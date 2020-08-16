@@ -32,6 +32,7 @@ public:
     SelectDisplayTimePassed,
     SetTimerView,
     UnlockedMainMenu,
+    UnlockSafeView,
     WifiConnectingView,
   };
 

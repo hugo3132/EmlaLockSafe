@@ -1,9 +1,20 @@
+
+/**
+ * @author    Hugo3132
+ * @copyright 2-clause BSD license
+ */
+
 #pragma once
 #include "../config.h"
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <WiFiClientSecure.h>
+#include <chrono>
+#include <condition_variable>
+#include <esp32/Thread.h>
+#include <limits>
+#include <mutex>
 
 namespace emlalock {
 /**
@@ -11,32 +22,11 @@ namespace emlalock {
  * @see https://www.emlalock.com/apidoc/
  */
 class EmlaLockApi {
-public:
-protected:
-  class ThreadProtectedData {
-  public:
-    bool lockState;
-    time_t startDate;
-    time_t endDate;
-    /**
-     * @brief The time when the last connection to the EmlaLock Server was
-     * established
-     */
-    std::chrono::system_clock::time_point lastConnectionTime;
-
-    ThreadProtectedData()
-      : lockState(true)
-      , startDate(0)
-      , endDate(0)
-      , lastConnectionTime(std::chrono::system_clock::from_time_t(0)) {}
-  };
-  network_core_lib::threading::ThreadSafeTriggerVariable<ThreadProtectedData> data;
-
 protected:
   /**
    * @brief The base address to the API
    */
-  const String host = "www.emlalock.com";
+  const String host = "api.emlalock.com";
 
 protected:
   /**
@@ -44,11 +34,16 @@ protected:
    */
   StaticJsonDocument<10000> jsonDocument;
 
+protected:
+  std::mutex mtx;
+  bool triggered;
+  std::condition_variable condVar;
+
 public:
   /**
    * @brief Get the singleton instance of the API handler
    */
-  static EmlaLockApi& getInstance() {
+  static EmlaLockApi& getSingleton() {
     static EmlaLockApi* instance = nullptr;
     if (!instance) {
       instance = new EmlaLockApi();
@@ -62,10 +57,8 @@ protected:
    * @brief Construct a new EmlaLock Api Object. Use the singleton EmlaLock or
    * getInstance() instead of creating new objects.
    */
-  EmlaLockApi()
-    : data("Protected Data") {
+  EmlaLockApi() {
     esp32::Thread::create("ElmaApiThread", 8192, 1, 1, *this, &EmlaLockApi::threadFunction);
-    data.triggerAll();
   }
 
 public:
@@ -74,48 +67,13 @@ public:
    * server
    */
   void triggerRefresh() {
-    data.triggerAll();
+    std::unique_lock<std::mutex> lock(mtx);
+    triggered = true;
+    lock.unlock();
+    condVar.notify_all();
   }
 
-public:
-  /**
-   * @brief returns if a chastity session is active
-   */
-  const bool isLocked() {
-    auto lock = data.getUniqueLock();
-    return data.v.lockState;
-  }
 
-public:
-  /**
-   * @brief returns the start date of the current session or 0 if it should not
-   * be displayed.
-   */
-  const time_t getStartDate() {
-    auto lock = data.getUniqueLock();
-    return data.v.startDate;
-  }
-
-public:
-  /**
-   * @brief returns the end date of the current session or 0 if it should not be
-   * displayed.
-   */
-  const time_t getEndDate() {
-    auto lock = data.getUniqueLock();
-    return data.v.endDate;
-  }
-
-public:
-  /**
-   * @brief returns the time when the last connection to the EmlaLock Server was
-   * * established
-   */
-  const   std::chrono::system_clock::time_point getLastConnectionTime() {
-    auto lock = data.getUniqueLock();
-    return data.v.lastConnectionTime;
-  }
-  
 protected:
   /**
    * @brief The thread functions which is communicating asynchronously with the
@@ -124,42 +82,54 @@ protected:
 
   void threadFunction() {
     // This thread runs forever
-    while (!data.waitForTrigger(std::chrono::seconds(600), true).shutdownRequest) {
-      StateManger::getInstance().operationActive = true;
+    std::unique_lock<std::mutex> lock(mtx);
+    while (true) {
+      // wait until the thread will be triggered or every ten minutes...
+      condVar.wait_for(lock, std::chrono::seconds(600), [this]() -> bool {
+        return triggered;
+      }); // use lambda to avoid spurious wakeups
+      triggered = false;
 
       if (requestUrl(String("/info/?userid=") + USER_ID + "&apikey=" + API_KEY)) {
-        auto lock = data.getUniqueLock();
+        Serial.println("Parsing JSON.");
         if (jsonDocument["chastitysession"].size() != 0) {
-          data.v.lockState = true;
-          if (jsonDocument["chastitysession"]["displaymode"]["timepassed"].as<bool>()) {
-            data.v.startDate = jsonDocument["chastitysession"]["startdate"].as<time_t>();
+          LockState::setDisplayTimePassed(
+            (LockState::DisplayTimePassed)jsonDocument["chastitysession"]["displaymode"]["timepassed"].as<int>());
+          LockState::setDisplayTimeLeft(
+            (LockState::DisplayTimeLeft)jsonDocument["chastitysession"]["displaymode"]["timeleft"].as<int>());
+
+          if (LockState::getDisplayTimePassed() == LockState::DisplayTimePassed::yes) {
+            LockState::setStartDate(jsonDocument["chastitysession"]["startdate"].as<time_t>());
           }
           else {
-            data.v.startDate = 0;
+            LockState::setStartDate(0);
           }
-          if (jsonDocument["chastitysession"]["displaymode"]["timeleft"].as<bool>()) {
-            data.v.endDate = jsonDocument["chastitysession"]["enddate"].as<time_t>();
+
+          if (LockState::getDisplayTimeLeft() == LockState::DisplayTimeLeft::yes) {
+            LockState::setEndDate(jsonDocument["chastitysession"]["enddate"].as<time_t>());
           }
           else {
-            data.v.endDate = 0;
+            if (LockState::getDisplayTimeLeft() == LockState::DisplayTimeLeft::temperature) {
+              String s = jsonDocument["chastitysession"]["enddate"].as<String>();
+              s.replace("{{localization.", "");
+              s.replace("}}", "");
+              LockState::setTemperatureString(s);
+            }
+            LockState::setEndDate(std::numeric_limits<time_t>::max());
           }
         }
         else {
-          data.v.lockState = false;
-          data.v.startDate = 0;
-          data.v.endDate = 0;
+          // Session was closed on server ---> reset if the enddate was not
+          // displayed...
+          LockState::setEndDate(0);
         }
-        data.v.lastConnectionTime = std::chrono::system_clock::now();
-        StateManger::getInstance().lastConnectionTicks = xTaskGetTickCount();
       }
       else {
         Serial.println("Connection failed.");
       }
-
-      StateManger::getInstance().operationActive = false;
+      LockState::setLastUpdateTime(time(NULL));
     }
   }
-
 
 protected:
   /**
@@ -213,6 +183,7 @@ protected:
       return false;
     }
 
+    Serial.println(String("https://") + host + url + ": ");
     return true;
   }
 };

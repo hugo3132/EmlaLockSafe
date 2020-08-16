@@ -19,7 +19,7 @@ public:
    * @param display pointer to the LCD instance
    */
   EmergencyEnterMenuView(LiquidCrystal_PCF8574* display)
-    : lcd::ViewBase(display) {}
+    : lcd::ViewBase(display, "EmergencyEnterMenuView") {}
 
 public:
   /**

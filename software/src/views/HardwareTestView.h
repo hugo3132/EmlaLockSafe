@@ -28,7 +28,7 @@ public:
    * @param display pointer to the LCD instance
    */
   HardwareTestView(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder)
-    : lcd::ViewBase(display)
+    : lcd::ViewBase(display, "HardwareTestView")
     , encoder(encoder) {}
 
 public:

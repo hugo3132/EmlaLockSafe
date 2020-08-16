@@ -7,12 +7,15 @@
 #include "Tools.h"
 
 #include <SPIFFS.h>
+#include <mutex>
 #include <time.h>
 
 /**
  * @brief Singleton class managing the current lock state. The class also
  * automatically saves the lock state to flash so we know what's going on after
  * a reboot even if there is no wifi.
+ *
+ * Access to this class is thread-safe
  */
 class LockState {
 public:
@@ -26,6 +29,12 @@ public:
    * @brief States for the selection how the time left should be displayed
    */
   enum class DisplayTimeLeft { no = 0, yes = 1, temperature = 2, timeWithPenalty = 3, timeWithRandomPenalty = 4 };
+
+protected:
+  /**
+   * @brief mutex used to synchronize the data access
+   */
+  std::mutex mtx;
 
 protected:
   /**
@@ -57,6 +66,12 @@ protected:
    * configured. This value won't be saved to the flash!
    */
   time_t cachedEndDate;
+  
+protected:
+  /**
+   * @brief time of the last update
+   */
+  time_t lastUpdateTime;
 
 protected:
   /**
@@ -73,7 +88,8 @@ protected:
     , displayTimeLeft(DisplayTimeLeft::yes)
     , startDate(0)
     , endDate(0)
-    , cachedEndDate(0) {
+    , cachedEndDate(0)
+    , lastUpdateTime(0) {
     // load the data from the file system if available
     Tools::detachEncoderInterrupts();
     File file = SPIFFS.open("/lockSt.bin", "r");
@@ -141,6 +157,7 @@ public:
    * @brief Get how the time passed should be displayed
    */
   static const DisplayTimePassed& getDisplayTimePassed() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
     return getSingleton().displayTimePassed;
   }
 
@@ -149,8 +166,11 @@ public:
    * @brief Set how the time passed should be displayed
    */
   static void setDisplayTimePassed(const DisplayTimePassed& displayTimePassed) {
-    getSingleton().displayTimePassed = displayTimePassed;
-    getSingleton().saveData();
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().displayTimePassed != displayTimePassed) {
+      getSingleton().displayTimePassed = displayTimePassed;
+      getSingleton().saveData();
+    }
   }
 
 public:
@@ -158,6 +178,7 @@ public:
    * @brief Get how the time left should be displayed
    */
   static const DisplayTimeLeft& getDisplayTimeLeft() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
     return getSingleton().displayTimeLeft;
   }
 
@@ -166,8 +187,11 @@ public:
    * @brief Set how the time left should be displayed
    */
   static void setDisplayTimeLeft(const DisplayTimeLeft& displayTimeLeft) {
-    getSingleton().displayTimeLeft = displayTimeLeft;
-    getSingleton().saveData();
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().displayTimeLeft != displayTimeLeft) {
+      getSingleton().displayTimeLeft = displayTimeLeft;
+      getSingleton().saveData();
+    }
   }
 
 public:
@@ -175,6 +199,7 @@ public:
    * @brief Get the Start Date
    */
   static const time_t& getStartDate() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
     return getSingleton().startDate;
   }
 
@@ -183,8 +208,11 @@ public:
    * @brief Set the Start Date
    */
   static void setStartDate(const time_t& startDate) {
-    getSingleton().startDate = startDate;
-    getSingleton().saveData();
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().startDate != startDate) {
+      getSingleton().startDate = startDate;
+      getSingleton().saveData();
+    }
   }
 
 public:
@@ -192,6 +220,7 @@ public:
    * @brief Get the End Date
    */
   static const time_t& getEndDate() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
     return getSingleton().endDate;
   }
 
@@ -200,8 +229,11 @@ public:
    * @brief Set the End Date
    */
   static void setEndDate(const time_t& endDate) {
-    getSingleton().endDate = endDate;
-    getSingleton().saveData();
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().endDate != endDate) {
+      getSingleton().endDate = endDate;
+      getSingleton().saveData();
+    }
   }
 
 public:
@@ -209,6 +241,7 @@ public:
    * @brief Get the Cached End Date
    */
   static const time_t& getCachedEndDate() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
     return getSingleton().cachedEndDate;
   }
 
@@ -217,7 +250,30 @@ public:
    * @brief Set the Cached End Date
    */
   static void setCachedEndDate(const time_t& cachedEndDate) {
-    getSingleton().cachedEndDate = cachedEndDate;
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().cachedEndDate != cachedEndDate) {
+      getSingleton().cachedEndDate = cachedEndDate;
+    }
+  }
+
+public:
+  /**
+   * @brief Get the time of the last update over the emlalock api
+   */
+  static const time_t& getLastUpdateTime() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    return getSingleton().lastUpdateTime;
+  }
+
+public:
+  /**
+   * @brief Set the time of the last update over the emlalock api
+   */
+  static void setLastUpdateTime(const time_t& lastUpdateTime) {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().lastUpdateTime != lastUpdateTime) {
+      getSingleton().lastUpdateTime = lastUpdateTime;
+    }
   }
 
 public:
@@ -225,6 +281,7 @@ public:
    * @brief Get the temperature string
    */
   static const String& getTemperatureString() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
     return getSingleton().temperatureString;
   }
 
@@ -233,7 +290,11 @@ public:
    * @brief Set the temperature string
    */
   static void setTemperatureString(const String& temperatureString) {
-    getSingleton().temperatureString = temperatureString;
-    getSingleton().saveData();
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().temperatureString != temperatureString) {
+      getSingleton().temperatureString = temperatureString;
+      getSingleton().saveData();
+    }
   }
+  
 };
