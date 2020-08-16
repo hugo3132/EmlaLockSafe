@@ -60,6 +60,12 @@ protected:
 
 protected:
   /**
+   * @brief temperature string
+   */
+  String temperatureString;
+
+protected:
+  /**
    * @brief Constructs the lock state by trying to reading the state from flash
    */
   LockState()
@@ -80,6 +86,9 @@ protected:
     constexpr auto numberOfBytes = sizeof(DisplayTimePassed) + sizeof(DisplayTimeLeft) + 2 * sizeof(time_t);
     char buf[numberOfBytes];
     auto readOk = file.readBytes(buf, numberOfBytes) == numberOfBytes;
+    if (readOk) {
+      temperatureString = file.readString();
+    }
 
     file.close();
     Tools::attachEncoderInterrupts();
@@ -113,6 +122,7 @@ protected:
     file.write((uint8_t*)&displayTimeLeft, sizeof(DisplayTimeLeft));
     file.write((uint8_t*)&startDate, sizeof(time_t));
     file.write((uint8_t*)&endDate, sizeof(time_t));
+    file.write((uint8_t*)temperatureString.c_str(), temperatureString.length());
     file.close();
     Tools::attachEncoderInterrupts();
   }
@@ -124,6 +134,40 @@ protected:
   static LockState& getSingleton() {
     static LockState lockState;
     return lockState;
+  }
+
+public:
+  /**
+   * @brief Get how the time passed should be displayed
+   */
+  static const DisplayTimePassed& getDisplayTimePassed() {
+    return getSingleton().displayTimePassed;
+  }
+
+public:
+  /**
+   * @brief Set how the time passed should be displayed
+   */
+  static void setDisplayTimePassed(const DisplayTimePassed& displayTimePassed) {
+    getSingleton().displayTimePassed = displayTimePassed;
+    getSingleton().saveData();
+  }
+
+public:
+  /**
+   * @brief Get how the time left should be displayed
+   */
+  static const DisplayTimeLeft& getDisplayTimeLeft() {
+    return getSingleton().displayTimeLeft;
+  }
+
+public:
+  /**
+   * @brief Set how the time left should be displayed
+   */
+  static void setDisplayTimeLeft(const DisplayTimeLeft& displayTimeLeft) {
+    getSingleton().displayTimeLeft = displayTimeLeft;
+    getSingleton().saveData();
   }
 
 public:
@@ -178,35 +222,18 @@ public:
 
 public:
   /**
-   * @brief Get how the time passed should be displayed
+   * @brief Get the temperature string
    */
-  static const DisplayTimePassed& getDisplayTimePassed() {
-    return getSingleton().displayTimePassed;
+  static const String& getTemperatureString() {
+    return getSingleton().temperatureString;
   }
 
 public:
   /**
-   * @brief Set how the time passed should be displayed
+   * @brief Set the temperature string
    */
-  static void setDisplayTimePassed(const DisplayTimePassed& displayTimePassed) {
-    getSingleton().displayTimePassed = displayTimePassed;
-    getSingleton().saveData();
-  }
-
-public:
-  /**
-   * @brief Get how the time left should be displayed
-   */
-  static const DisplayTimeLeft& getDisplayTimeLeft() {
-    return getSingleton().displayTimeLeft;
-  }
-
-public:
-  /**
-   * @brief Set how the time left should be displayed
-   */
-  static void setDisplayTimeLeft(const DisplayTimeLeft& displayTimeLeft) {
-    getSingleton().displayTimeLeft = displayTimeLeft;
+  static void setTemperatureString(const String& temperatureString) {
+    getSingleton().temperatureString = temperatureString;
     getSingleton().saveData();
   }
 };

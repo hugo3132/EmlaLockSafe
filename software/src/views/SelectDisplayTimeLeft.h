@@ -52,18 +52,21 @@ protected:
       createMenuItem("Yes", [this](MenuItem*) {
         LockState::setDisplayTimeLeft(LockState::DisplayTimeLeft::yes);
         LockState::setStartDate(time(NULL));
+        LockState::setTemperatureString("");
         LockState::setEndDate(LockState::getCachedEndDate());
       });
 
       createMenuItem("No", [this](MenuItem*) {
         LockState::setDisplayTimeLeft(LockState::DisplayTimeLeft::no);
         LockState::setStartDate(time(NULL));
+        LockState::setTemperatureString("");
         LockState::setEndDate(LockState::getCachedEndDate());
       });
 
       createMenuItem("Temperature", [this](MenuItem*) {
         LockState::setDisplayTimeLeft(LockState::DisplayTimeLeft::temperature);
         LockState::setStartDate(time(NULL));
+        LockState::setTemperatureString(""); // Automatically generated!
         LockState::setEndDate(LockState::getCachedEndDate());
       });
 
