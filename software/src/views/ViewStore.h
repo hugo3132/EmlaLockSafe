@@ -28,6 +28,8 @@ public:
     HardwareTestView,
     LockedView,
     PreferencesMenu,
+    SelectDisplayTimeLeft,
+    SelectDisplayTimePassed,
     SetTimerView,
     UnlockedMainMenu,
     WifiConnectingView,

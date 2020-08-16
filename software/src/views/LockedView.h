@@ -4,8 +4,8 @@
  */
 #pragma once
 
-#include "../config.h"
 #include "../Tools.h"
+#include "../config.h"
 
 #include <RotaryEncoder.h>
 #include <ViewBase.h>
@@ -21,7 +21,6 @@ protected:
    */
   RotaryEncoder* encoder;
 
-protected:
 public:
   /**
    * @brief Construct the locked view

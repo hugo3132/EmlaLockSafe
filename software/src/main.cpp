@@ -4,7 +4,9 @@
  * @copyright 2-clause BSD license
  */
 
+#include "LockState.h"
 #include "RealTimeClock.h"
+#include "Tools.h"
 #include "config.h"
 #include "views/EmergencyEnterKeyView.h"
 #include "views/EmergencyEnterMenuView.h"
@@ -13,15 +15,16 @@
 #include "views/HardwareTestView.h"
 #include "views/LockedView.h"
 #include "views/PreferencesMenu.h"
+#include "views/SelectDisplayTimeLeft.h"
+#include "views/SelectDisplayTimePassed.h"
 #include "views/SetTimerView.h"
 #include "views/UnlockedMainMenu.h"
-#include "Tools.h"
 #include "views/ViewStore.h"
 #include "views/WifiConnectingView.h"
 
 #include <LiquidCrystal_PCF8574.h>
-#include <SPIFFS.h>
 #include <RotaryEncoder.h>
+#include <SPIFFS.h>
 #include <WiFiClientSecure.h>
 #include <Wire.h>
 #include <ds3231.h>
@@ -39,6 +42,8 @@ views::EmlalockUnlockKeyMenu emlalockUnlockKeyMenu(&display, &encoder, LCD_NUMBE
 views::HardwareTestView hardwareTestView(&display, &encoder);
 views::LockedView lockedView(&display, &encoder);
 views::PreferencesMenu preferencesMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
+views::SelectDisplayTimeLeft selectDisplayTimeLeft(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
+views::SelectDisplayTimePassed selectDisplayTimePassed(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::SetTimerView setTimerView(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::UnlockedMainMenu unlockedMainMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::WifiConnectingView wifiConnectingView(&display);
@@ -103,9 +108,10 @@ void setup() {
     ViewStore::addView(ViewStore::HardwareTestView, hardwareTestView);
     ViewStore::addView(ViewStore::LockedView, lockedView);
     ViewStore::addView(ViewStore::PreferencesMenu, preferencesMenu);
+    ViewStore::addView(ViewStore::SelectDisplayTimeLeft, selectDisplayTimeLeft);
+    ViewStore::addView(ViewStore::SelectDisplayTimePassed, selectDisplayTimePassed);
     ViewStore::addView(ViewStore::SetTimerView, setTimerView);
     ViewStore::addView(ViewStore::UnlockedMainMenu, unlockedMainMenu);
-    // ViewStore::addView(ViewStore::UpdateCertificatesView, updateCertificatesView);
     ViewStore::addView(ViewStore::WifiConnectingView, wifiConnectingView);
   }
   lcd::ViewBase::setBacklightTimeout(15000);
@@ -153,6 +159,19 @@ void loop() {
 
   // tick for the encoder if the interrupt didn't properly trigger
   encoder.tick();
+
+  // check if the safe must be locked?
+  if (LockState::getEndDate() > time(NULL)) {
+    // check if the locked view is active?
+    if (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::LockedView)) {
+      // No activate it
+      views::ViewStore::activateView(views::ViewStore::LockedView);
+    }
+  }
+  else if (lcd::ViewBase::getCurrentView() == views::ViewStore::getView(views::ViewStore::LockedView)) {
+    // the locked view is active but no longer required...
+    views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
+  }
 
   // tick the current view
   if (lcd::ViewBase::getCurrentView()) {

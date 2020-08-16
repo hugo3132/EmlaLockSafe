@@ -4,9 +4,13 @@
  */
 #pragma once
 
+#include "LockState.h"
+#include "ViewStore.h"
+
+#include <DialogYesNoBack.h>
+#include <MenuView.h>
 #include <RotaryEncoder.h>
 #include <ViewBase.h>
-#include <DialogYesNoBack.h>
 
 namespace views {
 /**
@@ -52,7 +56,7 @@ protected:
 protected:
   /**
    * @brief selection what field can be changed:
-   * 
+   *
    * 0: number of days
    * 1: number of hours
    * 2: number of minutes
@@ -92,7 +96,7 @@ protected:
    */
   virtual void activate() {
     display->clear();
-      
+
     // reset the values
     numberOfDays = 0;
     numberOfHours = 0;
@@ -106,7 +110,7 @@ protected:
 public:
   /**
    * @brief called during the loop function
-   * 
+   *
    * @param forceRedraw if true everything should be redrawn
    */
   virtual void tick(const bool& forceRedraw) {
@@ -122,7 +126,7 @@ public:
     if (redraw) {
       display->setCursor(0, 0);
       display->print("Set Lock Timer:");
-      
+
       display->setCursor(0, 1);
       display->printf("%s%d%cdays  ", (editIndex == 0 ? ">" : ""), numberOfDays, (editIndex == 0 ? '<' : ' '));
       display->setCursor(0, 2);
@@ -226,17 +230,19 @@ protected:
       // check if all 3 values were updated
       if (editIndex == 3) {
         // generate the dialog message for the are you sure question:
-        time_t setTime = time(NULL) +
+        time_t endDate = time(NULL) +
                          ((((time_t)numberOfDays) * 24 + ((time_t)numberOfHours)) * 60 + ((time_t)numberOfMinutes)) * 60;
         tm tmBuf;
         char buf[61];
-        strftime(buf, 61, "Are you sure to lock\nuntil\n%d.%m.%Y %R?", localtime_r(&setTime, &tmBuf));
+        strftime(buf, 61, "Are you sure to lock\nuntil\n%d.%m.%Y %R?", localtime_r(&endDate, &tmBuf));
 
         // display dialog
-        switch (lcd::DialogYesNoBack(display, encoder, buf, numberOfColumns, numberOfRows).showModal(lcd::DialogYesNoBack::DialogResult::no)) {
+        switch (lcd::DialogYesNoBack(display, encoder, buf, numberOfColumns, numberOfRows)
+                  .showModal(lcd::DialogYesNoBack::DialogResult::no)) {
         case lcd::DialogYesNoBack::DialogResult::yes:
-          lcd::DialogYesNoBack(display, encoder, "TODO!!!!!", numberOfColumns, numberOfRows).showModal(lcd::DialogYesNoBack::DialogResult::no);
-          getCurrentView() = nullptr;
+          LockState::setCachedEndDate(endDate);
+          views::ViewStore::activateView(views::ViewStore::SelectDisplayTimePassed);
+
           return false; // immediately skip tick
         case lcd::DialogYesNoBack::DialogResult::no:
           return true;
