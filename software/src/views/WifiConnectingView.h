@@ -5,6 +5,7 @@
 #pragma once
 
 #include "../config.h"
+#include "../Tools.h"
 
 #include <MenuView.h>
 #include <ViewBase.h>
@@ -23,7 +24,7 @@ public:
    * @param display pointer to the LCD instance
    */
   WifiConnectingView(LiquidCrystal_PCF8574* display)
-    : lcd::ViewBase(display) {}
+    : lcd::ViewBase(display, "WifiConnectingView") {}
 
 public:
   /**
@@ -57,7 +58,7 @@ protected:
 
     // Play an animation while the connection is established
     int counter = 0;
-    waitAnimation([&counter]() -> bool {
+    Tools::waitAnimation(display, [&counter]() -> bool {
       counter++;
       if (counter % 25 == 0) {
         // if we've waited for over 2.5s (25 loops), restart wifi....
@@ -78,32 +79,6 @@ protected:
 
     // go back to previous view
     activatePreviousView();
-  }
-
-protected:
-  /**
-   * @brief Shows the animation while waiting until the callback returns false
-   *
-   * @param stillActive callback function checking if the animation should be
-   * shown
-   */
-  void waitAnimation(std::function<bool()> stillActive) {
-    while (stillActive()) {
-      for (int i = 0; (i < 20) && stillActive(); i++) {
-        if (i == 0) {
-          display->setCursor(19, 3);
-          display->print(' ');
-          display->setCursor(i, 3);
-          display->print('*');
-        }
-        else {
-          display->setCursor(i - 1, 3);
-          display->print(" *");
-        }
-
-        delay(100);
-      }
-    }
   }
 
 public:

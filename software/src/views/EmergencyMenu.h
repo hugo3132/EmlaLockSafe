@@ -23,7 +23,7 @@ public:
    * @param numberOfRows number of display-rows
    */
   EmergencyMenu(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder, const int& numberOfColumns, const int& numberOfRows)
-    : lcd::MenuView(display, encoder, "Unlocked Main Menu", numberOfColumns, numberOfRows) {}
+    : lcd::MenuView(display, "EmergencyMenu", encoder, "Unlocked Main Menu", numberOfColumns, numberOfRows) {}
 
 public:
   /**

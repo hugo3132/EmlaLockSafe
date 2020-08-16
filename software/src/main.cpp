@@ -8,6 +8,7 @@
 #include "RealTimeClock.h"
 #include "Tools.h"
 #include "config.h"
+#include "emlalock/EmlaLockApi.h"
 #include "views/EmergencyEnterKeyView.h"
 #include "views/EmergencyEnterMenuView.h"
 #include "views/EmergencyMenu.h"
@@ -18,6 +19,7 @@
 #include "views/SelectDisplayTimeLeft.h"
 #include "views/SelectDisplayTimePassed.h"
 #include "views/SetTimerView.h"
+#include "views/UnlockSafeView.h"
 #include "views/UnlockedMainMenu.h"
 #include "views/ViewStore.h"
 #include "views/WifiConnectingView.h"
@@ -28,6 +30,7 @@
 #include <WiFiClientSecure.h>
 #include <Wire.h>
 #include <ds3231.h>
+#include <esp32/Thread.h>
 #include <string>
 #include <sys/time.h>
 
@@ -46,6 +49,7 @@ views::SelectDisplayTimeLeft selectDisplayTimeLeft(&display, &encoder, LCD_NUMBE
 views::SelectDisplayTimePassed selectDisplayTimePassed(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::SetTimerView setTimerView(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::UnlockedMainMenu unlockedMainMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
+views::UnlockSafeView unlockSafeView(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::WifiConnectingView wifiConnectingView(&display);
 
 /**
@@ -112,6 +116,7 @@ void setup() {
     ViewStore::addView(ViewStore::SelectDisplayTimePassed, selectDisplayTimePassed);
     ViewStore::addView(ViewStore::SetTimerView, setTimerView);
     ViewStore::addView(ViewStore::UnlockedMainMenu, unlockedMainMenu);
+    ViewStore::addView(ViewStore::UnlockSafeView, unlockSafeView);
     ViewStore::addView(ViewStore::WifiConnectingView, wifiConnectingView);
   }
   lcd::ViewBase::setBacklightTimeout(15000);
@@ -149,6 +154,9 @@ void setup() {
 
   // Start normal operation
   views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
+
+  // start emlalock api
+  emlalock::EmlaLockApi::getSingleton().triggerRefresh();
 }
 
 /**

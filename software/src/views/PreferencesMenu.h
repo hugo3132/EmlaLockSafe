@@ -25,7 +25,7 @@ public:
    * @param numberOfRows number of display-rows
    */
   PreferencesMenu(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder, const int& numberOfColumns, const int& numberOfRows)
-    : lcd::MenuView(display, encoder, "Preferences", numberOfColumns, numberOfRows) {}
+    : lcd::MenuView(display, "PreferencesMenu", encoder, "Preferences", numberOfColumns, numberOfRows) {}
 
 public:
   /**

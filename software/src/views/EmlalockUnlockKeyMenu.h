@@ -26,7 +26,7 @@ public:
                         RotaryEncoder* encoder,
                         const int& numberOfColumns,
                         const int& numberOfRows)
-    : lcd::MenuView(display, encoder, "Emlalock Unlock Key", numberOfColumns, numberOfRows) {}
+    : lcd::MenuView(display, "EmlalockUnlockKeyMenu", encoder, "Emlalock Unlock Key", numberOfColumns, numberOfRows) {}
 
 public:
   /**

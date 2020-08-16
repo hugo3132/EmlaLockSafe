@@ -6,6 +6,7 @@
 
 #include "../Tools.h"
 #include "../config.h"
+#include "../emlalock/EmlaLockApi.h"
 
 #include <RotaryEncoder.h>
 #include <ViewBase.h>
@@ -34,7 +35,7 @@ public:
    * @param display pointer to the LCD instance
    */
   LockedView(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder)
-    : lcd::ViewBase(display)
+    : lcd::ViewBase(display, "LockedView")
     , encoder(encoder) {
     temperatureStrings[0] = "very cold";
     temperatureStrings[1] = "cold";
@@ -85,6 +86,11 @@ public:
     }
     getBacklightTimeoutManager().tick(display);
 
+    // click reloads the data from emlalock
+    if(click) {
+      emlalock::EmlaLockApi::getSingleton().triggerRefresh();
+    }
+
     // just to be sure...
     digitalWrite(COIL_PIN, 0);
 
@@ -109,7 +115,7 @@ public:
     // current time
     static time_t lastDisplayedCurrentTime = 0;
     time_t currentTime = time(NULL);
-    if (forceRedraw || (lastDisplayedCurrentTime/60 != currentTime/60)) {
+    if (forceRedraw || (lastDisplayedCurrentTime / 60 != currentTime / 60)) {
       lastDisplayedCurrentTime = currentTime;
       strftime(buf, 6, "%R", localtime_r(&currentTime, &tmBuf));
       display->setCursor(13, 0);

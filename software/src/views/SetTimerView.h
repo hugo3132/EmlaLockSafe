@@ -73,7 +73,7 @@ public:
    * @param numberOfRows number of display-rows
    */
   SetTimerView(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder, const int& numberOfColumns, const int& numberOfRows)
-    : lcd::ViewBase(display)
+    : lcd::ViewBase(display, "SetTimerView")
     , encoder(encoder)
     , numberOfColumns(numberOfColumns)
     , numberOfRows(numberOfRows) {}

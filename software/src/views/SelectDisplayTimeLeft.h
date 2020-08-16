@@ -27,7 +27,7 @@ public:
                         RotaryEncoder* encoder,
                         const int& numberOfColumns,
                         const int& numberOfRows)
-    : lcd::MenuView(display, encoder, "Display time left?", numberOfColumns, numberOfRows) {}
+    : lcd::MenuView(display, "SelectDisplayTimeLeft", encoder, "Display time left?", numberOfColumns, numberOfRows) {}
 
 public:
   /**

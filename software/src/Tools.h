@@ -63,6 +63,31 @@ public:
 
 public:
   /**
+   * @brief Shows the animation while waiting until the callback returns false
+   *
+   * @param stillActive callback function checking if the animation should be
+   * shown
+   */
+  static void waitAnimation(LiquidCrystal_PCF8574* display, std::function<bool()> stillActive) {
+    while (stillActive()) {
+      for (int i = 0; (i < 20) && stillActive(); i++) {
+        if (i == 0) {
+          display->setCursor(19, 3);
+          display->print(' ');
+          display->setCursor(i, 3);
+          display->print('*');
+        }
+        else {
+          display->setCursor(i - 1, 3);
+          display->print(" *");
+        }
+
+        delay(100);
+      }
+    }
+  }
+public:
+  /**
    * @brief attach the encoder pins to a interrupt
    */
   static void attachEncoderInterrupts() {

@@ -39,7 +39,7 @@ public:
    * @param display pointer to the LCD instance
    */
   EmergencyEnterKeyView(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder)
-    : lcd::ViewBase(display)
+    : lcd::ViewBase(display, "EmergencyEnterKeyView")
     , encoder(encoder) {}
 
 public:

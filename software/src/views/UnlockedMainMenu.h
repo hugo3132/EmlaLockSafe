@@ -24,7 +24,7 @@ public:
    * @param numberOfRows number of display-rows
    */
   UnlockedMainMenu(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder, const int& numberOfColumns, const int& numberOfRows)
-    : lcd::MenuView(display, encoder, "Unlocked Main Menu", numberOfColumns, numberOfRows) {}
+    : lcd::MenuView(display, "UnlockedMainMenu", encoder, "Unlocked Main Menu", numberOfColumns, numberOfRows) {}
 
 public:
   /**
@@ -48,18 +48,16 @@ protected:
     if (menuItems.empty()) {
       // create menu items
 
-      // Open Safe has no click callback since coil is active as long as button
-      // is pressed (see tick function)
-      createMenuItem("Open Safe"); 
-
-
-      createMenuItem("Set Custom Timer", [this](MenuItem*) {
+      createMenuItem("Open Safe", [](MenuItem*) {
+        ViewStore::activateView(ViewStore::UnlockSafeView);
+      });
+      createMenuItem("Set Custom Timer", [](MenuItem*) {
         ViewStore::activateView(ViewStore::SetTimerView);
       });
-      createMenuItem("Emlalock Unlock Key", [this](MenuItem*) {
+      createMenuItem("Emlalock Unlock Key", [](MenuItem*) {
         ViewStore::activateView(ViewStore::EmlalockUnlockKeyMenu);
       });
-      createMenuItem("Preferences", [this](MenuItem*) {
+      createMenuItem("Preferences", [](MenuItem*) {
         ViewStore::activateView(ViewStore::PreferencesMenu);
       });
     }
@@ -78,16 +76,6 @@ public:
 
     // update the signal strength symbol
     Tools::tickWifiSymbol(display, forceRedraw);
-
-    // check if the selection is 0 (Open Safe item) and the button is pressed
-    if ((selection == 0) && (encoder->getSwitchState())) {
-      // activate coil
-      digitalWrite(COIL_PIN, 1);
-    }
-    else {
-      // disable coil
-      digitalWrite(COIL_PIN, 0);
-    }
   }
 };
 } // namespace views

@@ -18,7 +18,7 @@
 #define API_KEY "xxxxxxxxxxxxx"
 
 /**
- * @brief The SSID(name) of your WIFI
+ * @brief The SSID(name) of your wifi
  * @note If the ssid contains " or \ you have to escape them with \" and \\.
  */
 #define WIFI_SSID "xxxxxxxxxxxxx"
