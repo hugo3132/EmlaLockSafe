@@ -5,6 +5,8 @@
 #pragma once
 
 #include "../emlalock/EmergencyKey.h"
+#include "../LockState.h"
+#include "ViewStore.h"
 
 #include <RotaryEncoder.h>
 #include <ViewBase.h>
@@ -112,10 +114,14 @@ public:
         char key[7];
         emlalock::EmergencyKey::getCurrentKey(key);
         if (strcmp(key, enteredKey) == 0) {
-          display->print("Check OK    ");
+          // Correct key was entered...
+          LockState::setEndDate(0); // set to unlock
+          LockState::setLastUpdateTime(time(NULL) + 10);
+          ViewStore::activateView(ViewStore::UnlockSafeView);
+          return;
         }
         else {
-          display->print("Check Not OK");
+          display->print("Invalid Key");
         }
       }
       redraw = true;

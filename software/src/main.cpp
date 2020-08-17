@@ -171,7 +171,11 @@ void loop() {
   // check if the safe must be locked?
   if (LockState::getEndDate() > time(NULL)) {
     // check if the locked view is active?
-    if (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::LockedView)) {
+    if ((lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::LockedView)) &&
+        (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterMenuView)) &&
+        (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyMenu)) &&
+        (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterKeyView)) &&
+        (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::WifiConnectingView))) {
       // No activate it
       views::ViewStore::activateView(views::ViewStore::LockedView);
     }
