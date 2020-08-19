@@ -103,7 +103,7 @@ public:
 
     // Did we run in a 15s timeout?
     if (LockState::getLastUpdateTime() < activationTime) {
-      digitalWrite(COIL_PIN, 0);
+      digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
       lcd::DialogOk(display, encoder, "The Emlalock API\ndid not answer\nwithin 15s.", numberOfColumns, numberOfRows).showModal();
       activatePreviousView();
       return;
@@ -111,7 +111,7 @@ public:
 
     // Should the safe be locked
     if (LockState::getEndDate() > time(NULL)) {
-      digitalWrite(COIL_PIN, 0);
+      digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
       return;
     }
 
@@ -122,7 +122,7 @@ public:
       display->setCursor(0, 0);
       display->print("Safe unlocked");
       coilActivationTime = millis();
-      digitalWrite(COIL_PIN, 1);
+      digitalWrite(COIL_PIN, SAFE_COIL_UNLOCKED);
     }
 
     // show a animation showing how many time is lest until the coil is released
@@ -134,7 +134,7 @@ public:
 
     // Check if the coil should be released after 10 seconds
     if (millis() - coilActivationTime > 10000) {
-      digitalWrite(COIL_PIN, 0);
+      digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
       activatePreviousView();
     }
   }

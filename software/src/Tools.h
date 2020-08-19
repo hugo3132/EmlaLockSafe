@@ -92,8 +92,8 @@ public:
    */
   static void attachEncoderInterrupts() {
     // attach interrupts of rotary encoder
-    attachInterrupt(digitalPinToInterrupt(ENCODER_PIN_A), encoderInterrupt, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(ENCODER_PIN_B), encoderInterrupt, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(ENCODER_PIN_CLK), encoderInterrupt, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(ENCODER_PIN_DT), encoderInterrupt, CHANGE);
     attachInterrupt(digitalPinToInterrupt(ENCODER_SWITCH), encoderInterrupt, CHANGE);
   }
 
@@ -102,8 +102,8 @@ public:
    * @brief detach the encoder pins to a interrupt
    */
   static void detachEncoderInterrupts() {
-    detachInterrupt(digitalPinToInterrupt(ENCODER_PIN_A));
-    detachInterrupt(digitalPinToInterrupt(ENCODER_PIN_B));
+    detachInterrupt(digitalPinToInterrupt(ENCODER_PIN_CLK));
+    detachInterrupt(digitalPinToInterrupt(ENCODER_PIN_DT));
     detachInterrupt(digitalPinToInterrupt(ENCODER_SWITCH));
   }
 };

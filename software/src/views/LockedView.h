@@ -92,7 +92,7 @@ public:
     }
 
     // just to be sure...
-    digitalWrite(COIL_PIN, 0);
+    digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
 
     // Stuff which never changes
     if (forceRedraw) {

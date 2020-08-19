@@ -112,6 +112,8 @@ public:
       display->setCursor(0, 3);
       display->print(buf);
       lastTime = now;
+
+      digitalWrite(COIL_PIN, now%2);
     }
 
     Tools::tickWifiSymbol(display, forceRedraw);

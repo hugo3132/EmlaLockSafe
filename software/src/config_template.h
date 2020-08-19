@@ -36,19 +36,35 @@
 #define TIME_ZONE "CET-1CEST,M3.5.0,M10.5.0/3"
 
 /**
+ * @brief Set Timezone to Berlin for other strings see
+ * https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
+ */
+#define TIME_ZONE "CET-1CEST,M3.5.0,M10.5.0/3"
+
+/**
  * @brief GPIO the coil of the safe is connected to
  */
-#define COIL_PIN 26
+#define COIL_PIN 15
+
+/**
+ * @brief Value of the COIL_PIN if the coil should be locked 
+ */
+#define SAFE_COIL_LOCKED LOW
+
+/**
+ * @brief Value of the COIL_PIN if the coil should be unlocked 
+ */
+#define SAFE_COIL_UNLOCKED HIGH
 
 /**
  * @brief GPIO of the ky-040 clk pin
  */
-#define ENCODER_PIN_A 32
+#define ENCODER_PIN_CLK 27
 
 /**
  * @brief GPIO of the ky-040 dt pin
  */
-#define ENCODER_PIN_B 33
+#define ENCODER_PIN_DT 26
 
 /**
  * @brief GPIO of the ky-040 sw pin
@@ -58,7 +74,7 @@
 /**
  * @brief I2C address of the LCD
  */
-#define LCD_ADDR           0x27
+#define LCD_ADDR 0x27
 
 /**
  * @brief number of columns of the lcd

@@ -34,7 +34,7 @@
 #include <string>
 #include <sys/time.h>
 
-RotaryEncoder encoder(ENCODER_PIN_A, ENCODER_PIN_B, ENCODER_SWITCH);
+RotaryEncoder encoder(ENCODER_PIN_CLK, ENCODER_PIN_DT, ENCODER_SWITCH);
 
 LiquidCrystal_PCF8574 display(LCD_ADDR); // set the LCD address to 0x27 for a 16 chars and 2 line display
 
@@ -63,6 +63,10 @@ void ICACHE_RAM_ATTR encoderInterrupt(void) {
  * @brief Setup of Sketch
  */
 void setup() {
+  // Setup Coil output
+  pinMode(COIL_PIN, OUTPUT);
+  digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
+
   // Set Timezone
   setenv("TZ", TIME_ZONE, 1);
   tzset();
@@ -88,17 +92,6 @@ void setup() {
   }
   else {
     Serial.println("LCD not found.");
-    return;
-  }
-
-  // Check if the RTC is reachable
-  Wire.beginTransmission(DS3231_I2C_ADDR);
-  if (Wire.endTransmission() == 0) {
-    Serial.println("Real-time Clock found.");
-    RealTimeClock::loadTimeFromRtc();
-  }
-  else {
-    Serial.println("Real-time Clock not found.");
     return;
   }
 
@@ -128,10 +121,6 @@ void setup() {
     return;
   }
 
-  // Setup Coil output
-  pinMode(COIL_PIN, OUTPUT);
-  digitalWrite(COIL_PIN, LOW);
-
   // Check if we need to go to the emergency menu
   encoder.tick();
   if (encoder.getSwitchState()) {
@@ -147,6 +136,17 @@ void setup() {
       views::ViewStore::activateView(views::ViewStore::EmergencyMenu);
       return;
     }
+  }
+  
+  // Check if the RTC is reachable
+  Wire.beginTransmission(DS3231_I2C_ADDR);
+  if (Wire.endTransmission() == 0) {
+    Serial.println("Real-time Clock found.");
+    RealTimeClock::loadTimeFromRtc();
+  }
+  else {
+    Serial.println("Real-time Clock not found.");
+    return;
   }
 
   // Start connecting to WIFI
