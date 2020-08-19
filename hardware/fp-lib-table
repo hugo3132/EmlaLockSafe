@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name DS3231_Module_AzDelivery)(type KiCad)(uri "${KIPRJMOD}/DS3231 Module AzDelivery/DS3231_Module_AzDelivery.pretty")(options "")(descr ""))
+  (lib (name ESP32_NodeMCU_Module_AzDelivery)(type KiCad)(uri "${KIPRJMOD}/ESP32 NodeMCU Module AzDelivery/ESP32_NodeMCU_Module_AzDelivery.pretty")(options "")(descr ""))
+)
