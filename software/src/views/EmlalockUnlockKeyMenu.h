@@ -45,17 +45,17 @@ protected:
    * @brief called as soon as the view becomes active
    */
   virtual void activate() {
-    char key[7];
-
-    // get the current key from the file system
-    emlalock::EmergencyKey::getCurrentKey(key);
-    String keyItemText = "Current Key: " + String(key);
-
     // is this the first time activate is called?
     if (menuItems.empty()) {
-      // create menu items
+      // get the current key from the file system
+      char key[7];
+      emlalock::EmergencyKey::getCurrentKey(key);
+      
+      // Menu item just showing the current key
+      String keyItemText = "Current Key: " + String(key);
       createMenuItem(keyItemText, [this](MenuItem*) {});
 
+      // Menu item which allows to generate a new key
       createMenuItem("Generate new key", [this](MenuItem*) {
         if (lcd::DialogYesNo(display,
                              encoder,
@@ -64,17 +64,20 @@ protected:
                              numberOfRows)
               .showModal(false)) {
           char key[7];
+
           // generate and save new key
           emlalock::EmergencyKey::generateNewKey(key);
+
+          // update the menu item
+          String keyItemText = "Current Key: " + String(key);
+          menuItems.front().setText(keyItemText);
         }
       });
 
+      // Item for going back to the previous menu.
       createMenuItem("Back", [this](MenuItem*) {
         activatePreviousView();
       });
-    }
-    else {
-      menuItems.front().setText(keyItemText);
     }
 
     lcd::MenuView::activate();
