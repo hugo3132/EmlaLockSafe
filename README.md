@@ -3,8 +3,9 @@ This project is about controlling a cheap digital safe from a local hardware sto
 
 # Contents
 - [Understanding the locking mechanism](#understanding-the-locking-mechanism)
-- [New Electronics](#new-electronics)
-  * [How it works](#how-it-works)
+- [New electronics](#new-electronics)
+  * [Controller board](#controller-board)
+  * [I/O module](#io-module)
 
 # Understanding the locking mechanism
 As described above, I've used a cheap safe from a local hardware store. But any cheap safe should do the trick as long as it can be electronically unlocked and easily disassembled. After removing the cover on the inside of the safe, the original electronics board can be removed and the mechanism looks as follows:
@@ -16,16 +17,17 @@ The mechanism is also the reason why these safe must be mounted to something sol
 
 # New electronics
 The idea of this project is now to replace the original electronics with a controller which checks the EmlaLock API if it can be opened or not. To be able to connect to the internet I first started using a ESP8266. After a while I ran out of memory while parsing the JSON file delivered by the EmlaLock API. Therefore, I had to switch to the more powerful [ESP32 module](https://www.amazon.de/AZDelivery-ESP32-NodeMCU-Module-Parent/dp/B07Z6CSD9K).
-The controller module is extended by a [real-time clock (RTC) module](https://www.amazon.de/AZDelivery-Real-Clock-DS3231-Parent/dp/B07ZQGBH14). As long as the controller has a WiFi connection the time of the RTC module is set using the [network time protocol](https://en.wikipedia.org/wiki/Network_Time_Protocol). In case the WiFi connection is lost the controller is able to get the time from the RTC module even after the power outage. 
-TBD...
+The controller module is extended by a [real-time clock (RTC) module](https://www.amazon.de/AZDelivery-Real-Clock-DS3231-Parent/dp/B07ZQGBH14). As long as the controller has a WiFi connection the time of the RTC module is set using the [network time protocol](https://en.wikipedia.org/wiki/Network_Time_Protocol). In case the WiFi connection is lost the controller is able to get the time from the RTC module even after the power outage. This is important in case the [manual mode](#manual-mode) is used.
 
-<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/unlockkey.png" width="50%">
+The controller and RTC module are both part of the [controller board](#controller-board) which is mounted inside the safe. The [controller board](#controller-board) is extended by the [I/O module](#io-module) mounted to the outside of the safe which contains a [HD44780 display with an I²C converter](https://www.amazon.de/AZDelivery-Bundle-2004-blau-Parent/dp/B07Z6CPTF4) and a [rotary encoder](https://www.amazon.de/WayinTop-Encoder-Drehgeber-Drehwinkelgeber-Druckknopf/dp/B07T3672VK). Since the controller display requires 5V and the controller runs with 3.3V, a [logic level converter](https://www.amazon.de/gp/product/B07LG6RK7L) is added between the controller board and the LCD module.
 
 
-Changes in API, no wifi, ... 
----> RTC 
----> Key
 
+
+## Controller board
+
+## I/O module
+[](https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374)
 
 
 Display Unit only for I/O
@@ -40,3 +42,17 @@ Display Unit only for I/O
 ![Controller Board](https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_Controller_Board_Layout.svg)
 Controller Board (inside the safe)
 
+
+
+
+# Software
+- [Software](#software)
+  * [Manual mode](#manual-mode)
+TBD
+
+## Unlock key
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/unlockkey.png" width="50%">
+
+
+## Manual mode
+TBD
