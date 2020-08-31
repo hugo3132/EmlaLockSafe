@@ -1,14 +1,15 @@
 EESchema Schematic File Version 4
+LIBS:EmlaLockSafe-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
-Rev ""
-Comp ""
-Comment1 ""
+Title "EmlaLockSafe Controller Module"
+Date "2020-08-31"
+Rev "1.0"
+Comp "hugo3132"
+Comment1 "BSD 2-Clause License"
 Comment2 ""
 Comment3 ""
 Comment4 ""

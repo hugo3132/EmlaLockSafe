@@ -1,4 +1,6 @@
 (sym_lib_table
-  (lib (name ESP32_NodeMCU_Module_AzDelivery)(type Legacy)(uri "${KIPRJMOD}/ESP32 NodeMCU Module AzDelivery/ESP32_NodeMCU_Module_AzDelivery.lib")(options "")(descr ""))
-  (lib (name DS3231_Module_AzDelivery)(type Legacy)(uri "${KIPRJMOD}/DS3231 Module AzDelivery/DS3231_Module_AzDelivery.lib")(options "")(descr ""))
+  (lib (name LogicLevelConverter)(type Legacy)(uri ${KIPRJMOD}/LogicLevelConverter/LogicLevelConverter.lib)(options "")(descr ""))
+  (lib (name Tinkerforge_Libraries)(type Legacy)(uri D:/Entwicklung/Arduino/Projects/ElmaLockSafe/hardware/TinkerforgeLibraries/tinkerforge.lib)(options "")(descr ""))
+  (lib (name Display)(type Legacy)(uri ${KIPRJMOD}/Display/Display.lib)(options "")(descr ""))
+  (lib (name Rotary_Encoder)(type Legacy)(uri "${KIPRJMOD}/Rotary Encoder/Rotary_Encoder.lib")(options "")(descr ""))
 )

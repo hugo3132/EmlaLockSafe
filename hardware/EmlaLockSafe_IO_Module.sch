@@ -1,0 +1,227 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "EmlaLockSafe I/O Module"
+Date "2020-08-31"
+Rev "1.0"
+Comp "hugo3132"
+Comment1 "BSD 2-Clause License"
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector_Generic:Conn_01x08 LCD/Encoder_Connecor1
+U 1 1 5F3C574A
+P 2750 4150
+F 0 "LCD/Encoder_Connecor1" H 2830 4142 50  0000 L CNN
+F 1 "Conn_01x08" H 2830 4051 50  0000 L CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Horizontal" H 2750 4150 50  0001 C CNN
+F 3 "~" H 2750 4150 50  0001 C CNN
+	1    2750 4150
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3100 4450 2950 4450
+Wire Wire Line
+	3100 3750 2950 3750
+Text GLabel 3100 4050 2    50   Input ~ 0
+ENC_CLK
+Text GLabel 3100 3950 2    50   Input ~ 0
+ENC_DT
+Text GLabel 3100 3850 2    50   Input ~ 0
+ENC_SW
+Wire Wire Line
+	3100 4050 2950 4050
+Wire Wire Line
+	3100 3950 2950 3950
+Wire Wire Line
+	3100 3850 2950 3850
+$Comp
+L power:+5V #PWR0106
+U 1 1 5F406AA6
+P 3100 4450
+F 0 "#PWR0106" H 3100 4300 50  0001 C CNN
+F 1 "+5V" V 3115 4578 50  0000 L CNN
+F 2 "" H 3100 4450 50  0001 C CNN
+F 3 "" H 3100 4450 50  0001 C CNN
+	1    3100 4450
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0107
+U 1 1 5F4070D6
+P 3150 4350
+F 0 "#PWR0107" H 3150 4100 50  0001 C CNN
+F 1 "GND" V 3155 4222 50  0000 R CNN
+F 2 "" H 3150 4350 50  0001 C CNN
+F 3 "" H 3150 4350 50  0001 C CNN
+	1    3150 4350
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3150 4350 2950 4350
+$Comp
+L power:+3.3V #PWR0108
+U 1 1 5F407EE2
+P 3100 3750
+F 0 "#PWR0108" H 3100 3600 50  0001 C CNN
+F 1 "+3.3V" V 3115 3878 50  0000 L CNN
+F 2 "" H 3100 3750 50  0001 C CNN
+F 3 "" H 3100 3750 50  0001 C CNN
+	1    3100 3750
+	0    1    1    0   
+$EndComp
+$Comp
+L LogicLevelConverter:4_Channel_I2C LogicLevelConverter
+U 1 1 5F4CD510
+P 4800 4250
+F 0 "LogicLevelConverter" H 4800 4750 50  0000 C CNN
+F 1 "4_Channel_I2C" H 4800 4650 50  0000 C CNN
+F 2 "" H 4800 4250 50  0001 C CNN
+F 3 "" H 4800 4250 50  0001 C CNN
+	1    4800 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5F4D41A0
+P 4800 4650
+F 0 "#PWR?" H 4800 4400 50  0001 C CNN
+F 1 "GND" V 4805 4522 50  0000 R CNN
+F 2 "" H 4800 4650 50  0001 C CNN
+F 3 "" H 4800 4650 50  0001 C CNN
+	1    4800 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5F4D4758
+P 4250 3950
+F 0 "#PWR?" H 4250 3800 50  0001 C CNN
+F 1 "+3.3V" V 4265 4078 50  0000 L CNN
+F 2 "" H 4250 3950 50  0001 C CNN
+F 3 "" H 4250 3950 50  0001 C CNN
+	1    4250 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5F4D4EFB
+P 5750 3950
+F 0 "#PWR?" H 5750 3800 50  0001 C CNN
+F 1 "+5V" V 5765 4078 50  0000 L CNN
+F 2 "" H 5750 3950 50  0001 C CNN
+F 3 "" H 5750 3950 50  0001 C CNN
+	1    5750 3950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2950 4150 4400 4150
+Text Label 2950 4150 0    50   ~ 0
+SCL
+Text Label 2950 4250 0    50   ~ 0
+SDA
+Wire Wire Line
+	2950 4250 4400 4250
+$Comp
+L Display:I2C_Adapter I2C_to_LCD_Connector
+U 1 1 5F4E8FF0
+P 7250 4150
+F 0 "I2C_to_LCD_Connector" H 8128 4113 50  0000 L CNN
+F 1 "I2C_Adapter" H 8128 4022 50  0000 L CNN
+F 2 "" H 6950 3850 50  0001 C CNN
+F 3 "" H 6950 3850 50  0001 C CNN
+	1    7250 4150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 4250 6300 4250
+$Comp
+L power:GND #PWR?
+U 1 1 5F4EBF46
+P 6300 3950
+F 0 "#PWR?" H 6300 3700 50  0001 C CNN
+F 1 "GND" V 6305 3822 50  0000 R CNN
+F 2 "" H 6300 3950 50  0001 C CNN
+F 3 "" H 6300 3950 50  0001 C CNN
+	1    6300 3950
+	0    1    1    0   
+$EndComp
+$Comp
+L Display:HD44780 U?
+U 1 1 5F4F08F6
+P 7250 5050
+F 0 "U?" H 8178 5029 50  0000 L CNN
+F 1 "HD44780" H 8178 4938 50  0000 L CNN
+F 2 "" H 7150 5050 50  0001 C CNN
+F 3 "" H 7150 5050 50  0001 C CNN
+	1    7250 5050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 4150 6300 4150
+Wire Wire Line
+	5200 4050 5200 4000
+Wire Wire Line
+	5200 4050 5750 4050
+Wire Wire Line
+	5750 3950 5750 4050
+Connection ~ 5750 4050
+Wire Wire Line
+	5750 4050 6300 4050
+Wire Wire Line
+	4400 4000 4250 4000
+Wire Wire Line
+	4250 4000 4250 3950
+$Comp
+L Rotary_Encoder:KY_040 Rotary_Encoder
+U 1 1 5F4FDB30
+P 4950 2650
+F 0 "Rotary_Encoder" H 5478 2696 50  0000 L CNN
+F 1 "KY_040" H 5478 2605 50  0000 L CNN
+F 2 "" H 4950 2650 50  0001 C CNN
+F 3 "" H 4950 2650 50  0001 C CNN
+	1    4950 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5F502B8D
+P 4350 2750
+F 0 "#PWR?" H 4350 2600 50  0001 C CNN
+F 1 "+3.3V" V 4365 2878 50  0000 L CNN
+F 2 "" H 4350 2750 50  0001 C CNN
+F 3 "" H 4350 2750 50  0001 C CNN
+	1    4350 2750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5F502EAC
+P 4500 2850
+F 0 "#PWR?" H 4500 2600 50  0001 C CNN
+F 1 "GND" V 4505 2722 50  0000 R CNN
+F 2 "" H 4500 2850 50  0001 C CNN
+F 3 "" H 4500 2850 50  0001 C CNN
+	1    4500 2850
+	1    0    0    -1  
+$EndComp
+Text GLabel 4350 2650 0    50   Input ~ 0
+ENC_SW
+Text GLabel 4350 2550 0    50   Input ~ 0
+ENC_DT
+Text GLabel 4350 2450 0    50   Input ~ 0
+ENC_CLK
+Wire Wire Line
+	4350 2750 4500 2750
+Wire Wire Line
+	4500 2650 4350 2650
+Wire Wire Line
+	4350 2550 4500 2550
+Wire Wire Line
+	4500 2450 4350 2450
+$EndSCHEMATC
