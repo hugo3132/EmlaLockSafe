@@ -21,27 +21,30 @@ The controller module is extended by a [real-time clock (RTC) module](https://ww
 
 The controller and RTC module are both part of the [controller board](#controller-board) which is mounted inside the safe. The [controller board](#controller-board) is extended by the [I/O module](#io-module) mounted to the outside of the safe which contains a [HD44780 display with an I²C converter](https://www.amazon.de/AZDelivery-Bundle-2004-blau-Parent/dp/B07Z6CPTF4) and a [rotary encoder](https://www.amazon.de/WayinTop-Encoder-Drehgeber-Drehwinkelgeber-Druckknopf/dp/B07T3672VK). Since the controller display requires 5V and the controller runs with 3.3V, a [logic level converter](https://www.amazon.de/gp/product/B07LG6RK7L) is added between the controller board and the LCD module.
 
-
-
-
 ## Controller board
+The controller board contains the ESP32 controller and the RTC as well as some electronics which can open the coil. The controller board is mounted inside the safe to ensure the firmware cannot be modified while the safe is locked. For the power supply of the controller a USB cable without data-pins should be used (either by disconnecting them or using a USB power cable). 
+
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_Controller_Board_Schematic.svg" width="66%"><img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_Controller_Board_Layout.svg" width="33%">
+
+The controller board can be easily soldered to a prototype PCB:
+
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/ControllerBoard.png" width="66%">
+
+The only SMD part is the MOSFET in its SOT23 housing which can be placed between 3 pads of the PCB.
 
 ## I/O module
-[](https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374)
+The I/O module is responsible for displaying the current state and is therefore mounted to the outside of the safe. It consists of:
+* HD44780 based LCD module
+* HD44780 to I2C converter
+* logic level converter
+* rotary encoder
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_IO_Module_Schematic.svg" width="66%">
 
+Everything is mounted to a 3D printed case. The STL file can be downloaded from https://github.com/hugo3132/EmlaLockSafe/raw/master/hardware/EmlaLockSafe_IO_Module_Case.7z. The case itself was created using the free version of onshape. If it should be modified you can use the following link https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374 and modify it to your own needs.
 
-Display Unit only for I/O
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/DisplayModule_Back.png" width="49%"><img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/DisplayModule_Front.png" width="49%">
 
-
-![Controller Board](https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_IO_Module_Schematic.svg)
-![](https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/DisplayModule_Back.png)
-![](https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/DisplayModule_Front.png)
-
-![](https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/ControllerBoard.png)
-![Controller Board](https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_Controller_Board_Schematic.svg)
-![Controller Board](https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_Controller_Board_Layout.svg)
-Controller Board (inside the safe)
-
+For the I/O module no PCB is required. Everything is directly soldered to each other or connected with some cables. 
 
 
 
