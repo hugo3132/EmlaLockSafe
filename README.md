@@ -1,6 +1,8 @@
 # EmlaLockSafe
 This project is about controlling a cheap digital safe from a local hardware store using the API of emlalock https://www.emlalock.com. The safe I've got is the following: https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628
 
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/complete.png" width="100%">
+
 # Contents
 - [Understanding the locking mechanism](#understanding-the-locking-mechanism)
 - [New electronics](#new-electronics)
@@ -38,6 +40,9 @@ The I/O module is responsible for displaying the current state and is therefore 
 * HD44780 to I2C converter
 * logic level converter
 * rotary encoder
+
+As shown in the first picture the module is glued to the safe. This is because the keyhole for the emergency key is below the I/O module.
+
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_IO_Module_Schematic.svg" width="66%">
 
 Everything is mounted to a 3D printed case. The STL file can be downloaded from https://github.com/hugo3132/EmlaLockSafe/raw/master/hardware/EmlaLockSafe_IO_Module_Case.7z. The case itself was created using the free version of onshape. If it should be modified you can use the following link https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374 and modify it to your own needs.
