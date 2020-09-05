@@ -52,11 +52,25 @@ Everything is mounted to a 3D printed case. The STL file can be downloaded from 
 For the I/O module no PCB is required. Everything is directly soldered to each other or connected with some cables. 
 
 
-
-# Software
 - [Software](#software)
+  * [Configuration](#configuration)
+  * [Unlock Key](#unlock-key)
   * [Manual mode](#manual-mode)
 TBD
+
+# Software
+
+doxygen
+
+## Configuration
+The software is configured by a file called *config.h*. Since the WiFi password must be entered into this file only a template version (*config_template.h*) of the file is commited. The template must be renamed to *config.h* and the following fields must be updated:
+ * **USER_ID**: The user ID used to communicate with the EmlaLock-API. The ID can be found if you log in to EmlaLock, navigate to *Settings > API*.
+ * **API_KEY**: The API key used to communicate with the EmlaLock-API. The key can be found if you log in to EmlaLock, navigate to *Settings > API*.
+ * **WIFI_SSID**: The name of your WiFi which should be used to connect to the EmlaLock API.
+ * **WIFI_PWD**: The password of your WiFi.
+ * **TIME_ZONE**: Your local time zone. Please check https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv to select the correct strign for your time zone.
+
+The other configuration parameters must only be modified in case the hardware schematics are modified. It is strongly recommended to use a LCD module with 20x4 characters because some views assume this size of the module and don't use the values defined in *config.h*.
 
 ## Unlock key
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/unlockkey.png" width="50%">
