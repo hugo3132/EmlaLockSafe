@@ -73,7 +73,6 @@ public:
     condVar.notify_all();
   }
 
-
 protected:
   /**
    * @brief The thread functions which is communicating asynchronously with the
@@ -116,6 +115,14 @@ protected:
               LockState::setTemperatureString(s);
             }
             LockState::setEndDate(std::numeric_limits<time_t>::max());
+          }
+
+          if (jsonDocument["chastitysession"]["incleaning"].as<int>() != 0) {
+            LockState::setCleaningEndDate(jsonDocument["chastitysession"]["cleaningstarted"].as<time_t>() +
+                                          jsonDocument["chastitysession"]["timeforcleaning"].as<time_t>());
+          }
+          else {
+            LockState::setCleaningEndDate(0);
           }
         }
         else {

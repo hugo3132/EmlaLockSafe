@@ -26,6 +26,7 @@ public:
     EmergencyMenu,
     EmlalockUnlockKeyMenu,
     HardwareTestView,
+    HygieneOpeningView,
     LockedView,
     PreferencesMenu,
     SelectDisplayTimeLeft,

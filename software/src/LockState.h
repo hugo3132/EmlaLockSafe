@@ -69,6 +69,13 @@ protected:
   
 protected:
   /**
+   * @brief end date of the current cleaning opening or 0 if not opened for
+   * cleaning. This value won't be saved to the flash!
+   */
+  time_t cleaningEndDate;
+
+protected:
+  /**
    * @brief time of the last update
    */
   time_t lastUpdateTime;
@@ -89,6 +96,7 @@ protected:
     , startDate(0)
     , endDate(0)
     , cachedEndDate(0)
+    , cleaningEndDate(0)
     , lastUpdateTime(0) {
     // load the data from the file system if available
     Tools::detachEncoderInterrupts();
@@ -253,6 +261,26 @@ public:
     std::unique_lock<std::mutex> lock(getSingleton().mtx);
     if (getSingleton().cachedEndDate != cachedEndDate) {
       getSingleton().cachedEndDate = cachedEndDate;
+    }
+  }
+
+public:
+  /**
+   * @brief Get the End Date of the current cleaning opening (or 0)
+   */
+  static const time_t& getCleaningEndDate() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    return getSingleton().cleaningEndDate;
+  }
+
+public:
+  /**
+   * @brief Set the End Date of the current cleaning opening
+   */
+  static void setCleaningEndDate(const time_t& cleaningEndDate) {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().cleaningEndDate != cleaningEndDate) {
+      getSingleton().cleaningEndDate = cleaningEndDate;
     }
   }
 

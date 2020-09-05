@@ -110,8 +110,9 @@ public:
     }
 
     // Should the safe be locked
-    if (LockState::getEndDate() > time(NULL)) {
+    if ((LockState::getEndDate() > time(NULL)) && (LockState::getCleaningEndDate() < time(NULL))) {
       digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
+      activatePreviousView();
       return;
     }
 
@@ -133,7 +134,7 @@ public:
     }
 
     // Check if the coil should be released after 10 seconds
-    if (millis() - coilActivationTime > 10000) {
+    if ((millis() - coilActivationTime > 10000) || (encoder->getNewClick())) {
       digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
       activatePreviousView();
     }

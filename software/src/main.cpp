@@ -14,6 +14,7 @@
 #include "views/EmergencyMenu.h"
 #include "views/EmlalockUnlockKeyMenu.h"
 #include "views/HardwareTestView.h"
+#include "views/HygieneOpeningView.h"
 #include "views/LockedView.h"
 #include "views/PreferencesMenu.h"
 #include "views/SelectDisplayTimeLeft.h"
@@ -44,6 +45,7 @@ views::EmergencyMenu emergencyMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_N
 views::EmlalockUnlockKeyMenu emlalockUnlockKeyMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::HardwareTestView hardwareTestView(&display, &encoder);
 views::LockedView lockedView(&display, &encoder);
+views::HygieneOpeningView hygieneOpeningView(&display, &encoder);
 views::PreferencesMenu preferencesMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::SelectDisplayTimeLeft selectDisplayTimeLeft(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::SelectDisplayTimePassed selectDisplayTimePassed(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
@@ -103,6 +105,7 @@ void setup() {
     ViewStore::addView(ViewStore::EmergencyMenu, emergencyMenu);
     ViewStore::addView(ViewStore::EmlalockUnlockKeyMenu, emlalockUnlockKeyMenu);
     ViewStore::addView(ViewStore::HardwareTestView, hardwareTestView);
+    ViewStore::addView(ViewStore::HygieneOpeningView, hygieneOpeningView);
     ViewStore::addView(ViewStore::LockedView, lockedView);
     ViewStore::addView(ViewStore::PreferencesMenu, preferencesMenu);
     ViewStore::addView(ViewStore::SelectDisplayTimeLeft, selectDisplayTimeLeft);
@@ -137,7 +140,7 @@ void setup() {
       return;
     }
   }
-  
+
   // Check if the RTC is reachable
   Wire.beginTransmission(DS3231_I2C_ADDR);
   if (Wire.endTransmission() == 0) {
@@ -170,14 +173,29 @@ void loop() {
 
   // check if the safe must be locked?
   if (LockState::getEndDate() > time(NULL)) {
-    // check if the locked view is active?
-    if ((lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::LockedView)) &&
-        (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterMenuView)) &&
-        (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyMenu)) &&
-        (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterKeyView)) &&
-        (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::WifiConnectingView))) {
-      // No activate it
-      views::ViewStore::activateView(views::ViewStore::LockedView);
+    // check if there is a hygiene opening
+    if (LockState::getCleaningEndDate() > time(NULL)) {
+      // check if the view is active?
+      if ((lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::HygieneOpeningView)) &&
+          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterMenuView)) &&
+          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyMenu)) &&
+          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterKeyView)) &&
+          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::UnlockSafeView)) &&
+          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::WifiConnectingView))) {
+        // No activate it
+        views::ViewStore::activateView(views::ViewStore::HygieneOpeningView);
+      }
+    }
+    else {
+      // check if the locked view is active?
+      if ((lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::LockedView)) &&
+          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterMenuView)) &&
+          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyMenu)) &&
+          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterKeyView)) &&
+          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::WifiConnectingView))) {
+        // No activate it
+        views::ViewStore::activateView(views::ViewStore::LockedView);
+      }
     }
   }
   else if (lcd::ViewBase::getCurrentView() == views::ViewStore::getView(views::ViewStore::LockedView)) {
