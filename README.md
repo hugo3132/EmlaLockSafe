@@ -8,9 +8,11 @@ This project is about controlling a cheap digital safe from a local hardware sto
 - [New electronics](#new-electronics)
   * [Controller board](#controller-board)
   * [I/O module](#io-module)
+- [Software Configuration](#software-configuration)
 - [Software](#software)
-  * [Configuration](#configuration)
-  * [Unlock Key](#unlock-key)
+  * [Example Views](#Example-Views)
+    * [EmlalockUnlockKeyMenu](#EmlalockUnlockKeyMenu)
+    * [LockedView](#LockedView)
   * [Manual mode](#manual-mode)
 
 # Understanding the locking mechanism
@@ -55,12 +57,7 @@ Everything is mounted to a 3D printed case. The STL file can be downloaded from 
 
 For the I/O module no PCB is required. Everything is directly soldered to each other or connected with some cables. 
 
-
-# Software
-
-doxygen
-
-## Configuration
+# Software Configuration
 The software is configured by a file called *config.h*. Since the WiFi password must be entered into this file only a template version (*config_template.h*) of the file is commited. The template must be renamed to *config.h* and the following fields must be updated:
  * **USER_ID**: The user ID used to communicate with the EmlaLock-API. The ID can be found if you log in to EmlaLock, navigate to *Settings > API*.
  * **API_KEY**: The API key used to communicate with the EmlaLock-API. The key can be found if you log in to EmlaLock, navigate to *Settings > API*.
@@ -70,10 +67,22 @@ The software is configured by a file called *config.h*. Since the WiFi password 
 
 The other configuration parameters must only be modified in case the hardware schematics are modified. It is strongly recommended to use a LCD module with 20x4 characters because some views assume this size of the module and don't use the values defined in *config.h*.
 
-## Unlock key
-<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/unlockkey.png" width="50%">
+# Software
+
+--> Based on views,
+--> Views are global and can be accessed over the [ViewStore](https://github.com/hugo3132/EmlaLockSafe/blob/master/software/src/views/ViewStore.h)
+--> Menus are a specialization of a view
+
+--> Meaning unlock key [EmlalockUnlockKeyMenu](#EmlalockUnlockKeyMenu)
 
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/EmlalockSafe.vpd.svg" width="100%">
+
+## Example Views
+### EmlalockUnlockKeyMenu
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/EmlalockUnlockKeyMenu.png" width="50%">
+### LockedView
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/LockedView.png" width="50%">
+
 
 ## Manual mode
 TBD
