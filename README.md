@@ -81,7 +81,7 @@ The other configuration parameters must only be modified in case the hardware sc
 ### EmlalockUnlockKeyMenu
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/EmlalockUnlockKeyMenu.png" width="50%">
 ### LockedView
-<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/LockedView.png" width="50%">
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/LockedView.png" width="100%">
 
 
 ## Manual mode
