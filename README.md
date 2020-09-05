@@ -1,7 +1,7 @@
 # EmlaLockSafe
 This project is about controlling a cheap digital safe from a local hardware store using the API of emlalock https://www.emlalock.com. The safe I've got is the following: https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628
 
-<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/complete.png" width="50%">
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/complete.png" width="100%">
 
 # Contents
 - [Understanding the locking mechanism](#understanding-the-locking-mechanism)
