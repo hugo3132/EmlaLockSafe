@@ -8,6 +8,10 @@ This project is about controlling a cheap digital safe from a local hardware sto
 - [New electronics](#new-electronics)
   * [Controller board](#controller-board)
   * [I/O module](#io-module)
+- [Software](#software)
+  * [Configuration](#configuration)
+  * [Unlock Key](#unlock-key)
+  * [Manual mode](#manual-mode)
 
 # Understanding the locking mechanism
 As described above, I've used a cheap safe from a local hardware store. But any cheap safe should do the trick as long as it can be electronically unlocked and easily disassembled. After removing the cover on the inside of the safe, the original electronics board can be removed and the mechanism looks as follows:
@@ -51,12 +55,6 @@ Everything is mounted to a 3D printed case. The STL file can be downloaded from 
 
 For the I/O module no PCB is required. Everything is directly soldered to each other or connected with some cables. 
 
-
-- [Software](#software)
-  * [Configuration](#configuration)
-  * [Unlock Key](#unlock-key)
-  * [Manual mode](#manual-mode)
-TBD
 
 # Software
 
