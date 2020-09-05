@@ -78,8 +78,10 @@ The other configuration parameters must only be modified in case the hardware sc
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/EmlalockSafe.vpd.svg" width="100%">
 
 ## Example Views
+
 ### EmlalockUnlockKeyMenu
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/EmlalockUnlockKeyMenu.png" width="50%">
+
 ### LockedView
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/LockedView.png" width="100%">
 
