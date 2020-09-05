@@ -73,6 +73,7 @@ The other configuration parameters must only be modified in case the hardware sc
 ## Unlock key
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/unlockkey.png" width="50%">
 
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/EmlalockSafe.vpd.svg" width="100%">
 
 ## Manual mode
 TBD
