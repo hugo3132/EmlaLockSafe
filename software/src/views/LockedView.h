@@ -33,6 +33,7 @@ public:
    * @brief Construct the locked view
    *
    * @param display pointer to the LCD instance
+   * @param encoder pointer to the encoder instance
    */
   LockedView(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder)
     : lcd::ViewBase(display, "LockedView")
