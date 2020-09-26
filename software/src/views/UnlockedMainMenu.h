@@ -60,6 +60,9 @@ protected:
       createMenuItem("Preferences", [](MenuItem*) {
         ViewStore::activateView(ViewStore::PreferencesMenu);
       });
+      createMenuItem("Hardware Test View", [](MenuItem*) {
+        ViewStore::activateView(ViewStore::HardwareTestView);
+      });
     }
     lcd::MenuView::activate();
   }

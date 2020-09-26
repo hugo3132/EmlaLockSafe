@@ -7,48 +7,54 @@
 #include "../LockState.h"
 #include "ViewStore.h"
 
-#include <RotaryEncoder.h>
-#include <ViewBase.h>
+#include <MenuView.h>
 
 namespace views {
 /**
  * @brief View used when the safe is unlocked for a hygiene opening
  */
-class HygieneOpeningView : public lcd::ViewBase {
-protected:
-  /**
-   * @brief pointer to the encoder instance
-   */
-  RotaryEncoder* encoder;
-
+class HygieneOpeningMenu : public lcd::MenuView {
 public:
   /**
-   * @brief Construct the locked view
+   * @brief Construct a new hygiene opening menu object
    *
-   * @param display pointer to the LCD instance
+   * @param display pointer to the display instance
+   * @param encoder pointer to the encoder instance
+   * @param numberOfColumns number of display-columns
+   * @param numberOfRows number of display-rows
    */
-  HygieneOpeningView(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder)
-    : lcd::ViewBase(display, "HygieneOpeningView")
-    , encoder(encoder) {}
+  HygieneOpeningMenu(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder, const int& numberOfColumns, const int& numberOfRows)
+    : lcd::MenuView(display, "HygieneOpeningMenu", encoder, "Hygiene Opening", numberOfColumns, numberOfRows) {}
 
 public:
   /**
    * @brief Copy constructor - not available
    */
-  HygieneOpeningView(const HygieneOpeningView& other) = delete;
+  HygieneOpeningMenu(const HygieneOpeningMenu& other) = delete;
 
 public:
   /**
    * @brief Move constructor
    */
-  HygieneOpeningView(HygieneOpeningView&& other) noexcept = delete;
+  HygieneOpeningMenu(HygieneOpeningMenu&& other) noexcept = delete;
 
 protected:
   /**
    * @brief called as soon as the view becomes active
    */
   virtual void activate() {
-    tick(true);
+    // is this the first time activate is called?
+    if (menuItems.empty()) {
+      // create menu items
+      createMenuItem("Open Safe", [](MenuItem*) {
+        ViewStore::activateView(ViewStore::UnlockSafeView);
+      });
+      createMenuItem("Emlalock Unlock Key", [](MenuItem*) {
+        ViewStore::activateView(ViewStore::EmlalockUnlockKeyMenu);
+      });
+      createMenuItem("Time Left: 00:00:00", [](MenuItem*) {});
+    }
+    lcd::MenuView::activate();
   }
 
 public:
@@ -58,6 +64,9 @@ public:
    * @param forceRedraw if true everything should be redrawn
    */
   virtual void tick(const bool& forceRedraw) {
+    // updated the view of the menu
+    lcd::MenuView::tick(forceRedraw);
+
     auto direction = encoder->getDirection();
     auto click = encoder->getNewClick();
     char buf[21];
@@ -68,24 +77,6 @@ public:
       }
     }
     getBacklightTimeoutManager().tick(display);
-
-    // click unlocks the coil
-    if (click) {
-      ViewStore::activateView(ViewStore::UnlockSafeView);
-    }
-
-    // Stuff which never changes
-    if (forceRedraw) {
-      display->clear();
-      display->setCursor(0, 0);
-      display->print("Hygiene Opening");
-
-      display->setCursor(0, 1);
-      display->print("Time Left:  **:**:**");
-
-      display->setCursor(0, 3);
-      display->print("Click to open safe!");
-    }
 
     // should the time left be displayed? If yes, how
     static time_t lastDisplayedTime = 0;
@@ -101,9 +92,12 @@ public:
       timeLeft = timeLeft / 60;
       int hour = timeLeft;
 
-      sprintf(buf, "Time Left:  %02d:%02d:%02d", hour, min, sec);
-      display->setCursor(0, 1);
-      display->print(buf);
+      sprintf(buf, "Time Left: %02d:%02d:%02d", hour, min, sec);
+
+      menuItems.back().setText(buf);
+
+      //   display->setCursor(0, 1);
+      //   display->print(buf);
     }
   }
 };

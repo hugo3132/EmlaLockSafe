@@ -12,7 +12,7 @@
 #include <WiFiClientSecure.h>
 #include <chrono>
 #include <condition_variable>
-#include <esp32/Thread.h>
+#include <Thread.h>
 #include <limits>
 #include <mutex>
 

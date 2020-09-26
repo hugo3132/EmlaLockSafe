@@ -14,7 +14,7 @@
 #include "views/EmergencyMenu.h"
 #include "views/EmlalockUnlockKeyMenu.h"
 #include "views/HardwareTestView.h"
-#include "views/HygieneOpeningView.h"
+#include "views/HygieneOpeningMenu.h"
 #include "views/LockedView.h"
 #include "views/PreferencesMenu.h"
 #include "views/SelectDisplayTimeLeft.h"
@@ -31,7 +31,7 @@
 #include <WiFiClientSecure.h>
 #include <Wire.h>
 #include <ds3231.h>
-#include <esp32/Thread.h>
+#include <Thread.h>
 #include <string>
 #include <sys/time.h>
 
@@ -45,7 +45,7 @@ views::EmergencyMenu emergencyMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_N
 views::EmlalockUnlockKeyMenu emlalockUnlockKeyMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::HardwareTestView hardwareTestView(&display, &encoder);
 views::LockedView lockedView(&display, &encoder);
-views::HygieneOpeningView hygieneOpeningView(&display, &encoder);
+views::HygieneOpeningMenu hygieneOpeningMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::PreferencesMenu preferencesMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::SelectDisplayTimeLeft selectDisplayTimeLeft(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::SelectDisplayTimePassed selectDisplayTimePassed(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
@@ -105,7 +105,7 @@ void setup() {
     ViewStore::addView(ViewStore::EmergencyMenu, emergencyMenu);
     ViewStore::addView(ViewStore::EmlalockUnlockKeyMenu, emlalockUnlockKeyMenu);
     ViewStore::addView(ViewStore::HardwareTestView, hardwareTestView);
-    ViewStore::addView(ViewStore::HygieneOpeningView, hygieneOpeningView);
+    ViewStore::addView(ViewStore::HygieneOpeningMenu, hygieneOpeningMenu);
     ViewStore::addView(ViewStore::LockedView, lockedView);
     ViewStore::addView(ViewStore::PreferencesMenu, preferencesMenu);
     ViewStore::addView(ViewStore::SelectDisplayTimeLeft, selectDisplayTimeLeft);
@@ -175,15 +175,21 @@ void loop() {
   if (LockState::getEndDate() > time(NULL)) {
     // check if there is a hygiene opening
     if (LockState::getCleaningEndDate() > time(NULL)) {
-      // check if the view is active?
-      if ((lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::HygieneOpeningView)) &&
-          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterMenuView)) &&
-          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyMenu)) &&
-          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterKeyView)) &&
-          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::UnlockSafeView)) &&
-          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::WifiConnectingView))) {
-        // No activate it
-        views::ViewStore::activateView(views::ViewStore::HygieneOpeningView);
+      // Hygiene Opening is currently active
+      const lcd::ViewBase* view = lcd::ViewBase::getCurrentView();
+
+      // go through all previous views and look if it can be traced back to the
+      // hygiene menu
+      while (view && (view != views::ViewStore::getView(views::ViewStore::HygieneOpeningMenu))) {
+        view = view->getPreviousView();
+      }
+
+      // if the current view does not originate from the view based on the
+      // hygiene menu, activate the menu
+      if (view != views::ViewStore::getView(views::ViewStore::HygieneOpeningMenu)) {
+        // ensure there is no back from the menu
+        lcd::ViewBase::activateView(nullptr);
+        views::ViewStore::activateView(views::ViewStore::HygieneOpeningMenu);
       }
     }
     else {
