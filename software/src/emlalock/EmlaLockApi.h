@@ -9,10 +9,10 @@
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
+#include <Thread.h>
 #include <WiFiClientSecure.h>
 #include <chrono>
 #include <condition_variable>
-#include <Thread.h>
 #include <limits>
 #include <mutex>
 
@@ -35,18 +35,41 @@ protected:
   StaticJsonDocument<10000> jsonDocument;
 
 protected:
+  /**
+   * @brief Mutex used to ensure thread safety of the API
+   */
   std::mutex mtx;
-  bool triggered;
+
+protected:
+  /**
+   * @brief Condition variable to which can be triggered to immediately request
+   * the status of the EmlaLock Session
+   */
   std::condition_variable condVar;
+
+protected:
+  /**
+   * @brief Helper variable to detect spurious wakeups of thread.
+   */
+  bool triggered;
+
+protected:
+  /**
+   * @brief If true the thread requesting data from emlalock won't be started.
+   */
+  bool offlineMode;
 
 public:
   /**
    * @brief Get the singleton instance of the API handler
+   *
+   * @param offlineMode if true the thread requesting data from emlalock won't
+   * be started.
    */
-  static EmlaLockApi& getSingleton() {
+  static EmlaLockApi& getSingleton(bool offlineMode = false) {
     static EmlaLockApi* instance = nullptr;
     if (!instance) {
-      instance = new EmlaLockApi();
+      instance = new EmlaLockApi(offlineMode);
     }
 
     return *instance;
@@ -56,9 +79,20 @@ protected:
   /**
    * @brief Construct a new EmlaLock Api Object. Use the singleton EmlaLock or
    * getInstance() instead of creating new objects.
+   *
+   * @param offlineMode if true the thread requesting data from emlalock won't
+   * be started.
    */
-  EmlaLockApi() {
-    esp32::Thread::create("ElmaApiThread", 8192, 1, 1, *this, &EmlaLockApi::threadFunction);
+  EmlaLockApi(bool offlineMode)
+    : triggered(true)
+    , offlineMode(offlineMode) {
+    if (offlineMode) {
+      Serial.println("Starting EmlaLock API in offline mode..");
+    }
+    else {
+      Serial.println("Starting EmlaLock API in online mode..");
+      esp32::Thread::create("ElmaApiThread", 8192, 1, 1, *this, &EmlaLockApi::threadFunction);
+    }
   }
 
 public:
@@ -68,9 +102,14 @@ public:
    */
   void triggerRefresh() {
     std::unique_lock<std::mutex> lock(mtx);
-    triggered = true;
-    lock.unlock();
-    condVar.notify_all();
+    if (offlineMode) {
+      LockState::setLastUpdateTime(time(NULL));
+    }
+    else {
+      triggered = true;
+      lock.unlock();
+      condVar.notify_all();
+    }
   }
 
 protected:
@@ -78,7 +117,6 @@ protected:
    * @brief The thread functions which is communicating asynchronously with the
    * Emlalock API
    */
-
   void threadFunction() {
     // This thread runs forever
     std::unique_lock<std::mutex> lock(mtx);
@@ -89,8 +127,15 @@ protected:
       }); // use lambda to avoid spurious wakeups
       triggered = false;
 
+      // ensure we are not in the manual mode!
+      if ((LockState::getEndDate() > time(NULL)) && (LockState::getMode() == LockState::Mode::manual)) {
+        continue;
+      }
+      else {
+        LockState::setMode(LockState::Mode::emlalock);
+      }
+
       if (requestUrl(String("/info/?userid=") + USER_ID + "&apikey=" + API_KEY)) {
-        Serial.println("Parsing JSON.");
         if (jsonDocument["chastitysession"].size() != 0) {
           LockState::setDisplayTimePassed(
             (LockState::DisplayTimePassed)jsonDocument["chastitysession"]["displaymode"]["timepassed"].as<int>());
