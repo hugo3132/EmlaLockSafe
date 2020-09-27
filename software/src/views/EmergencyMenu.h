@@ -51,6 +51,14 @@ protected:
       createMenuItem("Start Wifi", [this](MenuItem*) {
         ViewStore::activateView(ViewStore::WifiConnectingView);
       });
+      createMenuItem("Offline Mode", [this](MenuItem*) {
+        if (LockState::getEndDate() > time(NULL)) {
+          views::ViewStore::activateView(views::ViewStore::LockedView);
+        }
+        else {
+          views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
+        }
+      });
     }
     lcd::MenuView::activate();
   }

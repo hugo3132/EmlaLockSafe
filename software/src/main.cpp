@@ -28,10 +28,10 @@
 #include <LiquidCrystal_PCF8574.h>
 #include <RotaryEncoder.h>
 #include <SPIFFS.h>
+#include <Thread.h>
 #include <WiFiClientSecure.h>
 #include <Wire.h>
 #include <ds3231.h>
-#include <Thread.h>
 #include <string>
 #include <sys/time.h>
 
@@ -127,8 +127,18 @@ void setup() {
   // Check if we need to go to the emergency menu
   encoder.tick();
   if (encoder.getSwitchState()) {
+    // Check if the RTC is reachable
+    Wire.beginTransmission(DS3231_I2C_ADDR);
+    if (Wire.endTransmission() == 0) {
+      Serial.println("Real-time Clock found.");
+      RealTimeClock::loadTimeFromRtc();
+    }
+    else {
+      Serial.println("Real-time Clock not found.");
+    }
+    
+    // Show animation to keep button pressed
     views::ViewStore::activateView(views::ViewStore::EmergencyEnterMenuView);
-
     for (int i = 0; (i < 20 && encoder.getSwitchState()); i++) {
       lcd::ViewBase::getCurrentView()->tick(false);
       delay(100);
@@ -136,6 +146,10 @@ void setup() {
 
     encoder.getNewClick(); // otherwise we have some problem that a click is pending
     if (encoder.getSwitchState()) {
+      // Set API to offline mode
+      emlalock::EmlaLockApi::getSingleton(true);
+
+      // show offline menu
       views::ViewStore::activateView(views::ViewStore::EmergencyMenu);
       return;
     }
@@ -155,18 +169,26 @@ void setup() {
   // Start connecting to WIFI
   views::ViewStore::activateView(views::ViewStore::WifiConnectingView);
 
-  // Start normal operation
-  views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
+  // Check if the safe should be locked
+  if (LockState::getEndDate() > time(NULL)) {
+    views::ViewStore::activateView(views::ViewStore::LockedView);
+  }
+  else {
+    views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
+  }
 
-  // start emlalock api
-  emlalock::EmlaLockApi::getSingleton().triggerRefresh();
+  Serial.println("EndofSetup.");
 }
 
 /**
  * @brief Loop function
  */
 void loop() {
+  //   Serial.println("Tick.");
   static time_t nextRtcUpdate = time(NULL) + 120;
+
+  // start emlalock api if necessary
+  emlalock::EmlaLockApi::getSingleton();
 
   // tick for the encoder if the interrupt didn't properly trigger
   encoder.tick();
@@ -206,6 +228,7 @@ void loop() {
   }
   else if (lcd::ViewBase::getCurrentView() == views::ViewStore::getView(views::ViewStore::LockedView)) {
     // the locked view is active but no longer required...
+    emlalock::EmlaLockApi::getSingleton().triggerRefresh();
     views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
   }
 
