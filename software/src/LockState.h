@@ -18,23 +18,44 @@
  * Access to this class is thread-safe
  */
 class LockState {
+#pragma region Enums
+public:
+  /**
+   * @brief Enum basetype used for saving to the flash
+   */
+  using enumBaseType = uint8_t;
+
+public:
+  /**
+   * @brief Current mode of the safe
+   */
+  enum class Mode : enumBaseType { emlalock = 0, manual = 1 };
+
 public:
   /**
    * @brief States for the selection how the passed time should be displayed
    */
-  enum class DisplayTimePassed { no = 0, yes = 1 };
+  enum class DisplayTimePassed : enumBaseType { no = 0, yes = 1 };
 
 public:
   /**
    * @brief States for the selection how the time left should be displayed
    */
-  enum class DisplayTimeLeft { no = 0, yes = 1, temperature = 2, timeWithPenalty = 3, timeWithRandomPenalty = 4 };
+  enum class DisplayTimeLeft : enumBaseType { no = 0, yes = 1, temperature = 2, timeWithPenalty = 3, timeWithRandomPenalty = 4 };
+#pragma endregion
 
 protected:
   /**
    * @brief mutex used to synchronize the data access
    */
   std::mutex mtx;
+
+#pragma region Members stored on Flash
+protected:
+  /**
+   * @brief The mode
+   */
+  Mode mode;
 
 protected:
   /**
@@ -62,11 +83,18 @@ protected:
 
 protected:
   /**
+   * @brief temperature string
+   */
+  String temperatureString;
+#pragma endregion
+
+protected:
+  /**
    * @brief chache for the end date of the session which is currently
    * configured. This value won't be saved to the flash!
    */
   time_t cachedEndDate;
-  
+
 protected:
   /**
    * @brief end date of the current cleaning opening or 0 if not opened for
@@ -80,34 +108,51 @@ protected:
    */
   time_t lastUpdateTime;
 
-protected:
-  /**
-   * @brief temperature string
-   */
-  String temperatureString;
-
+#pragma region singleton
 protected:
   /**
    * @brief Constructs the lock state by trying to reading the state from flash
    */
   LockState()
-    : displayTimePassed(DisplayTimePassed::yes)
+    : mode(Mode::emlalock)
+    , displayTimePassed(DisplayTimePassed::yes)
     , displayTimeLeft(DisplayTimeLeft::yes)
     , startDate(0)
     , endDate(0)
     , cachedEndDate(0)
     , cleaningEndDate(0)
     , lastUpdateTime(0) {
+    loadData();
+  }
+
+protected:
+  /**
+   * @brief Get the singleton instance
+   */
+  static LockState& getSingleton() {
+    static LockState lockState;
+    return lockState;
+  }
+#pragma endregion
+
+#pragma region Flash Access Functions
+protected:
+  /**
+   * @brief Loads the current state of the object to the flash
+   */
+  void loadData() {
     // load the data from the file system if available
+    Serial.println("Loading lockState");
     Tools::detachEncoderInterrupts();
     File file = SPIFFS.open("/lockSt.bin", "r");
     if (!file) {
+      Serial.println("Loading lockState failed");
       Tools::attachEncoderInterrupts();
       return;
     }
 
     // read everything to a buffer
-    constexpr auto numberOfBytes = sizeof(DisplayTimePassed) + sizeof(DisplayTimeLeft) + 2 * sizeof(time_t);
+    constexpr auto numberOfBytes = sizeof(Mode) + sizeof(DisplayTimePassed) + sizeof(DisplayTimeLeft) + 2 * sizeof(time_t);
     char buf[numberOfBytes];
     auto readOk = file.readBytes(buf, numberOfBytes) == numberOfBytes;
     if (readOk) {
@@ -120,6 +165,8 @@ protected:
     if (readOk) {
       // copy the data from the buffer to the actual variables
       char* src = buf;
+      memcpy(&mode, src, sizeof(Mode));
+      src += sizeof(Mode);
       memcpy(&displayTimePassed, src, sizeof(DisplayTimePassed));
       src += sizeof(DisplayTimePassed);
       memcpy(&displayTimeLeft, src, sizeof(DisplayTimeLeft));
@@ -128,6 +175,8 @@ protected:
       src += sizeof(time_t);
       memcpy(&endDate, src, sizeof(time_t));
     }
+
+    Serial.println("Loaded lockState");
   }
 
 protected:
@@ -135,6 +184,7 @@ protected:
    * @brief Saves the current state of the object to the flash
    */
   void saveData() {
+    Serial.println("Saving lockState");
     Tools::detachEncoderInterrupts();
     File file = SPIFFS.open("/lockSt.bin", "w");
     if (!file) {
@@ -142,6 +192,7 @@ protected:
       return;
     }
 
+    file.write((uint8_t*)&mode, sizeof(DisplayTimePassed));
     file.write((uint8_t*)&displayTimePassed, sizeof(DisplayTimePassed));
     file.write((uint8_t*)&displayTimeLeft, sizeof(DisplayTimeLeft));
     file.write((uint8_t*)&startDate, sizeof(time_t));
@@ -149,17 +200,36 @@ protected:
     file.write((uint8_t*)temperatureString.c_str(), temperatureString.length());
     file.close();
     Tools::attachEncoderInterrupts();
-  }
 
-protected:
+    Serial.println("Saved lockState");
+  }
+#pragma endregion
+
+#pragma region getter / setter
+#pragma region mode
+public:
   /**
-   * @brief Get the singleton instance
+   * @brief Get the mode
    */
-  static LockState& getSingleton() {
-    static LockState lockState;
-    return lockState;
+  static const Mode& getMode() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    return getSingleton().mode;
   }
 
+public:
+  /**
+   * @brief Set the mode
+   */
+  static void setMode(const Mode& mode) {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().mode != mode) {
+      getSingleton().mode = mode;
+      getSingleton().saveData();
+    }
+  }
+#pragma endregion
+
+#pragma region displayTimePassed
 public:
   /**
    * @brief Get how the time passed should be displayed
@@ -180,7 +250,9 @@ public:
       getSingleton().saveData();
     }
   }
+#pragma endregion
 
+#pragma region displayTimeLeft
 public:
   /**
    * @brief Get how the time left should be displayed
@@ -201,7 +273,9 @@ public:
       getSingleton().saveData();
     }
   }
+#pragma endregion
 
+#pragma region startDate
 public:
   /**
    * @brief Get the Start Date
@@ -222,7 +296,9 @@ public:
       getSingleton().saveData();
     }
   }
+#pragma endregion
 
+#pragma region endDate
 public:
   /**
    * @brief Get the End Date
@@ -243,67 +319,9 @@ public:
       getSingleton().saveData();
     }
   }
+#pragma endregion
 
-public:
-  /**
-   * @brief Get the Cached End Date
-   */
-  static const time_t& getCachedEndDate() {
-    std::unique_lock<std::mutex> lock(getSingleton().mtx);
-    return getSingleton().cachedEndDate;
-  }
-
-public:
-  /**
-   * @brief Set the Cached End Date
-   */
-  static void setCachedEndDate(const time_t& cachedEndDate) {
-    std::unique_lock<std::mutex> lock(getSingleton().mtx);
-    if (getSingleton().cachedEndDate != cachedEndDate) {
-      getSingleton().cachedEndDate = cachedEndDate;
-    }
-  }
-
-public:
-  /**
-   * @brief Get the End Date of the current cleaning opening (or 0)
-   */
-  static const time_t& getCleaningEndDate() {
-    std::unique_lock<std::mutex> lock(getSingleton().mtx);
-    return getSingleton().cleaningEndDate;
-  }
-
-public:
-  /**
-   * @brief Set the End Date of the current cleaning opening
-   */
-  static void setCleaningEndDate(const time_t& cleaningEndDate) {
-    std::unique_lock<std::mutex> lock(getSingleton().mtx);
-    if (getSingleton().cleaningEndDate != cleaningEndDate) {
-      getSingleton().cleaningEndDate = cleaningEndDate;
-    }
-  }
-
-public:
-  /**
-   * @brief Get the time of the last update over the emlalock api
-   */
-  static const time_t& getLastUpdateTime() {
-    std::unique_lock<std::mutex> lock(getSingleton().mtx);
-    return getSingleton().lastUpdateTime;
-  }
-
-public:
-  /**
-   * @brief Set the time of the last update over the emlalock api
-   */
-  static void setLastUpdateTime(const time_t& lastUpdateTime) {
-    std::unique_lock<std::mutex> lock(getSingleton().mtx);
-    if (getSingleton().lastUpdateTime != lastUpdateTime) {
-      getSingleton().lastUpdateTime = lastUpdateTime;
-    }
-  }
-
+#pragma region temperatureString
 public:
   /**
    * @brief Get the temperature string
@@ -324,5 +342,73 @@ public:
       getSingleton().saveData();
     }
   }
-  
+#pragma endregion
+
+#pragma region cachedEndDate
+public:
+  /**
+   * @brief Get the Cached End Date
+   */
+  static const time_t& getCachedEndDate() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    return getSingleton().cachedEndDate;
+  }
+
+public:
+  /**
+   * @brief Set the Cached End Date
+   */
+  static void setCachedEndDate(const time_t& cachedEndDate) {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().cachedEndDate != cachedEndDate) {
+      getSingleton().cachedEndDate = cachedEndDate;
+    }
+  }
+#pragma endregion
+
+#pragma region cleaningEndDate
+public:
+  /**
+   * @brief Get the End Date of the current cleaning opening (or 0)
+   */
+  static const time_t& getCleaningEndDate() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    return getSingleton().cleaningEndDate;
+  }
+
+public:
+  /**
+   * @brief Set the End Date of the current cleaning opening
+   */
+  static void setCleaningEndDate(const time_t& cleaningEndDate) {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().cleaningEndDate != cleaningEndDate) {
+      getSingleton().cleaningEndDate = cleaningEndDate;
+    }
+  }
+#pragma endregion
+
+#pragma region lastUpdateTime
+public:
+  /**
+   * @brief Get the time of the last update over the emlalock api
+   */
+  static const time_t& getLastUpdateTime() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    return getSingleton().lastUpdateTime;
+  }
+
+public:
+  /**
+   * @brief Set the time of the last update over the emlalock api
+   */
+  static void setLastUpdateTime(const time_t& lastUpdateTime) {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().lastUpdateTime != lastUpdateTime) {
+      getSingleton().lastUpdateTime = lastUpdateTime;
+    }
+  }
+#pragma endregion
+
+#pragma endregion
 };
