@@ -53,6 +53,7 @@ protected:
         LockState::setDisplayTimeLeft(LockState::DisplayTimeLeft::yes);
         LockState::setStartDate(time(NULL));
         LockState::setTemperatureString("");
+        LockState::setMode(LockState::Mode::manual);
         LockState::setEndDate(LockState::getCachedEndDate());
       });
 
@@ -60,6 +61,7 @@ protected:
         LockState::setDisplayTimeLeft(LockState::DisplayTimeLeft::no);
         LockState::setStartDate(time(NULL));
         LockState::setTemperatureString("");
+        LockState::setMode(LockState::Mode::manual);
         LockState::setEndDate(LockState::getCachedEndDate());
       });
 
@@ -67,6 +69,7 @@ protected:
         LockState::setDisplayTimeLeft(LockState::DisplayTimeLeft::temperature);
         LockState::setStartDate(time(NULL));
         LockState::setTemperatureString(""); // Automatically generated!
+        LockState::setMode(LockState::Mode::manual);
         LockState::setEndDate(LockState::getCachedEndDate());
       });
 
