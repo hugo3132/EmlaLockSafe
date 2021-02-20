@@ -86,6 +86,13 @@ protected:
    * @brief temperature string
    */
   String temperatureString;
+
+protected:
+  /**
+   * @brief The number of failed session
+   */
+  uint32_t numberOfFailedSessions;
+
 #pragma endregion
 
 protected:
@@ -119,6 +126,7 @@ protected:
     , displayTimeLeft(DisplayTimeLeft::yes)
     , startDate(0)
     , endDate(0)
+    , numberOfFailedSessions(0)
     , cachedEndDate(0)
     , cleaningEndDate(0)
     , lastUpdateTime(0) {
@@ -152,7 +160,8 @@ protected:
     }
 
     // read everything to a buffer
-    constexpr auto numberOfBytes = sizeof(Mode) + sizeof(DisplayTimePassed) + sizeof(DisplayTimeLeft) + 2 * sizeof(time_t);
+    constexpr auto numberOfBytes = sizeof(Mode) + sizeof(DisplayTimePassed) + sizeof(DisplayTimeLeft) + 2 * sizeof(time_t) +
+                                   sizeof(uint32_t);
     char buf[numberOfBytes];
     auto readOk = file.readBytes(buf, numberOfBytes) == numberOfBytes;
     if (readOk) {
@@ -167,16 +176,22 @@ protected:
       char* src = buf;
       memcpy(&mode, src, sizeof(Mode));
       src += sizeof(Mode);
+
       memcpy(&displayTimePassed, src, sizeof(DisplayTimePassed));
       src += sizeof(DisplayTimePassed);
+
       memcpy(&displayTimeLeft, src, sizeof(DisplayTimeLeft));
       src += sizeof(DisplayTimeLeft);
+
       memcpy(&startDate, src, sizeof(time_t));
       src += sizeof(time_t);
-      memcpy(&endDate, src, sizeof(time_t));
-    }
 
-    Serial.println("Loaded lockState");
+      memcpy(&endDate, src, sizeof(time_t));
+      src += sizeof(time_t);
+
+      memcpy(&numberOfFailedSessions, src, sizeof(uint32_t));
+      src += sizeof(uint32_t);
+    }
   }
 
 protected:
@@ -197,6 +212,7 @@ protected:
     file.write((uint8_t*)&displayTimeLeft, sizeof(DisplayTimeLeft));
     file.write((uint8_t*)&startDate, sizeof(time_t));
     file.write((uint8_t*)&endDate, sizeof(time_t));
+    file.write((uint8_t*)&numberOfFailedSessions, sizeof(uint32_t));
     file.write((uint8_t*)temperatureString.c_str(), temperatureString.length());
     file.close();
     Tools::attachEncoderInterrupts();
@@ -316,6 +332,29 @@ public:
     std::unique_lock<std::mutex> lock(getSingleton().mtx);
     if (getSingleton().endDate != endDate) {
       getSingleton().endDate = endDate;
+      getSingleton().saveData();
+    }
+  }
+#pragma endregion
+
+#pragma region numberOfFailedSessions
+public:
+  /**
+   * @brief Get the number of failed sessions
+   */
+  static const uint32_t& getNumberOfFailedSessions() {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    return getSingleton().numberOfFailedSessions;
+  }
+
+public:
+  /**
+   * @brief Set the number of failed sessions
+   */
+  static void setNumberOfFailedSessions(const uint32_t& numberOfFailedSessions) {
+    std::unique_lock<std::mutex> lock(getSingleton().mtx);
+    if (getSingleton().numberOfFailedSessions != numberOfFailedSessions) {
+      getSingleton().numberOfFailedSessions = numberOfFailedSessions;
       getSingleton().saveData();
     }
   }

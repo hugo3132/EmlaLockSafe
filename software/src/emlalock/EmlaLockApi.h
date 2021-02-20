@@ -136,6 +136,20 @@ protected:
       }
 
       if (requestUrl(String("/info/?userid=") + USER_ID + "&apikey=" + API_KEY)) {
+        uint32_t numberOfFailedSessionOld = LockState::getNumberOfFailedSessions();
+        uint32_t numberOfFailedSessionNew = jsonDocument["user"]["failedsessions"].as<uint32_t>();
+        if (numberOfFailedSessionOld != numberOfFailedSessionNew) {
+          LockState::setNumberOfFailedSessions(numberOfFailedSessionNew);
+          // Check if a session with an known end date was aborted:
+          if ((LockState::getMode() == LockState::Mode::emlalock) && (LockState::getEndDate() != 0)) {
+            // that's not allowed if this happened during an active
+            // emlalock-session! Switch to manual mode with the last known end-time
+            Serial.println("Abort rejected");
+            LockState::setMode(LockState::Mode::manual);
+            return;
+          }
+        }
+
         if (jsonDocument["chastitysession"].size() != 0) {
           LockState::setDisplayTimePassed(
             (LockState::DisplayTimePassed)jsonDocument["chastitysession"]["displaymode"]["timepassed"].as<int>());
