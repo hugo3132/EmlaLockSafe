@@ -6,6 +6,8 @@
 
 #pragma once
 #include "../config.h"
+#define ARDUINOJSON_USE_LONG_LONG 1
+#define ARDUINOJSON_DECODE_UNICODE 1
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
@@ -207,7 +209,13 @@ protected:
   bool requestUrl(const String& url) {
     WiFiClientSecure client;
 
+    Serial.print("Host: https://");
+    Serial.print(host);
+    Serial.print("/");
+    Serial.println(url);
+
     // connect to server
+    client.setInsecure();
     client.connect(host.c_str(), 443);
     if (!client.connected()) {
       Serial.println("Connection failed!");
@@ -242,7 +250,16 @@ protected:
     }
 
     // update json doc
-    DeserializationError error = deserializeJson(jsonDocument, client);
+    String data = client.readString();
+    int idx = data.indexOf('{');
+    if(idx == -1) {
+      Serial.print(F("deserializeJson() failed: "));
+      Serial.println("Cannot find '{'!");
+      return false;
+    }
+
+    data.remove(0,idx);
+    DeserializationError error = deserializeJson(jsonDocument, data);
     if (error) {
       Serial.print(F("deserializeJson() failed: "));
       Serial.println(error.c_str());
