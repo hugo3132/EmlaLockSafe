@@ -1,32 +1,36 @@
-
 /**
  * @author    Hugo3132
  * @copyright 2-clause BSD license
  */
+
+// Enable flag if no hardware is connected
+//#define HEADLESS_API_DEBUGGING
 
 #include "LockState.h"
 #include "RealTimeClock.h"
 #include "Tools.h"
 #include "config.h"
 #include "emlalock/EmlaLockApi.h"
-#include "views/EmergencyEnterKeyView.h"
-#include "views/EmergencyEnterMenuView.h"
-#include "views/EmergencyMenu.h"
-#include "views/EmlalockUnlockKeyMenu.h"
-#include "views/HardwareTestView.h"
-#include "views/HygieneOpeningMenu.h"
-#include "views/LockedView.h"
-#include "views/PreferencesMenu.h"
-#include "views/SelectDisplayTimeLeft.h"
-#include "views/SelectDisplayTimePassed.h"
-#include "views/SetTimerView.h"
-#include "views/UnlockSafeView.h"
-#include "views/UnlockedMainMenu.h"
-#include "views/ViewStore.h"
-#include "views/WifiConnectingView.h"
+#if !defined(HEADLESS_API_DEBUGGING)
+  #include "views/EmergencyEnterKeyView.h"
+  #include "views/EmergencyEnterMenuView.h"
+  #include "views/EmergencyMenu.h"
+  #include "views/EmlalockUnlockKeyMenu.h"
+  #include "views/HardwareTestView.h"
+  #include "views/HygieneOpeningMenu.h"
+  #include "views/LockedView.h"
+  #include "views/PreferencesMenu.h"
+  #include "views/SelectDisplayTimeLeft.h"
+  #include "views/SelectDisplayTimePassed.h"
+  #include "views/SetTimerView.h"
+  #include "views/UnlockSafeView.h"
+  #include "views/UnlockedMainMenu.h"
+  #include "views/ViewStore.h"
+  #include "views/WifiConnectingView.h"
 
-#include <LiquidCrystal_PCF8574.h>
-#include <RotaryEncoder.h>
+  #include <LiquidCrystal_PCF8574.h>
+  #include <RotaryEncoder.h>
+#endif
 #include <SPIFFS.h>
 #include <Thread.h>
 #include <WiFiClientSecure.h>
@@ -35,6 +39,7 @@
 #include <string>
 #include <sys/time.h>
 
+#if !defined(HEADLESS_API_DEBUGGING)
 RotaryEncoder encoder(ENCODER_PIN_CLK, ENCODER_PIN_DT, ENCODER_SWITCH);
 
 LiquidCrystal_PCF8574 display(LCD_ADDR); // set the LCD address to 0x27 for a 16 chars and 2 line display
@@ -53,12 +58,15 @@ views::SetTimerView setTimerView(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUM
 views::UnlockedMainMenu unlockedMainMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::UnlockSafeView unlockSafeView(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::WifiConnectingView wifiConnectingView(&display);
+#endif
 
 /**
  * @brief Callback if one of the encoder's pin are changed
  */
 void ICACHE_RAM_ATTR encoderInterrupt(void) {
+#if !defined(HEADLESS_API_DEBUGGING)
   encoder.tick();
+#endif
 }
 
 /**
@@ -75,10 +83,12 @@ void setup() {
 
   // Initialize Serial
   Serial.begin(115200);
+  delay(100);
   Serial.println();
   Serial.println("Here we go!");
   Serial.setDebugOutput(true);
 
+#if !defined(HEADLESS_API_DEBUGGING)
   // Check if LCD works
   Wire.begin();
   Wire.beginTransmission(LCD_ADDR);
@@ -136,7 +146,7 @@ void setup() {
     else {
       Serial.println("Real-time Clock not found.");
     }
-    
+
     // Show animation to keep button pressed
     views::ViewStore::activateView(views::ViewStore::EmergencyEnterMenuView);
     for (int i = 0; (i < 20 && encoder.getSwitchState()); i++) {
@@ -177,6 +187,48 @@ void setup() {
     views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
   }
 
+#else
+  // initialize file system in flash
+  Serial.println("Mount SPIFFS");
+  if (!SPIFFS.begin(true)) {
+    Serial.println("SPIFFS mount failed");
+    return;
+  }
+
+  Serial.println("Connecting to wifi:");
+  Serial.println(WIFI_SSID);
+
+  // Start connecting
+  WiFi.disconnect();
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(WIFI_SSID, WIFI_PWD);
+  WiFi.setAutoReconnect(true);
+
+  // Play an animation while the connection is established
+  int counter = 0;
+  for (int i = 0; i < 10 && WiFi.status() != WL_CONNECTED; i++) {
+    // if we've waited for over 2.5s (25 loops), restart wifi....
+    // this is required because of an bug in the ESP32 arduino core.
+    delay(2500);
+    if (WiFi.status() == WL_CONNECTED) {
+      break;
+    }
+    Serial.println("Connecting to wifi:");
+    Serial.println(WIFI_SSID);
+    WiFi.disconnect();
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(WIFI_SSID, WIFI_PWD);
+    WiFi.setAutoReconnect(true);
+  }
+
+  Serial.println("Setting Timezone:");
+  // configure NTP
+  configTzTime(TIME_ZONE, "pool.ntp.org", "time.nist.gov", "time.google.com");
+
+  Serial.print("Connected: IP ");
+  Serial.println(WiFi.localIP());
+  delay(2000);
+#endif
   Serial.println("EndofSetup.");
 }
 
@@ -184,7 +236,7 @@ void setup() {
  * @brief Loop function
  */
 void loop() {
-  //   Serial.println("Tick.");
+#if !defined(HEADLESS_API_DEBUGGING)
   static time_t nextRtcUpdate = time(NULL) + 120;
 
   // start emlalock api if necessary
@@ -255,4 +307,10 @@ void loop() {
     RealTimeClock::saveTimeToRtc();
     Serial.println("Updated Real-Time Clock.");
   }
+#else
+  Serial.printf("\n\n\n\n\nTick.\n");
+  // start emlalock api if necessary
+  emlalock::EmlaLockApi::getSingleton().triggerRefresh();
+  delay(10000);
+#endif
 }

@@ -6,11 +6,12 @@
 
 #pragma once
 #include "../config.h"
-#define ARDUINOJSON_USE_LONG_LONG 1
+#define ARDUINOJSON_USE_LONG_LONG  1
 #define ARDUINOJSON_DECODE_UNICODE 1
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
+#include <HTTPClient.h>
 #include <Thread.h>
 #include <WiFiClientSecure.h>
 #include <chrono>
@@ -167,6 +168,10 @@ protected:
 
           if (LockState::getDisplayTimeLeft() == LockState::DisplayTimeLeft::yes) {
             LockState::setEndDate(jsonDocument["chastitysession"]["enddate"].as<time_t>());
+            char buf[21];
+            tm tmBuf;
+            strftime(buf, 21, "%d.%m.%Y %T", localtime_r(&LockState::getEndDate(), &tmBuf));
+            Serial.printf("End-date: %s\n", buf);
           }
           else {
             if (LockState::getDisplayTimeLeft() == LockState::DisplayTimeLeft::temperature) {
@@ -206,68 +211,100 @@ protected:
    * @param url the URL to be loaded
    * @return true if no error occurred.
    */
-  bool requestUrl(const String& url) {
+  bool requestUrl(String& url) {
     WiFiClientSecure client;
-
-    Serial.print("Host: https://");
-    Serial.print(host);
-    Serial.print("/");
+    client.setInsecure();
+    url = String("https://") + host + url;
     Serial.println(url);
 
-    // connect to server
-    client.setInsecure();
-    client.connect(host.c_str(), 443);
-    if (!client.connected()) {
-      Serial.println("Connection failed!");
-      return false;
-    }
+    // Your Domain name with URL path or IP address with path
+    HTTPClient http;
+    http.useHTTP10(true);
+    http.begin(client, url);
 
-    // send get request
-    client.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + host + "\r\n" + "User-Agent: ESP8266\r\n" +
-                 "Connection: Keep-Alive\r\n\r\n");
+    // Send HTTP GET request
+    int httpResponseCode = http.GET();
 
-    // wait until the header is received.
-    String result = "Invalid Header received.";
-    while (client.connected()) {
-      String line = client.readStringUntil('\n');
-
-      if ((line.length() > 8) && (line.substring(0, 8) == "HTTP/1.1")) {
-        result = line.substring(9);
-      }
-
-      if (line == "\r") {
-        break;
+    String data;
+    if (httpResponseCode > 0) {
+      DeserializationError error = deserializeJson(jsonDocument, http.getStream());
+      http.end();
+      if (error) {
+        Serial.print(F("deserializeJson() failed: "));
+        Serial.println(error.c_str());
+        return false;
       }
     }
-
-    // check result
-    result.trim();
-    if (result != "200 OK") {
-      Serial.println(String("Error Getting https://") + host + url + ": " + result);
-      // read to end since we want to reuse the connection
-      client.readString();
+    else {
+      Serial.print("Error code: ");
+      Serial.println(httpResponseCode);
+      // Free resources
+      http.end();
       return false;
     }
 
-    // update json doc
-    String data = client.readString();
-    int idx = data.indexOf('{');
-    if(idx == -1) {
-      Serial.print(F("deserializeJson() failed: "));
-      Serial.println("Cannot find '{'!");
-      return false;
-    }
-
-    data.remove(0,idx);
-    DeserializationError error = deserializeJson(jsonDocument, data);
-    if (error) {
-      Serial.print(F("deserializeJson() failed: "));
-      Serial.println(error.c_str());
-      return false;
-    }
-
-    Serial.println(String("https://") + host + url + ": ");
     return true;
+    // WiFiClientSecure client;
+
+    // Serial.print("Host: https://");
+    // Serial.print(host);
+    // Serial.print("/");
+    // Serial.println(url);
+
+    // // connect to server
+    // client.setInsecure();
+    // client.connect(host.c_str(), 443);
+    // if (!client.connected()) {
+    //   Serial.println("Connection failed!");
+    //   return false;
+    // }
+
+    // // send get request
+    // client.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + host + "\r\n" + "User-Agent: ESP8266\r\n" +
+    //              "Connection: Keep-Alive\r\n\r\n");
+
+    // // wait until the header is received.
+    // String result = "Invalid Header received.";
+    // while (client.connected()) {
+    //   String line = client.readStringUntil('\n');
+
+    //   if ((line.length() > 8) && (line.substring(0, 8) == "HTTP/1.1")) {
+    //     result = line.substring(9);
+    //   }
+
+    //   if (line == "\r") {
+    //     break;
+    //   }
+    // }
+
+    // // check result
+    // result.trim();
+    // if (result != "200 OK") {
+    //   Serial.println(String("Error Getting https://") + host + url + ": " + result);
+    //   // read to end since we want to reuse the connection
+    //   client.readString();
+    //   return false;
+    // }
+
+    // // update json doc
+    // String data = client.readString();
+    // int idx = data.indexOf('{');
+    // if(idx == -1) {
+    //   Serial.print(F("deserializeJson() failed: "));
+    //   Serial.println("Cannot find '{'!");
+    //   return false;
+    // }
+
+    // data.remove(0,idx);
+    // DeserializationError error = deserializeJson(jsonDocument, data);
+    // if (error) {
+    //   Serial.print(F("deserializeJson() failed: "));
+    //   Serial.println(error.c_str());
+    //   return false;
+    // }
+
+    // Serial.println(String("https://") + host + url + ": ");
+    // return true;
   }
 };
 
