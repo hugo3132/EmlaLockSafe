@@ -1,13 +1,12 @@
 EESchema Schematic File Version 4
-LIBS:EmlaLockSafe-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "EmlaLockSafe Controller Module"
-Date "2020-08-31"
-Rev "1.0"
+Date "2021-12-10"
+Rev "2.0"
 Comp "hugo3132"
 Comment1 "BSD 2-Clause License"
 Comment2 ""
@@ -26,24 +25,16 @@ F 3 "" H 5700 2200 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2850 2950 2950 2950
-Wire Wire Line
-	2850 2850 2950 2850
-Wire Wire Line
 	5100 2050 5000 2050
 Wire Wire Line
 	5100 1950 5000 1950
 Wire Wire Line
 	5700 2500 5700 2600
 Wire Wire Line
-	1300 1950 1400 1950
-Wire Wire Line
-	1400 2150 1300 2150
-Wire Wire Line
 	5700 1750 5700 1500
-Text GLabel 2950 2850 2    50   Input ~ 0
+Text GLabel 2750 2850 2    50   Input ~ 0
 SDA
-Text GLabel 2950 2950 2    50   Input ~ 0
+Text GLabel 2750 2950 2    50   Input ~ 0
 SCL
 Text GLabel 5000 1950 0    50   Input ~ 0
 SCL
@@ -72,18 +63,12 @@ Wire Wire Line
 	8600 1900 8450 1900
 Wire Wire Line
 	8450 2300 8600 2300
-Text GLabel 2950 1550 2    50   Input ~ 0
+Text GLabel 2750 3150 2    50   Input ~ 0
 ENC_SW
-Text GLabel 2950 1650 2    50   Input ~ 0
+Text GLabel 2750 3250 2    50   Input ~ 0
 ENC_DT
-Text GLabel 2950 1750 2    50   Input ~ 0
+Text GLabel 2750 3350 2    50   Input ~ 0
 ENC_CLK
-Wire Wire Line
-	2850 1550 2950 1550
-Wire Wire Line
-	2850 1650 2950 1650
-Wire Wire Line
-	2850 1750 2950 1750
 Text GLabel 8450 2000 0    50   Input ~ 0
 ENC_CLK
 Text GLabel 8450 2100 0    50   Input ~ 0
@@ -188,40 +173,36 @@ Connection ~ 2450 6250
 $Comp
 L power:+3.3V #PWR0101
 U 1 1 5F400170
-P 1300 1900
-F 0 "#PWR0101" H 1300 1750 50  0001 C CNN
-F 1 "+3.3V" H 1315 2073 50  0000 C CNN
-F 2 "" H 1300 1900 50  0001 C CNN
-F 3 "" H 1300 1900 50  0001 C CNN
-	1    1300 1900
+P 1350 850
+F 0 "#PWR0101" H 1350 700 50  0001 C CNN
+F 1 "+3.3V" H 1365 1023 50  0000 C CNN
+F 2 "" H 1350 850 50  0001 C CNN
+F 3 "" H 1350 850 50  0001 C CNN
+	1    1350 850 
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:+5V #PWR0102
 U 1 1 5F400BED
-P 1100 1900
-F 0 "#PWR0102" H 1100 1750 50  0001 C CNN
-F 1 "+5V" H 1115 2073 50  0000 C CNN
-F 2 "" H 1100 1900 50  0001 C CNN
-F 3 "" H 1100 1900 50  0001 C CNN
-	1    1100 1900
+P 1550 850
+F 0 "#PWR0102" H 1550 700 50  0001 C CNN
+F 1 "+5V" H 1565 1023 50  0000 C CNN
+F 2 "" H 1550 850 50  0001 C CNN
+F 3 "" H 1550 850 50  0001 C CNN
+	1    1550 850 
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:GND #PWR0103
 U 1 1 5F40180A
-P 1300 2150
-F 0 "#PWR0103" H 1300 1900 50  0001 C CNN
-F 1 "GND" H 1305 1977 50  0000 C CNN
-F 2 "" H 1300 2150 50  0001 C CNN
-F 3 "" H 1300 2150 50  0001 C CNN
-	1    1300 2150
+P 1400 1200
+F 0 "#PWR0103" H 1400 950 50  0001 C CNN
+F 1 "GND" H 1405 1027 50  0000 C CNN
+F 2 "" H 1400 1200 50  0001 C CNN
+F 3 "" H 1400 1200 50  0001 C CNN
+	1    1400 1200
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	1300 1900 1300 1950
-Wire Wire Line
-	1100 2050 1100 1900
 $Comp
 L power:+3.3V #PWR0104
 U 1 1 5F404E22
@@ -327,10 +308,8 @@ COIL
 Wire Wire Line
 	2050 6450 2100 6450
 Connection ~ 2100 6450
-Text GLabel 2950 2150 2    50   Input ~ 0
+Text GLabel 1500 2550 0    50   Input ~ 0
 COIL
-Wire Wire Line
-	2850 2150 2950 2150
 $Comp
 L Device:C C1
 U 1 1 5F41EBD1
@@ -387,17 +366,80 @@ Wire Wire Line
 	2050 4450 1850 4450
 Text Notes 1250 7300 0    50   ~ 0
 R2 must be "small" because when booting the pull-up resistor of the ESP32 is briefly active and would  unlock the COIL.
-Wire Wire Line
-	1100 2050 1400 2050
 $Comp
-L ESP32_NodeMCU_Module_AzDelivery:ESP32_NodeMCU_Module_AzDelivery ESP32
-U 1 1 5F3B9785
-P 2100 2050
-F 0 "ESP32" H 2125 3215 50  0000 C CNN
-F 1 "ESP32_NodeMCU_Module_AzDelivery" H 2125 3124 50  0000 C CNN
-F 2 "ESP32_NodeMCU_Module_AzDelivery:ESP32_NodeMCU_Module_AzDelivery" H 1750 2250 50  0001 C CNN
-F 3 "" H 1750 2250 50  0001 C CNN
-	1    2100 2050
+L ESP32_mini_KiCad_Library:mini_esp32 U1
+U 1 1 61B10496
+P 2150 850
+F 0 "U1" H 2175 975 50  0000 C CNN
+F 1 "mini_esp32" H 2175 884 50  0000 C CNN
+F 2 "ESP32_mini_KiCad_Library:ESP32_mini" H 2300 950 50  0001 C CNN
+F 3 "" H 2300 950 50  0001 C CNN
+	1    2150 850 
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	1600 2550 1500 2550
+Wire Wire Line
+	2650 2850 2750 2850
+Wire Wire Line
+	2650 2950 2750 2950
+Wire Wire Line
+	2650 3150 2750 3150
+Wire Wire Line
+	2650 3350 2750 3350
+Wire Wire Line
+	2650 3250 2750 3250
+Wire Wire Line
+	1550 850  1550 950 
+Wire Wire Line
+	1550 950  1600 950 
+Wire Wire Line
+	1350 850  1350 1050
+Wire Wire Line
+	1350 1050 1600 1050
+Wire Wire Line
+	1400 1200 1400 1150
+Wire Wire Line
+	1400 1150 1600 1150
+$Comp
+L MicroUSBBreakout:MicroUSBBreakout U2
+U 1 1 61B73DCC
+P 7200 1400
+F 0 "U2" H 7133 1825 50  0000 C CNN
+F 1 "MicroUSBBreakout" H 7133 1734 50  0000 C CNN
+F 2 "MicroUSBBreakout:MicroUSBBreakout" H 7200 1400 50  0001 C CNN
+F 3 "" H 7200 1400 50  0001 C CNN
+	1    7200 1400
 	1    0    0    -1  
 $EndComp
+$Comp
+L power:+5V #PWR0114
+U 1 1 61B74BBC
+P 7650 1100
+F 0 "#PWR0114" H 7650 950 50  0001 C CNN
+F 1 "+5V" V 7665 1228 50  0000 L CNN
+F 2 "" H 7650 1100 50  0001 C CNN
+F 3 "" H 7650 1100 50  0001 C CNN
+	1    7650 1100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0115
+U 1 1 61B78BA0
+P 7650 1650
+F 0 "#PWR0115" H 7650 1400 50  0001 C CNN
+F 1 "GND" V 7655 1522 50  0000 R CNN
+F 2 "" H 7650 1650 50  0001 C CNN
+F 3 "" H 7650 1650 50  0001 C CNN
+	1    7650 1650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7400 1600 7650 1600
+Wire Wire Line
+	7650 1600 7650 1650
+Wire Wire Line
+	7650 1100 7650 1200
+Wire Wire Line
+	7650 1200 7400 1200
 $EndSCHEMATC

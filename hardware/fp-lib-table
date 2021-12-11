@@ -1,4 +1,5 @@
 (fp_lib_table
-  (lib (name DS3231_Module_AzDelivery)(type KiCad)(uri "${KIPRJMOD}/DS3231 Module AzDelivery/DS3231_Module_AzDelivery.pretty")(options "")(descr ""))
-  (lib (name ESP32_NodeMCU_Module_AzDelivery)(type KiCad)(uri "${KIPRJMOD}/ESP32 NodeMCU Module AzDelivery/ESP32_NodeMCU_Module_AzDelivery.pretty")(options "")(descr ""))
+  (lib (name DS3231_Module_AzDelivery)(type KiCad)(uri "${KIPRJMOD}/libraries/DS3231 Module AzDelivery/DS3231_Module_AzDelivery.pretty")(options "")(descr ""))
+  (lib (name ESP32_mini_KiCad_Library)(type KiCad)(uri ${KIPRJMOD}/libraries/ESP32_mini_KiCad_Library/ESP32_mini.pretty)(options "")(descr ""))
+  (lib (name MicroUSBBreakout)(type KiCad)(uri ${KIPRJMOD}/libraries/MicroUSBBreakout/MicroUSBBreakout.pretty)(options "")(descr ""))
 )

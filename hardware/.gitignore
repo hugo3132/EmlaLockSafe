@@ -1,4 +1,11 @@
-/*cache.lib
-/fp-info-cache
-/*.sch-bak
-/*.kicad_pcb-bak
+*cache.lib
+fp-info-cache
+*.sch-bak
+*.kicad_pcb-bak
+*.bck
+*.000
+*.bak
+*.lst
+*.net
+*.mdc
+*.dsn
