@@ -1,5 +1,8 @@
 Ctrl:
-https://www.amazon.de/AZDelivery-ESP32-NodeMCU-Module-Parent/dp/B07Z6CSD9K
+https://www.amazon.de/KeeYees-Bluetooth-Internet-Entwicklungsboard-ESP-WROOM-32/dp/B08TBPBJGV/
+
+MicroUSB Breakout:
+https://www.amazon.de/ZXUEZHENG-Adapterplatine-Micro-USB-Micro-USB-Schnittstelle-Breakout-Modul/dp/B07KS1RPMP
 
 RTC:
 https://www.amazon.de/AZDelivery-Real-Clock-DS3231-Parent/dp/B07ZQGBH14
@@ -15,3 +18,4 @@ https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50
 
 Safe (must have some kind of electronic opening mechanism):
 https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628
+
