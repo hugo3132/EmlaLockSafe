@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Tools.h"
+#include "UsedInterrupts.h"
 
 #include <SPIFFS.h>
 #include <mutex>
@@ -149,27 +150,28 @@ protected:
    * @brief Loads the current state of the object to the flash
    */
   void loadData() {
-    // load the data from the file system if available
     Serial.println("Loading lockState");
-    Tools::detachEncoderInterrupts();
-    File file = SPIFFS.open("/lockSt.bin", "r");
-    if (!file) {
-      Serial.println("Loading lockState failed");
-      Tools::attachEncoderInterrupts();
-      return;
-    }
-
-    // read everything to a buffer
     constexpr auto numberOfBytes = sizeof(Mode) + sizeof(DisplayTimePassed) + sizeof(DisplayTimeLeft) + 2 * sizeof(time_t) +
                                    sizeof(uint32_t);
     char buf[numberOfBytes];
-    auto readOk = file.readBytes(buf, numberOfBytes) == numberOfBytes;
-    if (readOk) {
-      temperatureString = file.readString();
-    }
+    bool readOk;
 
-    file.close();
-    Tools::attachEncoderInterrupts();
+    // load the data from the file system if available
+    UsedInterrupts::executeWithoutInterrupts([this, &readOk, &buf]() {
+      File file = SPIFFS.open("/lockSt.bin", "r");
+      if (!file) {
+        Serial.println("Loading lockState failed");
+        return;
+      }
+
+      // read everything to a buffer
+      readOk = file.readBytes(buf, numberOfBytes) == numberOfBytes;
+      if (readOk) {
+        temperatureString = file.readString();
+      }
+
+      file.close();
+    });
 
     if (readOk) {
       // copy the data from the buffer to the actual variables
@@ -200,22 +202,21 @@ protected:
    */
   void saveData() {
     Serial.println("Saving lockState");
-    Tools::detachEncoderInterrupts();
-    File file = SPIFFS.open("/lockSt.bin", "w");
-    if (!file) {
-      Tools::attachEncoderInterrupts();
-      return;
-    }
+    UsedInterrupts::executeWithoutInterrupts([this]() {
+      File file = SPIFFS.open("/lockSt.bin", "w");
+      if (!file) {
+        return;
+      }
 
-    file.write((uint8_t*)&mode, sizeof(DisplayTimePassed));
-    file.write((uint8_t*)&displayTimePassed, sizeof(DisplayTimePassed));
-    file.write((uint8_t*)&displayTimeLeft, sizeof(DisplayTimeLeft));
-    file.write((uint8_t*)&startDate, sizeof(time_t));
-    file.write((uint8_t*)&endDate, sizeof(time_t));
-    file.write((uint8_t*)&numberOfFailedSessions, sizeof(uint32_t));
-    file.write((uint8_t*)temperatureString.c_str(), temperatureString.length());
-    file.close();
-    Tools::attachEncoderInterrupts();
+      file.write((uint8_t*)&mode, sizeof(DisplayTimePassed));
+      file.write((uint8_t*)&displayTimePassed, sizeof(DisplayTimePassed));
+      file.write((uint8_t*)&displayTimeLeft, sizeof(DisplayTimeLeft));
+      file.write((uint8_t*)&startDate, sizeof(time_t));
+      file.write((uint8_t*)&endDate, sizeof(time_t));
+      file.write((uint8_t*)&numberOfFailedSessions, sizeof(uint32_t));
+      file.write((uint8_t*)temperatureString.c_str(), temperatureString.length());
+      file.close();
+    });
 
     Serial.println("Saved lockState");
   }

@@ -6,10 +6,11 @@
 // Enable flag if no hardware is connected
 //#define HEADLESS_API_DEBUGGING
 
+#include "config.h"
 #include "LockState.h"
 #include "RealTimeClock.h"
 #include "Tools.h"
-#include "config.h"
+#include "UsedInterrupts.h"
 #include "emlalock/EmlaLockApi.h"
 #if !defined(HEADLESS_API_DEBUGGING)
   #include "views/EmergencyEnterKeyView.h"
@@ -100,7 +101,7 @@ void setup() {
     display.print("Booting...");
     display.setBacklight(1);
 
-    Tools::attachEncoderInterrupts();
+    UsedInterrupts::attach();
   }
   else {
     Serial.println("LCD not found.");

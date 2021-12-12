@@ -5,11 +5,13 @@
 #pragma once
 
 #include "../Tools.h"
+#include "../UsedInterrupts.h"
 
 #include <SPIFFS.h>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <functional>
 
 namespace emlalock {
 /**
@@ -23,17 +25,18 @@ public:
    * @param key target array to which the key is loaded
    */
   static void getCurrentKey(char (&key)[7]) {
-    Tools::detachEncoderInterrupts();
-    File file = SPIFFS.open("/emergKey.txt", "r");
-    if (!file) {
-      generateNewKey(key);
-      Tools::attachEncoderInterrupts();
-      return;
-    }
+    bool readOk = true;
 
-    auto readOk = file.readBytes(key, 6) == 6;
-    file.close();
-    Tools::attachEncoderInterrupts();
+    UsedInterrupts::executeWithoutInterrupts([&readOk, &key]() {
+      File file = SPIFFS.open("/emergKey.txt", "r");
+      if (file) {
+        readOk = file.readBytes(key, 6) == 6;
+        file.close();
+      }
+      else {
+        readOk = false;
+      }
+    });
 
     if (!readOk) {
       generateNewKey(key);
@@ -72,22 +75,22 @@ public:
    * @returns true if the new key was written to the flash
    */
   static bool setKey(char (&key)[7]) {
-    Tools::detachEncoderInterrupts();
+    UsedInterrupts::detach();
     File file = SPIFFS.open("/emergKey.txt", "w");
     if (!file) {
       file.close();
-      Tools::attachEncoderInterrupts();
+      UsedInterrupts::attach();
       strcpy(key, "Error");
       return false;
     }
     if (file.write((const uint8_t*)key, 6) != 6) {
       file.close();
-      Tools::attachEncoderInterrupts();
+      UsedInterrupts::attach();
       strcpy(key, "Error");
       return false;
     }
     file.close();
-    Tools::attachEncoderInterrupts();
+    UsedInterrupts::attach();
 
     return true;
   }

@@ -4,6 +4,7 @@
  */
 #pragma once
 #include "../Tools.h"
+#include "../UsedInterrupts.h"
 #include "../emlalock/EmergencyKey.h"
 
 #include <DialogYesNo.h>
@@ -81,9 +82,7 @@ protected:
 
       // detach interrputs which would crash the ESP while accessing the
       // file-system
-      Tools::detachEncoderInterrupts();
-      SPIFFS.format();
-      Tools::attachEncoderInterrupts();
+      UsedInterrupts::executeWithoutInterrupts([](){SPIFFS.format();});
 
       // Save the key back to memory
       emlalock::EmergencyKey::setKey(key);
