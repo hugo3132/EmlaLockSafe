@@ -21,6 +21,7 @@ public:
    * @brief IDs of the different views
    */
   enum ViewId {
+    ConfigurationServerView,
     EmergencyEnterKeyView,
     EmergencyEnterMenuView,
     EmergencyMenu,

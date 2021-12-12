@@ -102,6 +102,7 @@ private:
     server.on("/saveData", HTTP_GET, [this](AsyncWebServerRequest* request) {
       Configuration::getSingleton().setWifiSettings(request->getParam("ssid")->value(), request->getParam("pwd")->value());
       request->send(200, "text/plain", "Configuration Updated. Rebooting...");
+      delay(100);
       ESP.restart();
     });
 
@@ -133,7 +134,7 @@ public:
   /**
    * @brief Forward of the Arduino loop function
    */
-  virtual void loop() {
+  void loop() {
     static unsigned long nextScan = millis();
     if (millis() >= nextScan) {
       int n = WiFi.scanNetworks();

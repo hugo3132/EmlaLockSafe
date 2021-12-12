@@ -19,6 +19,7 @@
 #include "UsedInterrupts.h"
 #include "emlalock/EmlaLockApi.h"
 #if !defined(HEADLESS_API_DEBUGGING)
+  #include "views/ConfigurationServerView.h"
   #include "views/EmergencyEnterKeyView.h"
   #include "views/EmergencyEnterMenuView.h"
   #include "views/EmergencyMenu.h"
@@ -51,6 +52,7 @@ RotaryEncoder encoder(ENCODER_PIN_CLK, ENCODER_PIN_DT, ENCODER_SWITCH);
 
 LiquidCrystal_PCF8574 display(LCD_ADDR); // set the LCD address to 0x27 for a 16 chars and 2 line display
 
+views::ConfigurationServerView configurationServerView(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::EmergencyEnterKeyView emergencyEnterKeyView(&display, &encoder);
 views::EmergencyEnterMenuView emergencyEnterMenuView(&display);
 views::EmergencyMenu emergencyMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
@@ -125,20 +127,17 @@ void setup() {
   }
 
   // Do we need to configure the WiFi?
-  String ssid = configuration::Configuration::getSingleton().getSsid();
-  String pwd = configuration::Configuration::getSingleton().getPwd();
-
-  Serial.printf("SSID: '%s', PWD: '%s'\n", ssid.c_str(), pwd.c_str());
-  if((ssid.length() == 0) || (pwd.length() == 0)) {
+  if ((configuration::Configuration::getSingleton().getSsid().length() == 0) ||
+      (configuration::Configuration::getSingleton().getPwd().length() == 0)) {
     Serial.println("Start WiFi Configuration Server");
     configuration::WifiConfigurationServer::begin(display);
     return;
   }
 
-
   {
     // Add all views to the Viewstore
     using namespace views;
+    ViewStore::addView(ViewStore::ConfigurationServerView, configurationServerView);
     ViewStore::addView(ViewStore::EmergencyEnterKeyView, emergencyEnterKeyView);
     ViewStore::addView(ViewStore::EmergencyEnterMenuView, emergencyEnterMenuView);
     ViewStore::addView(ViewStore::EmergencyMenu, emergencyMenu);
@@ -211,6 +210,10 @@ void setup() {
   if (LockState::getEndDate() > time(NULL)) {
     views::ViewStore::activateView(views::ViewStore::LockedView);
   }
+  else if ((configuration::Configuration::getSingleton().getApiKey().length() == 0) ||
+           (configuration::Configuration::getSingleton().getUserId().length() == 0)) {
+    views::ViewStore::activateView(views::ViewStore::ConfigurationServerView);
+  }
   else {
     views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
   }
@@ -272,8 +275,6 @@ void loop() {
   }
 
 #if !defined(HEADLESS_API_DEBUGGING)
-  static time_t nextRtcUpdate = time(NULL) + 120;
-
   // start emlalock api if necessary
   emlalock::EmlaLockApi::getSingleton();
 
@@ -337,8 +338,9 @@ void loop() {
   }
 
   #if !defined(DISABLE_RTC)
-  // Check if the RTC should be updated again?
-  if (time(NULL) >= nextRtcUpdate) {
+  static time_t nextRtcUpdate = time(NULL) + 120;
+  // Check if the RTC should be updated again? The Second statement detects if we are way off.
+  if ((time(NULL) >= nextRtcUpdate) || (time(NULL) + 120 < nextRtcUpdate)) {
     nextRtcUpdate = time(NULL) + 120;
     RealTimeClock::saveTimeToRtc();
     Serial.println("Updated Real-Time Clock.");

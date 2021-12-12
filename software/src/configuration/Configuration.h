@@ -112,7 +112,7 @@ public:
     });
   }
 
-#pragma region Getter and Setter
+#pragma region Getter
 #pragma region WiFi Settings
 public:
   /**
@@ -124,41 +124,10 @@ public:
 
 public:
   /**
-   * @brief set the SSID(name) of your wifi
-   */
-  void setSsid(const String& value) {
-    ssid = value;
-    writeConfiguration();
-  }
-
-public:
-  /**
    * @brief get the password of your wifi.
    */
   const String& getPwd() const {
     return pwd;
-  }
-
-public:
-  /**
-   * @brief set the password of your wifi.
-   */
-  void setPwd(const String& value) {
-    pwd = value;
-    writeConfiguration();
-  }
-
-public:
-  /**
-   * @brief Set the Wifi Settings
-   * 
-   * @param ssid new ssid
-   * @param pwd  new password
-   */
-  void setWifiSettings(const String& ssid, const String& pwd) {
-    this->ssid = ssid;
-    this->pwd = pwd;
-    writeConfiguration();
   }
 #pragma endregion
 
@@ -173,28 +142,10 @@ public:
 
 public:
   /**
-   * @brief set the User ID extracted from the webpage settings > API
-   */
-  void setUserId(const String& value) {
-    userId = value;
-    writeConfiguration();
-  }
-
-public:
-  /**
    * @brief get the API Key extracted from the webpage settings > API
    */
   const String& getApiKey() const {
     return apiKey;
-  }
-
-public:
-  /**
-   * @brief set the API Key extracted from the webpage settings > API
-   */
-  void setApiKey(const String& value) {
-    apiKey = value;
-    writeConfiguration();
   }
 #pragma endregion
 
@@ -210,32 +161,43 @@ public:
 
 public:
   /**
-   * @brief set the timezone-string (e.g. "CET-1CEST,M3.5.0,M10.5.0/3") see also
-   *  https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
-   */
-  void setTimezone(const String& value) {
-    timezone = value;
-    writeConfiguration();
-  }
-
-public:
-  /**
    * @brief get the name to the timezone-string (e.g. "Europe/Berlin")
    */
   const String& getTimezoneName() const {
     return timezoneName;
   }
+#pragma endregion
+#pragma endregion
 
+#pragma region Setter
 public:
   /**
-   * @brief set the name to the timezone-string (e.g. "Europe/Berlin")
+   * @brief Set the Wifi Settings
+   * 
+   * @param ssid new ssid
+   * @param pwd  new password
    */
-  void setTimezoneName(const String& value) {
-    timezoneName = value;
+  void setWifiSettings(const String& ssid, const String& pwd) {
+    this->ssid = ssid;
+    this->pwd = pwd;
     writeConfiguration();
   }
-#pragma endregion
-#pragma endregion
+
+  /**
+   * @brief Set the Configuration Settings
+   * 
+   * @param userId new Emlalock API user id
+   * @param apiKey new Emlalock API key
+   * @param timezoneName new name of timezone
+   * @param timezone new timezone string
+   */
+  void setConfigurationSettings(const String& userId, const String& apiKey, const String& timezoneName, const String& timezone) {
+    this->userId = userId;
+    this->apiKey = apiKey;
+    this->timezoneName = timezoneName;
+    this->timezone = timezone;
+    writeConfiguration();
+  }
 
 protected:
   /**
@@ -258,5 +220,6 @@ protected:
       file.println(timezoneName);
     });
   }
+#pragma endregion
 };
 } // namespace configuration

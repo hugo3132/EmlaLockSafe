@@ -51,11 +51,5 @@ protected:
       });
     });
   }
-
-public:
-  /**
-   * @brief Forward of the Arduino loop function
-   */
-  virtual void loop() = 0;
 };
 } // namespace configuration

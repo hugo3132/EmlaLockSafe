@@ -5,7 +5,7 @@
  */
 
 #pragma once
-#include "../config.h"
+#include "../configuration/Configuration.h"
 #define ARDUINOJSON_USE_LONG_LONG  1
 #define ARDUINOJSON_DECODE_UNICODE 1
 
@@ -138,7 +138,8 @@ protected:
         LockState::setMode(LockState::Mode::emlalock);
       }
 
-      if (requestUrl(String("/info/?userid=") + USER_ID + "&apikey=" + API_KEY)) {
+      if (requestUrl("/info/?userid=" + configuration::Configuration::getSingleton().getUserId() +
+                     "&apikey=" + configuration::Configuration::getSingleton().getApiKey())) {
         uint32_t numberOfFailedSessionOld = LockState::getNumberOfFailedSessions();
         uint32_t numberOfFailedSessionNew = jsonDocument["user"]["failedsessions"].as<uint32_t>();
         if (numberOfFailedSessionOld != numberOfFailedSessionNew) {

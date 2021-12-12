@@ -5,9 +5,11 @@
 #pragma once
 #include "../Tools.h"
 #include "../UsedInterrupts.h"
+#include "../configuration/Configuration.h"
 #include "../emlalock/EmergencyKey.h"
 
 #include <DialogYesNo.h>
+#include <ESP.h>
 #include <MenuView.h>
 #include <SPIFFS.h>
 
@@ -50,6 +52,15 @@ protected:
       // create menu items
       createMenuItem("Format Flash", [this](MenuItem*) {
         onFormatFlash();
+      });
+
+      createMenuItem("Change Wifi Settings", [this](MenuItem*) {
+        configuration::Configuration::getSingleton().setWifiSettings("", "");
+        ESP.restart();
+      });
+
+      createMenuItem("Start Configuration Server", [this](MenuItem*) {
+        ViewStore::activateView(ViewStore::ConfigurationServerView);
       });
 
       createMenuItem("Back", [this](MenuItem*) {

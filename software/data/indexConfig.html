@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="main.css">
+  <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+
+  <script type="text/javascript">
+    var timeZones = [];
+
+    $(document).ready(function () {
+      jQuery.ajaxSetup({async:false});
+
+      // load all time zones
+      $.getJSON("zones.json", function (data) {
+        $.each(data, function (key, val) {
+          timeZones[val[0]] = val[1];
+
+          var opt = document.createElement('option');
+          opt.value = val[0];
+          opt.innerHTML = val[0];
+          document.getElementById('timezone').appendChild(opt);
+        });
+      });
+
+      // load the last values
+      $.get("lastValues",
+        function (data, status) {
+          lastValues = data.split(/\r?\n/);
+          document.getElementById('userId').value = lastValues[0];
+          document.getElementById('apiKey').value = lastValues[1];
+          document.getElementById('timezone').value = lastValues[2];
+        });
+
+      jQuery.ajaxSetup({async:true});
+    });
+
+    function saveData() {
+      $.get("saveData",
+        {
+          userId: document.getElementById('userId').value,
+          apiKey: document.getElementById('apiKey').value,
+          timezoneName: document.getElementById('timezone').value,
+          timezone: timeZones[document.getElementById('timezone').value]
+        },
+        function (data, status) {
+          alert(data);
+        });
+    }
+  </script>
+
+</head>
+
+<body>
+  <div class="container">
+    <h3>Emlalock Settings</h3>
+
+    <label for="lname">User ID</label>
+    <input type="text" id="userId" name="userId" placeholder="Your User ID">
+
+    <label for="lname">API Key</label>
+    <input type="text" id="apiKey" name="apiKey" placeholder="Your API Key">
+  </div>
+
+  <div class="container">
+    <h3>Miscellaneous Settings</h3>
+
+    <select id="timezone" name="timezone">
+    </select>
+  </div>
+
+  <div class="container">
+    <P><B>Note:</B> After saving the data, the Wifi will no longer be available. Check the safe's display. If an error occurs, you have to reconnect to the SafeSetup WiFi and reload this site!</P>
+    <button type="button" onclick="saveData();">Save Data</button>
+  </div>
+
+</body>
+
+</html>
