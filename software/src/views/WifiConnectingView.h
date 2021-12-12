@@ -4,8 +4,9 @@
  */
 #pragma once
 
-#include "../config.h"
 #include "../Tools.h"
+#include "../config.h"
+#include "../configuration/Configuration.h"
 
 #include <MenuView.h>
 #include <ViewBase.h>
@@ -48,12 +49,13 @@ protected:
     display->print("Connecting to wifi:");
 
     display->setCursor(0, 1);
-    display->print(WIFI_SSID);
+    display->print(configuration::Configuration::getSingleton().getSsid());
 
     // Start connecting
     WiFi.disconnect();
     WiFi.mode(WIFI_STA);
-    WiFi.begin(WIFI_SSID, WIFI_PWD);
+    WiFi.begin(configuration::Configuration::getSingleton().getSsid().c_str(),
+               configuration::Configuration::getSingleton().getPwd().c_str());
     WiFi.setAutoReconnect(true);
 
     // Play an animation while the connection is established
@@ -65,7 +67,8 @@ protected:
         // this is required because of an bug in the ESP32 arduino core.
         WiFi.disconnect();
         WiFi.mode(WIFI_STA);
-        WiFi.begin(WIFI_SSID, WIFI_PWD);
+        WiFi.begin(configuration::Configuration::getSingleton().getSsid().c_str(),
+                   configuration::Configuration::getSingleton().getPwd().c_str());
         WiFi.setAutoReconnect(true);
       }
       return WiFi.status() != WL_CONNECTED;

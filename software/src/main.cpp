@@ -6,9 +6,15 @@
 // Enable flag if no hardware is connected
 //#define HEADLESS_API_DEBUGGING
 
+//#define DISABLE_RTC
+
 #include "config.h"
+#include "configuration/Configuration.h"
+#include "configuration/WifiConfigurationServer.h"
 #include "LockState.h"
-#include "RealTimeClock.h"
+#if !defined(DISABLE_RTC)
+  #include "RealTimeClock.h"
+#endif
 #include "Tools.h"
 #include "UsedInterrupts.h"
 #include "emlalock/EmlaLockApi.h"
@@ -78,16 +84,26 @@ void setup() {
   pinMode(COIL_PIN, OUTPUT);
   digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
 
-  // Set Timezone
-  setenv("TZ", TIME_ZONE, 1);
-  tzset();
-
   // Initialize Serial
   Serial.begin(115200);
   delay(100);
   Serial.println();
   Serial.println("Here we go!");
   Serial.setDebugOutput(true);
+
+  // initialize file system in flash
+  Serial.println("Mount SPIFFS");
+  if (!SPIFFS.begin(true)) {
+    Serial.println("SPIFFS mount failed");
+    return;
+  }
+
+  // load the configuration
+  configuration::Configuration::begin();
+
+  // Set Timezone
+  setenv("TZ", configuration::Configuration::getSingleton().getTimezone().c_str(), 1);
+  tzset();
 
 #if !defined(HEADLESS_API_DEBUGGING)
   // Check if LCD works
@@ -107,6 +123,18 @@ void setup() {
     Serial.println("LCD not found.");
     return;
   }
+
+  // Do we need to configure the WiFi?
+  String ssid = configuration::Configuration::getSingleton().getSsid();
+  String pwd = configuration::Configuration::getSingleton().getPwd();
+
+  Serial.printf("SSID: '%s', PWD: '%s'\n", ssid.c_str(), pwd.c_str());
+  if((ssid.length() == 0) || (pwd.length() == 0)) {
+    Serial.println("Start WiFi Configuration Server");
+    configuration::WifiConfigurationServer::begin(display);
+    return;
+  }
+
 
   {
     // Add all views to the Viewstore
@@ -128,16 +156,10 @@ void setup() {
   }
   lcd::ViewBase::setBacklightTimeout(15000);
 
-  // initialize file system in flash
-  Serial.println("Mount SPIFFS");
-  if (!SPIFFS.begin(true)) {
-    Serial.println("SPIFFS mount failed");
-    return;
-  }
-
   // Check if we need to go to the emergency menu
   encoder.tick();
   if (encoder.getSwitchState()) {
+  #if !defined(DISABLE_RTC)
     // Check if the RTC is reachable
     Wire.beginTransmission(DS3231_I2C_ADDR);
     if (Wire.endTransmission() == 0) {
@@ -147,6 +169,7 @@ void setup() {
     else {
       Serial.println("Real-time Clock not found.");
     }
+  #endif
 
     // Show animation to keep button pressed
     views::ViewStore::activateView(views::ViewStore::EmergencyEnterMenuView);
@@ -166,6 +189,9 @@ void setup() {
     }
   }
 
+  views::ViewStore::activateView(views::ViewStore::HardwareTestView);
+
+  #if !defined(DISABLE_RTC)
   // Check if the RTC is reachable
   Wire.beginTransmission(DS3231_I2C_ADDR);
   if (Wire.endTransmission() == 0) {
@@ -176,6 +202,7 @@ void setup() {
     Serial.println("Real-time Clock not found.");
     return;
   }
+  #endif
 
   // Start connecting to WIFI
   views::ViewStore::activateView(views::ViewStore::WifiConnectingView);
@@ -237,6 +264,13 @@ void setup() {
  * @brief Loop function
  */
 void loop() {
+  // Is the WiFi configured?
+  if(configuration::WifiConfigurationServer::getSingletonPointer()) {
+    // no, just wait until the configration server reboots
+    configuration::WifiConfigurationServer::getSingletonPointer()->loop();
+    return;
+  }
+
 #if !defined(HEADLESS_API_DEBUGGING)
   static time_t nextRtcUpdate = time(NULL) + 120;
 
@@ -302,12 +336,14 @@ void loop() {
     display.print("is nullptr");
   }
 
+  #if !defined(DISABLE_RTC)
   // Check if the RTC should be updated again?
   if (time(NULL) >= nextRtcUpdate) {
     nextRtcUpdate = time(NULL) + 120;
     RealTimeClock::saveTimeToRtc();
     Serial.println("Updated Real-Time Clock.");
   }
+  #endif
 #else
   Serial.printf("\n\n\n\n\nTick.\n");
   // start emlalock api if necessary
