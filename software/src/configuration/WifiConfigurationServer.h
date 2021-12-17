@@ -8,6 +8,7 @@
 #include "ConfigurationServerBase.h"
 
 #include <Arduino.h>
+#include <DNSServer.h>
 #include <Esp.h>
 #include <LiquidCrystal_PCF8574.h>
 #include <WiFi.h>
@@ -19,7 +20,7 @@
 namespace configuration {
 
 /**
- * @brief Class implementing all functions to configure the Controller
+ * @brief Class implementing the configuration of the WiFi
  */
 class WifiConfigurationServer : ConfigurationServerBase {
 #pragma region Singelton
@@ -56,6 +57,12 @@ public:
 #pragma region Members
 protected:
   /**
+   * @brief Instance of the DNS server in access point mode
+   */
+  DNSServer dnsServer;
+
+protected:
+  /**
    * @brief Reference to the display
    */
   LiquidCrystal_PCF8574& display;
@@ -71,6 +78,18 @@ protected:
    * @brief List with all found ssids
    */
   std::list<String> ssids;
+
+protected:
+  /**
+   * @brief IP address in Access Point mode
+   */
+  IPAddress IP;
+
+protected:
+  /**
+   * @brief Network mask in Access Point mode
+   */
+  IPAddress netMsk;
 #pragma endregion
 
 private:
@@ -81,13 +100,50 @@ private:
    */
   WifiConfigurationServer(LiquidCrystal_PCF8574& display)
     : ConfigurationServerBase()
-    , display(display) {
+    , display(display)
+    , IP(10, 0, 0, 1)
+    , netMsk(255, 255, 255, 0) {
     // open access point
-    WiFi.softAP(CONFIGURATION_SSID, "");
-    IPAddress IP = WiFi.softAPIP();
+    WiFi.setAutoReconnect(false);
+    WiFi.persistent(false);
+    WiFi.disconnect();
+    WiFi.setHostname("EmlalockSafe");
 
-    // Add files to webserver which are loaded from the file system
+    // Setup Access Point
+    display.clear();
+    display.setCursor(0, 0);
+    display.print("Setting up WiFi");
+    Serial.println("Setting up WiFi");
+    if (!WiFi.softAP(CONFIGURATION_SSID)) {
+      display.clear();
+      display.setCursor(0, 0);
+      display.print("Error starting");
+      display.setCursor(0, 1);
+      display.print("Access Point ");
+      display.setCursor(0, 2);
+      display.print(CONFIGURATION_SSID);
+      Serial.print("Error starting Access Point ");
+      Serial.println(CONFIGURATION_SSID);
+      return;
+    }
+    delay(2000); // Without delay I've seen the IP address blank
+    WiFi.softAPConfig(IP, IP, netMsk);
+    dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
+    dnsServer.start(53, "*", IP);
+
+    // Setup Webserver
+    display.clear();
+    display.setCursor(0, 0);
+    display.print("Setting up Webserver");
+    Serial.println("Setting up Webserver");
+    delay(500);
     addSpiffsFileToServer("/", "text/html", "/indexWifi.html");
+    addSpiffsFileToServer("/generate_204", "text/html", "/indexWifi.html");
+    addSpiffsFileToServer("/favicon.ico", "text/html", "/indexWifi.html");
+    addSpiffsFileToServer("/fwlink", "text/html", "/indexWifi.html");
+    addSpiffsFileToServer("/jquery-3.6.0.min.js", "text/javascript");
+    addSpiffsFileToServer("/main.css", "text/css");
+    addSpiffsFileToServer("/zones.json", "text/json");
 
     // Add file to webserver listing all visible SSIDs
     server.on("/ssids", HTTP_GET, [this](AsyncWebServerRequest* request) {
@@ -106,9 +162,14 @@ private:
       ESP.restart();
     });
 
-    // Start Webserver
-    server.begin();
-    
+    server.onNotFound([](AsyncWebServerRequest* request) {
+      // forward to index
+      AsyncWebServerResponse* response = request->beginResponse(302, "text/plain", "");
+      response->addHeader("Location", String("http://") + WiFi.softAPIP().toString());
+      request->send(response);
+    });
+
+    server.begin(); // Web server start
     // Update the LCD
     display.clear();
     display.setCursor(0, 0);
@@ -135,17 +196,22 @@ public:
    * @brief Forward of the Arduino loop function
    */
   void loop() {
-    static unsigned long nextScan = millis();
-    if (millis() >= nextScan) {
-      int n = WiFi.scanNetworks();
-      {
-        std::unique_lock<std::mutex> lock(mtx);
-        ssids.clear();
-        for (int i = 0; i < n; ++i) {
-          ssids.push_back(WiFi.SSID(i));
-        }
+    dnsServer.processNextRequest(); // DNS
+
+    // check the state scanning for wifis
+    int16_t scanState = WiFi.scanComplete();
+    if (scanState == -2) {
+      // not started yet, start a new scan
+      WiFi.scanNetworks(true);
+    }
+    else if (scanState >= 0) {
+      // scan completed
+      std::unique_lock<std::mutex> lock(mtx);
+      ssids.clear();
+      for (int i = 0; i < scanState; ++i) {
+        ssids.push_back(WiFi.SSID(i));
       }
-      nextScan = millis() + 5000;
+      WiFi.scanNetworks(true);
     }
   }
 };

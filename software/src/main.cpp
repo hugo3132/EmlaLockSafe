@@ -82,15 +82,17 @@ void ICACHE_RAM_ATTR encoderInterrupt(void) {
  * @brief Setup of Sketch
  */
 void setup() {
+  REG_WRITE(GPIO_OUT_W1TS_REG, BIT(GPIO_NUM_16)); // Guru Meditation Error Remediation set
+  delay(1);
+  REG_WRITE(GPIO_OUT_W1TC_REG, BIT(GPIO_NUM_16)); // Guru Meditation Error Remediation clear
+
   // Setup Coil output
   pinMode(COIL_PIN, OUTPUT);
   digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
 
   // Initialize Serial
   Serial.begin(115200);
-  delay(100);
-  Serial.println();
-  Serial.println("Here we go!");
+  while (!Serial); // wait for serial port to connect. Needed for native USB
   Serial.setDebugOutput(true);
 
   // initialize file system in flash
