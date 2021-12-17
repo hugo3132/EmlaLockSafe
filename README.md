@@ -1,5 +1,5 @@
 # EmlaLockSafe
-This project is about controlling a cheap digital safe from a local hardware store using the API of emlalock https://www.emlalock.com. The safe I've got is the following: https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628
+This project is about controlling a cheap digital safe from a local hardware store using the API of emlalock https://www.emlalock.com. 
 
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/safe.png" width="100%">
 
@@ -16,7 +16,7 @@ This project is about controlling a cheap digital safe from a local hardware sto
   * [Manual mode](#manual-mode)
 
 # Understanding the locking mechanism
-As described above, I've used a cheap safe from a local hardware store. But any cheap safe should do the trick as long as it can be electronically unlocked and easily disassembled. After removing the cover on the inside of the safe, the original electronics board can be removed and the mechanism looks as follows:
+As described above, I've used a [cheap safe from a local hardware store](https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628). But any cheap safe should do the trick as long as it can be electronically unlocked and easily disassembled. Try to look for a safe which is powered by 4 batteries (4 x 1.5V). Then the chances are high that the 5V of the controller board are high enough to pull the coil. The cheaper the safe the easier it might be to drill the holes into it to mount everything. After removing the cover on the inside of the safe, the original electronics board can be removed and the mechanism looks as follows:
 
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/coil.png" width="50%">
 
@@ -32,7 +32,7 @@ The controller and RTC module are both part of the [controller board](#controlle
 ## Controller board
 The controller board contains the ESP32 controller and the RTC as well as some electronics which can open the coil. The controller board is mounted inside the safe to ensure the firmware cannot be modified while the safe is locked. For the power supply of the controller a USB cable without data-pins should be used (either by disconnecting them or using a USB power cable). 
 
-<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_Controller_Board_Schematic.svg" width="66%"><img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_Controller_Board_Layout.svg" width="33%">
+<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_Controller_Board.svg" width="66%">
 
 The controller board can be easily soldered to a prototype PCB:
 
@@ -49,7 +49,7 @@ The I/O module is responsible for displaying the current state and is therefore 
 
 As shown in the first picture the module is glued to the safe. This is because the keyhole for the emergency key is below the I/O module.
 
-<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/EmlaLockSafe_IO_Module_Schematic.svg" width="66%">
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/Schematics/EmlaLockSafe_IO_Module_Schematic.svg" width="66%">
 
 Everything is mounted to a 3D printed case. The STL file can be downloaded from https://github.com/hugo3132/EmlaLockSafe/raw/master/hardware/EmlaLockSafe_IO_Module_Case.7z. The case itself was created using the free version of onshape. If it should be modified you can use the following link https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374 and modify it to your own needs.
 
