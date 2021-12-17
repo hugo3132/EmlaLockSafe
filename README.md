@@ -32,7 +32,7 @@ The controller and RTC module are both part of the [controller board](#controlle
 ## Controller board
 The controller board contains the ESP32 controller and the RTC as well as some electronics which can open the coil. The controller board is mounted inside the safe to ensure the firmware cannot be modified while the safe is locked. For the power supply of the controller a USB cable without data-pins should be used (either by disconnecting them or using a USB power cable). 
 
-<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_Controller_Board.svg" width="66%"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/pcb.png" width="66%">
+<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_Controller_Board.svg" width="66%"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/pcb.png" width="33%">
 
 The controller board can be easily soldered to a prototype PCB:
 
