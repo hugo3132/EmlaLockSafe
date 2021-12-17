@@ -6,6 +6,7 @@
 
 #include "../LockState.h"
 #include "../Tools.h"
+#include "../configuration/Configuration.h"
 #include "ViewStore.h"
 
 #include <DialogOK.h>
@@ -110,7 +111,10 @@ public:
     }
 
     // Should the safe be locked
-    if ((LockState::getEndDate() > time(NULL)) && (LockState::getCleaningEndDate() < time(NULL))) {
+    configuration::Configuration& config = configuration::Configuration::getSingleton();
+    if ((LockState::getEndDate() > time(NULL)) &&
+        ((LockState::getCleaningEndDate() == 0) ||
+         (config.getAutoLockHygieneOpeningTimeout() && (LockState::getCleaningEndDate() < time(NULL))))) {
       digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
       activatePreviousView();
       return;

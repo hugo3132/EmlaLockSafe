@@ -245,67 +245,6 @@ protected:
     }
 
     return true;
-    // WiFiClientSecure client;
-
-    // Serial.print("Host: https://");
-    // Serial.print(host);
-    // Serial.print("/");
-    // Serial.println(url);
-
-    // // connect to server
-    // client.setInsecure();
-    // client.connect(host.c_str(), 443);
-    // if (!client.connected()) {
-    //   Serial.println("Connection failed!");
-    //   return false;
-    // }
-
-    // // send get request
-    // client.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + host + "\r\n" + "User-Agent: ESP8266\r\n" +
-    //              "Connection: Keep-Alive\r\n\r\n");
-
-    // // wait until the header is received.
-    // String result = "Invalid Header received.";
-    // while (client.connected()) {
-    //   String line = client.readStringUntil('\n');
-
-    //   if ((line.length() > 8) && (line.substring(0, 8) == "HTTP/1.1")) {
-    //     result = line.substring(9);
-    //   }
-
-    //   if (line == "\r") {
-    //     break;
-    //   }
-    // }
-
-    // // check result
-    // result.trim();
-    // if (result != "200 OK") {
-    //   Serial.println(String("Error Getting https://") + host + url + ": " + result);
-    //   // read to end since we want to reuse the connection
-    //   client.readString();
-    //   return false;
-    // }
-
-    // // update json doc
-    // String data = client.readString();
-    // int idx = data.indexOf('{');
-    // if(idx == -1) {
-    //   Serial.print(F("deserializeJson() failed: "));
-    //   Serial.println("Cannot find '{'!");
-    //   return false;
-    // }
-
-    // data.remove(0,idx);
-    // DeserializationError error = deserializeJson(jsonDocument, data);
-    // if (error) {
-    //   Serial.print(F("deserializeJson() failed: "));
-    //   Serial.println(error.c_str());
-    //   return false;
-    // }
-
-    // Serial.println(String("https://") + host + url + ": ");
-    // return true;
   }
 };
 

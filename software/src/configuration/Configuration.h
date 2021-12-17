@@ -94,6 +94,15 @@ protected:
   unsigned long backlightTimeOut;
 #pragma endregion
 
+#pragma region Hygiene Opening Settings
+protected:
+  /**
+   * @brief Automatically lock after the time for hygiene opening is over. If not set, the safe stays unlocked until the hygiene
+   * opening is ended on the website.
+   */
+  bool autoLockHygieneOpeningTimeout;
+#pragma endregion
+
 public:
   Configuration() {
     // load everything from the SPIFFS
@@ -117,10 +126,11 @@ public:
       timezoneName = file.readStringUntil('\n');
       timezoneName.trim();
       backlightTimeOut = strtoul(file.readStringUntil('\n').c_str(), NULL, 0);
+      autoLockHygieneOpeningTimeout = strtol(file.readStringUntil('\n').c_str(), NULL, 0) == 1;
 
-      // file.close();
-      // file = SPIFFS.open("/configuration.txt", "r");
-      // Serial.printf("configuration.txt: \n\"%s\"\n", file.readString().c_str());
+      file.close();
+      file = SPIFFS.open("/configuration.txt", "r");
+      Serial.printf("configuration.txt: \n\"%s\"\n", file.readString().c_str());
     });
   }
 
@@ -187,13 +197,23 @@ public:
     return backlightTimeOut;
   }
 #pragma endregion
+#pragma region Hygiene Opening Settings
+public:
+  /**
+   * @brief return if the safe should automatically lock after the time for hygiene opening is over. If not set, the safe stays
+   * unlocked until the hygiene opening is ended on the website.
+   */
+  const bool& getAutoLockHygieneOpeningTimeout() const {
+    return autoLockHygieneOpeningTimeout;
+  }
+#pragma endregion
 #pragma endregion
 
 #pragma region Setter
 public:
   /**
    * @brief Set the Wifi Settings
-   * 
+   *
    * @param ssid new ssid
    * @param pwd  new password
    */
@@ -205,23 +225,27 @@ public:
 
   /**
    * @brief Set the Configuration Settings
-   * 
+   *
    * @param userId new Emlalock API user id
    * @param apiKey new Emlalock API key
    * @param timezoneName new name of timezone
    * @param timezone new timezone string
    * @param backlightTimeOut new timeout of display backlight in seconds
+   * @param autoLockHygieneOpeningTimeout Automatically lock after the time for hygiene opening is over. If not set, the safe
+   * stays unlocked until the hygiene opening is ended on the website.
    */
   void setConfigurationSettings(const String& userId,
                                 const String& apiKey,
                                 const String& timezoneName,
                                 const String& timezone,
-                                const long& backlightTimeOut) {
+                                const long& backlightTimeOut,
+                                const bool& autoLockHygieneOpeningTimeout) {
     this->userId = userId;
     this->apiKey = apiKey;
     this->timezoneName = timezoneName;
     this->timezone = timezone;
     this->backlightTimeOut = backlightTimeOut;
+    this->autoLockHygieneOpeningTimeout = autoLockHygieneOpeningTimeout;
 
     writeConfiguration();
   }
@@ -246,6 +270,7 @@ protected:
       file.println(timezone);
       file.println(timezoneName);
       file.println(backlightTimeOut);
+      file.println((autoLockHygieneOpeningTimeout)?"1":"0");
     });
   }
 #pragma endregion

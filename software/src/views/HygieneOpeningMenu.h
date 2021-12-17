@@ -80,7 +80,10 @@ public:
 
     // should the time left be displayed? If yes, how
     static time_t lastDisplayedTime = 0;
-    time_t timeLeft = LockState::getCleaningEndDate() - time(NULL);
+    time_t timeLeft = 0;
+    if(LockState::getCleaningEndDate() > time(NULL)) {
+      timeLeft = LockState::getCleaningEndDate() - time(NULL);
+    }
 
     // redraw required?
     if (forceRedraw || (lastDisplayedTime != timeLeft)) {
@@ -95,9 +98,6 @@ public:
       sprintf(buf, "Time Left: %02d:%02d:%02d", hour, min, sec);
 
       menuItems.back().setText(buf);
-
-      //   display->setCursor(0, 1);
-      //   display->print(buf);
     }
   }
 };

@@ -65,7 +65,8 @@ private:
                     "text/plain",
                     Configuration::getSingleton().getUserId() + "\r\n" + Configuration::getSingleton().getApiKey() + "\r\n" +
                       Configuration::getSingleton().getTimezoneName() + "\r\n" +
-                      Configuration::getSingleton().getBacklightTimeOut());
+                      Configuration::getSingleton().getBacklightTimeOut() + "\r\n" +
+                      (Configuration::getSingleton().getAutoLockHygieneOpeningTimeout()?"true":"false"));
     });
 
     server.on("/saveData", HTTP_GET, [](AsyncWebServerRequest* request) {
@@ -73,7 +74,8 @@ private:
                                                              getParam(request, "apiKey"),
                                                              getParam(request, "timezoneName"),
                                                              getParam(request, "timezone"),
-                                                             strtoul(getParam(request, "backlightTimeOut").c_str(), NULL, 0));
+                                                             strtoul(getParam(request, "backlightTimeOut").c_str(), NULL, 0),
+                                                             getParam(request, "autoLockHygieneOpeningTimeout").c_str() == "true");
       request->send(200, "text/plain", "Configuration Updated. Rebooting...");
       delay(100);
       ESP.restart();

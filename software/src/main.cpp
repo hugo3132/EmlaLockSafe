@@ -106,7 +106,6 @@ void setup() {
   configuration::Configuration::begin();
   configuration::Configuration& config = configuration::Configuration::getSingleton();
 
-
   // Set Timezone
   setenv("TZ", config.getTimezone().c_str(), 1);
   tzset();
@@ -273,6 +272,8 @@ void setup() {
  * @brief Loop function
  */
 void loop() {
+  configuration::Configuration& config = configuration::Configuration::getSingleton();
+
   // Is the WiFi configured?
   if(configuration::WifiConfigurationServer::getSingletonPointer()) {
     // no, just wait until the configration server reboots
@@ -290,11 +291,12 @@ void loop() {
   // check if the safe must be locked?
   if (LockState::getEndDate() > time(NULL)) {
     // check if there is a hygiene opening
-    if (LockState::getCleaningEndDate() > time(NULL)) {
+    if ((config.getAutoLockHygieneOpeningTimeout() && LockState::getCleaningEndDate() > time(NULL)) ||
+        (!config.getAutoLockHygieneOpeningTimeout() && LockState::getCleaningEndDate() != 0)) {
       // Hygiene Opening is currently active
       const lcd::ViewBase* view = lcd::ViewBase::getCurrentView();
 
-      // go through all previous views and look if it can be traced back to the
+      // go through all previous views and look if it can be tracked back to the
       // hygiene menu
       while (view && (view != views::ViewStore::getView(views::ViewStore::HygieneOpeningMenu))) {
         view = view->getPreviousView();
