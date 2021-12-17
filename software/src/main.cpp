@@ -8,8 +8,8 @@
 
 //#define DISABLE_RTC
 
-#include "config.h"
 #include "configuration/Configuration.h"
+#include "configuration/HardwareConfiguration.h"
 #include "configuration/WifiConfigurationServer.h"
 #include "LockState.h"
 #if !defined(DISABLE_RTC)

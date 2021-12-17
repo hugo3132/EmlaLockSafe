@@ -4,7 +4,7 @@
  */
 #pragma once
 
-#include "config.h"
+#include "configuration/HardwareConfiguration.h"
 
 #include <ViewBase.h>
 #include <WiFi.h>

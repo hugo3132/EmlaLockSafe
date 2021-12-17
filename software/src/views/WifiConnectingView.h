@@ -5,7 +5,6 @@
 #pragma once
 
 #include "../Tools.h"
-#include "../config.h"
 #include "../configuration/Configuration.h"
 
 #include <MenuView.h>

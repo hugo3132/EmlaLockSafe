@@ -6,7 +6,6 @@
 
 #include "../UsedInterrupts.h"
 #include "ConfigurationServerBase.h"
-#include "config.h"
 
 #include <Arduino.h>
 #include <ESPAsyncWebServer.h>

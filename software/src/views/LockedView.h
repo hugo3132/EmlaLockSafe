@@ -5,7 +5,6 @@
 #pragma once
 
 #include "../Tools.h"
-#include "../config.h"
 #include "../emlalock/EmlaLockApi.h"
 
 #include <RotaryEncoder.h>
