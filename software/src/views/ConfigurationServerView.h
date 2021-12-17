@@ -23,7 +23,7 @@ public:
    * @param numberOfRows number of display-rows
    */
   ConfigurationServerView(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder, const int& numberOfColumns, const int& numberOfRows)
-    : lcd::MenuView(display, "ConfigurationServerView", encoder, "Connect to", numberOfColumns, numberOfRows) {}
+    : lcd::MenuView(display, "ConfigurationServerView", encoder, "Open in browser:", numberOfColumns, numberOfRows) {}
 
 public:
   /**
