@@ -14,6 +14,7 @@
 #include <WiFi.h>
 #include <list>
 #include <mutex>
+#include <stdlib.h>
 
 namespace configuration {
 /**
@@ -62,16 +63,17 @@ private:
     server.on("/lastValues", HTTP_GET, [this](AsyncWebServerRequest* request) {
       request->send(200,
                     "text/plain",
-                    Configuration::getSingleton().getUserId() + "\r\n" +
-                    Configuration::getSingleton().getApiKey() + "\r\n" +
-                    Configuration::getSingleton().getTimezoneName());
+                    Configuration::getSingleton().getUserId() + "\r\n" + Configuration::getSingleton().getApiKey() + "\r\n" +
+                      Configuration::getSingleton().getTimezoneName() + "\r\n" +
+                      Configuration::getSingleton().getBacklightTimeOut());
     });
 
-    server.on("/saveData", HTTP_GET, [this](AsyncWebServerRequest* request) {
-      Configuration::getSingleton().setConfigurationSettings(request->getParam("userId")->value(),
-                                                             request->getParam("apiKey")->value(),
-                                                             request->getParam("timezoneName")->value(),
-                                                             request->getParam("timezone")->value());
+    server.on("/saveData", HTTP_GET, [](AsyncWebServerRequest* request) {
+      Configuration::getSingleton().setConfigurationSettings(getParam(request, "userId"),
+                                                             getParam(request, "apiKey"),
+                                                             getParam(request, "timezoneName"),
+                                                             getParam(request, "timezone"),
+                                                             strtoul(getParam(request, "backlightTimeOut").c_str(), NULL, 0));
       request->send(200, "text/plain", "Configuration Updated. Rebooting...");
       delay(100);
       ESP.restart();
@@ -79,6 +81,18 @@ private:
 
     // Start Webserver
     server.begin();
+  }
+
+  static String getParam(AsyncWebServerRequest* request, const String& paramName) {
+    auto param = request->getParam(paramName);
+    if (param == nullptr) {
+      Serial.println("Error getting parameter: " + paramName);
+      return "";
+    }
+    else {
+      Serial.println("Getting parameter: " + paramName + " = \"" + param->value() + "\"");
+      return param->value();
+    }
   }
 };
 } // namespace configuration

@@ -8,6 +8,7 @@
 
 #include <Arduino.h>
 #include <SPIFFS.h>
+#include <stdlib.h>
 
 namespace configuration {
 /**
@@ -72,7 +73,7 @@ protected:
   String apiKey;
 #pragma endregion
 
-#pragma region Timezone Settings
+#pragma region Miscellaneous Settings
 protected:
   /**
    * @brief The timezone-string (e.g. "CET-1CEST,M3.5.0,M10.5.0/3") see also
@@ -85,6 +86,12 @@ protected:
    * @brief The name to the timezone-string (e.g. "Europe/Berlin")
    */
   String timezoneName;
+
+protected:
+  /**
+   * @brief Timeout of display backlight in seconds
+   */
+  unsigned long backlightTimeOut;
 #pragma endregion
 
 public:
@@ -109,6 +116,11 @@ public:
       timezone.trim();
       timezoneName = file.readStringUntil('\n');
       timezoneName.trim();
+      backlightTimeOut = strtoul(file.readStringUntil('\n').c_str(), NULL, 0);
+
+      // file.close();
+      // file = SPIFFS.open("/configuration.txt", "r");
+      // Serial.printf("configuration.txt: \n\"%s\"\n", file.readString().c_str());
     });
   }
 
@@ -149,7 +161,7 @@ public:
   }
 #pragma endregion
 
-#pragma region Timezone Settings
+#pragma region Miscellaneous Settings
 public:
   /**
    * @brief get the timezone-string (e.g. "CET-1CEST,M3.5.0,M10.5.0/3") see also
@@ -165,6 +177,14 @@ public:
    */
   const String& getTimezoneName() const {
     return timezoneName;
+  }
+
+public:
+  /**
+   * @brief get the timeout of display backlight in seconds
+   */
+  const unsigned long& getBacklightTimeOut() const {
+    return backlightTimeOut;
   }
 #pragma endregion
 #pragma endregion
@@ -190,12 +210,19 @@ public:
    * @param apiKey new Emlalock API key
    * @param timezoneName new name of timezone
    * @param timezone new timezone string
+   * @param backlightTimeOut new timeout of display backlight in seconds
    */
-  void setConfigurationSettings(const String& userId, const String& apiKey, const String& timezoneName, const String& timezone) {
+  void setConfigurationSettings(const String& userId,
+                                const String& apiKey,
+                                const String& timezoneName,
+                                const String& timezone,
+                                const long& backlightTimeOut) {
     this->userId = userId;
     this->apiKey = apiKey;
     this->timezoneName = timezoneName;
     this->timezone = timezone;
+    this->backlightTimeOut = backlightTimeOut;
+
     writeConfiguration();
   }
 
@@ -218,6 +245,7 @@ protected:
       file.println(apiKey);
       file.println(timezone);
       file.println(timezoneName);
+      file.println(backlightTimeOut);
     });
   }
 #pragma endregion

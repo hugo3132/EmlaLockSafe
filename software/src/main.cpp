@@ -104,9 +104,11 @@ void setup() {
 
   // load the configuration
   configuration::Configuration::begin();
+  configuration::Configuration& config = configuration::Configuration::getSingleton();
+
 
   // Set Timezone
-  setenv("TZ", configuration::Configuration::getSingleton().getTimezone().c_str(), 1);
+  setenv("TZ", config.getTimezone().c_str(), 1);
   tzset();
 
 #if !defined(HEADLESS_API_DEBUGGING)
@@ -129,8 +131,8 @@ void setup() {
   }
 
   // Do we need to configure the WiFi?
-  if ((configuration::Configuration::getSingleton().getSsid().length() == 0) ||
-      (configuration::Configuration::getSingleton().getPwd().length() == 0)) {
+  if ((config.getSsid().length() == 0) ||
+      (config.getPwd().length() == 0)) {
     Serial.println("Start WiFi Configuration Server");
     configuration::WifiConfigurationServer::begin(display);
     return;
@@ -155,7 +157,9 @@ void setup() {
     ViewStore::addView(ViewStore::UnlockSafeView, unlockSafeView);
     ViewStore::addView(ViewStore::WifiConnectingView, wifiConnectingView);
   }
-  lcd::ViewBase::setBacklightTimeout(15000);
+  Serial.print("Setting Display Timeout to ");
+  Serial.println(config.getBacklightTimeOut() * 1000);
+  lcd::ViewBase::setBacklightTimeout(config.getBacklightTimeOut() * 1000);
 
   // Check if we need to go to the emergency menu
   encoder.tick();
@@ -212,8 +216,8 @@ void setup() {
   if (LockState::getEndDate() > time(NULL)) {
     views::ViewStore::activateView(views::ViewStore::LockedView);
   }
-  else if ((configuration::Configuration::getSingleton().getApiKey().length() == 0) ||
-           (configuration::Configuration::getSingleton().getUserId().length() == 0)) {
+  else if ((config.getApiKey().length() == 0) ||
+           (config.getUserId().length() == 0)) {
     views::ViewStore::activateView(views::ViewStore::ConfigurationServerView);
   }
   else {
@@ -277,7 +281,7 @@ void loop() {
   }
 
 #if !defined(HEADLESS_API_DEBUGGING)
-  // start emlalock api if necessary
+  //start emlalock api if necessary
   emlalock::EmlaLockApi::getSingleton();
 
   // tick for the encoder if the interrupt didn't properly trigger

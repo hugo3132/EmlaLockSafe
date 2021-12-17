@@ -31,6 +31,7 @@
           document.getElementById('userId').value = lastValues[0];
           document.getElementById('apiKey').value = lastValues[1];
           document.getElementById('timezone').value = lastValues[2];
+          document.getElementById('backlightTimeOut').value = lastValues[3];
         });
 
       jQuery.ajaxSetup({async:true});
@@ -42,7 +43,8 @@
           userId: document.getElementById('userId').value,
           apiKey: document.getElementById('apiKey').value,
           timezoneName: document.getElementById('timezone').value,
-          timezone: timeZones[document.getElementById('timezone').value]
+          timezone: timeZones[document.getElementById('timezone').value],
+          backlightTimeOut: document.getElementById('backlightTimeOut').value
         },
         function (data, status) {
           alert(data);
@@ -56,18 +58,21 @@
   <div class="container">
     <h3>Emlalock Settings</h3>
 
-    <label for="lname">User ID</label>
+    <label for="userId">User ID</label>
     <input type="text" id="userId" name="userId" placeholder="Your User ID">
 
-    <label for="lname">API Key</label>
+    <label for="apiKey">API Key</label>
     <input type="text" id="apiKey" name="apiKey" placeholder="Your API Key">
   </div>
 
   <div class="container">
     <h3>Miscellaneous Settings</h3>
 
-    <select id="timezone" name="timezone">
-    </select>
+    <label for="timezone">Timezone</label>
+    <select id="timezone" name="timezone"></select>
+
+    <label for="backlightTimeOut">Timeout of display backlight in seconds. 0 disables the timeout.</label>
+    <input type="text" id="backlightTimeOut" name="backlightTimeOut">
   </div>
 
   <div class="container">
