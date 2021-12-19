@@ -90,23 +90,5 @@ For the I/O module no PCB is required. Everything is directly soldered to each o
 
 
 # Software
+The software is documented using doxygen. Please refer to https://hugo3132.github.io/EmlaLockSafe/index.html to open the software documentation.
 
---> Based on views,
---> Views are global and can be accessed over the [ViewStore](https://github.com/hugo3132/EmlaLockSafe/blob/master/software/src/views/ViewStore.h)
---> Menus are a specialization of a view
-
---> Meaning unlock key [EmlalockUnlockKeyMenu](#EmlalockUnlockKeyMenu)
-
-<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/EmlalockSafe.vpd.svg" width="100%">
-
-## Example Views
-
-### EmlalockUnlockKeyMenu
-<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/EmlalockUnlockKeyMenu.png" width="50%">
-
-### LockedView
-<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/LockedView.png" width="100%">
-
-
-## Manual mode
-TBD
