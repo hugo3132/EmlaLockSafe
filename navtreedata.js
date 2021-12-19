@@ -24,12 +24,45 @@
 */
 var NAVTREE =
 [
-  [ "EmlaLockSafe", "index.html", ]
+  [ "EmlaLockSafe", "index.html", [
+    [ "Overview", "index.html#Overview", null ],
+    [ "Configuration", "index.html#Configuration", null ],
+    [ "Lockstate", "index.html#Lockstate", null ],
+    [ "API", "index.html#EmlaLock", null ],
+    [ "Views", "index.html#Views", null ],
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ]
+    ] ],
+    [ "Classes", "annotated.html", [
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
+      [ "Class Members", "functions.html", [
+        [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", null ],
+        [ "Variables", "functions_vars.html", null ],
+        [ "Typedefs", "functions_type.html", null ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Enumerator", "functions_eval.html", null ]
+      ] ]
+    ] ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Functions", "globals_func.html", null ],
+        [ "Variables", "globals_vars.html", null ],
+        [ "Macros", "globals_defs.html", null ]
+      ] ]
+    ] ]
+  ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"index.html"
+"_configuration_8h.html",
+"classemlalock_1_1_emla_lock_api.html#ab98e7fa363c4617de00ee1df3c03a1bb",
+"classviews_1_1_view_store.html#a8551609990773bed68f356722a297e77"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
