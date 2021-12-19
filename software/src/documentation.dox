@@ -3,20 +3,64 @@
 
 Documentation for the software of the EmlaLockSafe.
 
-\image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/safe.png width=50%
+\image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/safe.png height=150px
 
 \tableofcontents
 
 \section Overview
 The EmlaLockSafe uses an ESP32 processor board to open the attached safe dependent on your session on <a href="https://www.emlalock.com">emlalock.com</a>.
+The software running on the EPS32 is speparated into different parts which are described in the following sections.
 
-\section Configuration
+The \ref secConfiguration "first section" covers the how the webservers are used to configure the software. The section \ref secLockstate shows how the 
+software handles if it should open or not and what is shown on the display. The section \ref secEmlaLockApi shows how the software interacts with the API
+of <a href="https://www.emlalock.com">emlalock.com</a>.
 
-\section Lockstate
+Except of the \ref subWifiConfigurationServer, everything what is displayed on the LCD is using \ref secViews. A view can be what's currently displayed, a
+dialog or an menu. For the navigation within the views, the encoder nob can be used.
 
-\section EmlaLock API
+\section secConfiguration Configuration
 
-\section Views
+The configuration is stored in the fields of the \ref configuration::Configuration class. It automatically loads and saves all parameters to the file 
+/configuration.txt. The filesystem is located in an SPIFFS in the ESP32's flash memory.
+To change the configuration two webservers are used. The first sever (see \ref subWifiConfigurationServer) is always started automatically when the WiFi 
+credentials are not complete. The second server (see \ref subMainConfigurationServer) is automatically started if the EmlaLock API is not configured. 
+Both servers can also be started using the \ref subPreferencesMenu.
 
+\subsection subWifiConfigurationServer WiFi Configuration Server
+
+\subsection subMainConfigurationServer Main Configuration Server
+
+\section secLockstate Lockstate
+
+\section secEmlaLockApi EmlaLock API
+
+\section secViews Views
+
+\subsection subPreferencesMenu Preferences Menu
+Only available when unlocked
 
 */
+
+
+
+--> Based on views,
+--> Views are global and can be accessed over the [ViewStore](https://github.com/hugo3132/EmlaLockSafe/blob/master/software/src/views/ViewStore.h)
+--> Menus are a specialization of a view
+
+--> Meaning unlock key [EmlalockUnlockKeyMenu](#EmlalockUnlockKeyMenu)
+
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/EmlalockSafe.vpd.svg" width="100%">
+
+## Example Views
+
+### EmlalockUnlockKeyMenu
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/EmlalockUnlockKeyMenu.png" width="50%">
+
+### LockedView
+<img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/LockedView.png" width="100%">
+
+
+## Manual mode
+TBD
+
+
