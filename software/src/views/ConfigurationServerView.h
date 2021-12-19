@@ -48,6 +48,10 @@ protected:
 
       // create menu items
       createMenuItem("http://" + WiFi.localIP().toString(), [this](MenuItem*) {});
+      createMenuItem("Back", [this](MenuItem*) {
+        configuration::ConfigurationServer::end();
+        activatePreviousView();
+      });
     }
 
     lcd::MenuView::activate();
@@ -62,10 +66,11 @@ public:
   virtual void tick(const bool& forceRedraw) {
     static unsigned long nextCheck = millis();
 
-    if(nextCheck >= millis()) {
+    if(nextCheck < millis()) {
       static String ip = "";
       String tmpIp = WiFi.localIP().toString();
       if (ip != tmpIp) {
+        ip = tmpIp;
         menuItems.front().setText("http://" + tmpIp);
       }
       nextCheck = millis() + 100;
