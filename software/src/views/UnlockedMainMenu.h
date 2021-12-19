@@ -8,6 +8,7 @@
 #include "ViewStore.h"
 
 #include <MenuView.h>
+#include <Esp.h>
 
 namespace views {
 /**
@@ -62,6 +63,9 @@ protected:
       });
       createMenuItem("Hardware Test View", [](MenuItem*) {
         ViewStore::activateView(ViewStore::HardwareTestView);
+      });
+      createMenuItem("Reboot", [](MenuItem*) {
+        ESP.restart();
       });
     }
     lcd::MenuView::activate();
