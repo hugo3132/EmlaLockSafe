@@ -64,27 +64,42 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#Overview">Overview</a></li>
-<li class="level1"><a href="#Configuration">Configuration</a></li>
-<li class="level1"><a href="#Lockstate">Lockstate</a></li>
-<li class="level1"><a href="#EmlaLock">API</a></li>
-<li class="level1"><a href="#Views">Views</a></li>
+<li class="level1"><a href="#secConfiguration">Configuration</a><ul><li class="level2"><a href="#subWifiConfigurationServer">WiFi Configuration Server</a></li>
+<li class="level2"><a href="#subMainConfigurationServer">Main Configuration Server</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#secLockstate">Lockstate</a></li>
+<li class="level1"><a href="#secEmlaLockApi">EmlaLock API</a></li>
+<li class="level1"><a href="#secViews">Views</a><ul><li class="level2"><a href="#subPreferencesMenu">Preferences Menu</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="textblock"><p >Documentation for the software of the EmlaLockSafe.</p>
 <div class="image">
-<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/safe.png" alt="" width="50%"/>
+<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/safe.png" alt="" height="150px"/>
 </div>
 <h1><a class="anchor" id="Overview"></a>
 Overview</h1>
-<p >The EmlaLockSafe uses an ESP32 processor board to open the attached safe dependent on your session on <a href="https://www.emlalock.com">emlalock.com</a>.</p>
-<h1><a class="anchor" id="Configuration"></a>
+<p >The EmlaLockSafe uses an ESP32 processor board to open the attached safe dependent on your session on <a href="https://www.emlalock.com">emlalock.com</a>. The software running on the EPS32 is speparated into different parts which are described in the following sections.</p>
+<p >The <a class="el" href="index.html#secConfiguration">first section</a> covers the how the webservers are used to configure the software. The section <a class="el" href="index.html#secLockstate">Lockstate</a> shows how the software handles if it should open or not and what is shown on the display. The section <a class="el" href="index.html#secEmlaLockApi">EmlaLock API</a> shows how the software interacts with the API of <a href="https://www.emlalock.com">emlalock.com</a>.</p>
+<p >Except of the <a class="el" href="index.html#subWifiConfigurationServer">WiFi Configuration Server</a>, everything what is displayed on the LCD is using <a class="el" href="index.html#secViews">Views</a>. A view can be what's currently displayed, a dialog or an menu. For the navigation within the views, the encoder nob can be used.</p>
+<h1><a class="anchor" id="secConfiguration"></a>
 Configuration</h1>
-<h1><a class="anchor" id="Lockstate"></a>
+<p >The configuration is stored in the fields of the <a class="el" href="classconfiguration_1_1_configuration.html">configuration::Configuration</a> class. It automatically loads and saves all parameters to the file /configuration.txt. The filesystem is located in an SPIFFS in the ESP32's flash memory. To change the configuration two webservers are used. The first sever (see <a class="el" href="index.html#subWifiConfigurationServer">WiFi Configuration Server</a>) is always started automatically when the WiFi credentials are not complete. The second server (see <a class="el" href="index.html#subMainConfigurationServer">Main Configuration Server</a>) is automatically started if the EmlaLock API is not configured. Both servers can also be started using the <a class="el" href="index.html#subPreferencesMenu">Preferences Menu</a>.</p>
+<h2><a class="anchor" id="subWifiConfigurationServer"></a>
+WiFi Configuration Server</h2>
+<h2><a class="anchor" id="subMainConfigurationServer"></a>
+Main Configuration Server</h2>
+<h1><a class="anchor" id="secLockstate"></a>
 Lockstate</h1>
-<h1><a class="anchor" id="EmlaLock"></a>
-API</h1>
-<h1><a class="anchor" id="Views"></a>
+<h1><a class="anchor" id="secEmlaLockApi"></a>
+EmlaLock API</h1>
+<h1><a class="anchor" id="secViews"></a>
 Views</h1>
+<h2><a class="anchor" id="subPreferencesMenu"></a>
+Preferences Menu</h2>
+<p >Only available when unlocked </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

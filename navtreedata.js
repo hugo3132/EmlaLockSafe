@@ -26,10 +26,15 @@ var NAVTREE =
 [
   [ "EmlaLockSafe", "index.html", [
     [ "Overview", "index.html#Overview", null ],
-    [ "Configuration", "index.html#Configuration", null ],
-    [ "Lockstate", "index.html#Lockstate", null ],
-    [ "API", "index.html#EmlaLock", null ],
-    [ "Views", "index.html#Views", null ],
+    [ "Configuration", "index.html#secConfiguration", [
+      [ "WiFi Configuration Server", "index.html#subWifiConfigurationServer", null ],
+      [ "Main Configuration Server", "index.html#subMainConfigurationServer", null ]
+    ] ],
+    [ "Lockstate", "index.html#secLockstate", null ],
+    [ "EmlaLock API", "index.html#secEmlaLockApi", null ],
+    [ "Views", "index.html#secViews", [
+      [ "Preferences Menu", "index.html#subPreferencesMenu", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
     ] ],
