@@ -1,0 +1,22 @@
+/**
+\mainpage EmlaLockSafe
+
+Documentation for the software of the EmlaLockSafe.
+
+\image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/safe.png width=50%
+
+\tableofcontents
+
+\section Overview
+The EmlaLockSafe uses an ESP32 processor board to open the attached safe dependent on your session on <a href="https://www.emlalock.com">emlalock.com</a>.
+
+\section Configuration
+
+\section Lockstate
+
+\section EmlaLock API
+
+\section Views
+
+
+*/
