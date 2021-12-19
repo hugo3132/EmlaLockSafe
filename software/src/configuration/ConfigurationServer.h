@@ -48,6 +48,16 @@ public:
     }
     return **getInstance();
   }
+
+  /**
+   * @brief Destroy the configuration server
+   */
+  inline static void end() {
+    if (*getInstance()) {
+      delete *getInstance();
+      *getInstance() = nullptr;
+    }
+  }
 #pragma endregion
 
 private:
@@ -75,15 +85,14 @@ private:
                                                              getParam(request, "timezoneName"),
                                                              getParam(request, "timezone"),
                                                              strtoul(getParam(request, "backlightTimeOut").c_str(), NULL, 0),
-                                                             getParam(request, "autoLockHygieneOpeningTimeout").c_str() == "true");
-      request->send(200, "text/plain", "Configuration Updated. Rebooting...");
-      delay(100);
-      ESP.restart();
+                                                             getParam(request, "autoLockHygieneOpeningTimeout") == "true");
+      request->send(200, "text/plain", "Configuration updated");
     });
 
     // Start Webserver
     server.begin();
   }
+
 
   static String getParam(AsyncWebServerRequest* request, const String& paramName) {
     auto param = request->getParam(paramName);

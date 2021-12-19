@@ -9,6 +9,7 @@
 #include <Arduino.h>
 #include <SPIFFS.h>
 #include <stdlib.h>
+#include <ViewBase.h>
 
 namespace configuration {
 /**
@@ -242,10 +243,17 @@ public:
                                 const bool& autoLockHygieneOpeningTimeout) {
     this->userId = userId;
     this->apiKey = apiKey;
+
     this->timezoneName = timezoneName;
     this->timezone = timezone;
+    setenv("TZ", timezone.c_str(), 1);
+    tzset();    
+
     this->backlightTimeOut = backlightTimeOut;
+    lcd::ViewBase::setBacklightTimeout(backlightTimeOut * 1000);
+
     this->autoLockHygieneOpeningTimeout = autoLockHygieneOpeningTimeout;
+    Serial.println((autoLockHygieneOpeningTimeout)?"1":"0");
 
     writeConfiguration();
   }
