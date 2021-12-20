@@ -58,7 +58,13 @@ public:
   static void executeWithoutInterrupts(std::function<void(void)> f) {
     if (interruptsAttached) {
       detach();
-      f();
+      try{
+        f();
+      }
+      catch(...) {
+        attach();
+        throw;
+      }
       attach();
     }
     else {
