@@ -7,6 +7,8 @@ This project is about controlling a cheap digital safe from a local hardware sto
 
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/safe.png" width="100%">
 
+The software is documented using doxygen. Please refer to https://hugo3132.github.io/EmlaLockSafe/index.html to open the software documentation.
+
 # Contents
 - [Setup](#setup)
   - [Howto Flash the Software](#howto-flash-the-software)
@@ -17,11 +19,6 @@ This project is about controlling a cheap digital safe from a local hardware sto
   - [New electronics](#new-electronics)
     - [Controller board](#controller-board)
     - [I/O module](#io-module)
-- [Software](#software)
-  - [Example Views](#Example-Views)
-    - [EmlalockUnlockKeyMenu](#EmlalockUnlockKeyMenu)
-    - [LockedView](#LockedView)
-  - [Manual mode](#manual-mode)
 
 # Setup
 ## Howto Flash the Software
@@ -44,9 +41,10 @@ After the controller rebooted and has connected to the WiFi a webserver is start
 Since the controller is now part of your normal network it can be reached by any computer, phone, ... connected to your network.
 
 # Hardware Description 
-Note: The following might be outdated since it was written for V1.0.0.
 
 ## Understanding the locking mechanism
+Note: The following might be outdated since it was written for V1.0.0.
+
 As described above, I've used a [cheap safe from a local hardware store](https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628). But any cheap safe should do the trick as long as it can be electronically unlocked and easily disassembled. Try to look for a safe which is powered by 4 batteries (4 x 1.5V). Then the chances are high that the 5V of the controller board are high enough to pull the coil. The cheaper the safe the easier it might be to drill the holes into it to mount everything. After removing the cover on the inside of the safe, the original electronics board can be removed and the mechanism looks as follows:
 
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/coil.png" width="50%">
@@ -55,12 +53,16 @@ On the left side of the picture the safe is locked. The pin of the coil is pushe
 The mechanism is also the reason why these safe must be mounted to something solid (e.g. a wall). Otherwise you can hit the safe from the top which pushes down the spring for a few milliseconds in which the safe can be unlocked.
 
 ## New electronics
+Note: The following might be outdated since it was written for V1.0.0.
+
 The idea of this project is now to replace the original electronics with a controller which checks the EmlaLock API if it can be opened or not. To be able to connect to the internet I first started using a ESP8266. After a while I ran out of memory while parsing the JSON file delivered by the EmlaLock API. Therefore, I had to switch to the more powerful [ESP32 module](https://www.amazon.de/AZDelivery-ESP32-NodeMCU-Module-Parent/dp/B07Z6CSD9K).
 The controller module is extended by a [real-time clock (RTC) module](https://www.amazon.de/AZDelivery-Real-Clock-DS3231-Parent/dp/B07ZQGBH14). As long as the controller has a WiFi connection the time of the RTC module is set using the [network time protocol](https://en.wikipedia.org/wiki/Network_Time_Protocol). In case the WiFi connection is lost the controller is able to get the time from the RTC module even after the power outage. This is important in case the [manual mode](#manual-mode) is used.
 
 The controller and RTC module are both part of the [controller board](#controller-board) which is mounted inside the safe. The [controller board](#controller-board) is extended by the [I/O module](#io-module) mounted to the outside of the safe which contains a [HD44780 display with an I²C converter](https://www.amazon.de/AZDelivery-Bundle-2004-blau-Parent/dp/B07Z6CPTF4) and a [rotary encoder](https://www.amazon.de/WayinTop-Encoder-Drehgeber-Drehwinkelgeber-Druckknopf/dp/B07T3672VK). Since the controller display requires 5V and the controller runs with 3.3V, a [logic level converter](https://www.amazon.de/gp/product/B07LG6RK7L) is added between the controller board and the LCD module.
 
 ### Controller board
+Note: The following might be outdated since it was written for V1.0.0.
+
 The controller board contains the ESP32 controller and the RTC as well as some electronics which can open the coil. The controller board is mounted inside the safe to ensure the firmware cannot be modified while the safe is locked. For the power supply of the controller a USB cable without data-pins should be used (either by disconnecting them or using a USB power cable). 
 
 <img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_Controller_Board.svg" width="66%">
@@ -86,9 +88,4 @@ Everything is mounted to a 3D printed case. The STL file can be downloaded from 
 
 <img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/DisplayModule_Back.png" width="49%"><img src="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/DisplayModule_Front.png" width="49%">
 
-For the I/O module no PCB is required. Everything is directly soldered to each other or connected with some cables. 
-
-
-# Software
-The software is documented using doxygen. Please refer to https://hugo3132.github.io/EmlaLockSafe/index.html to open the software documentation.
-
+For the I/O module no PCB is required. Everything is directly soldered to each other or connected with some cables.
