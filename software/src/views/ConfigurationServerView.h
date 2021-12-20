@@ -48,6 +48,10 @@ protected:
 
       // create menu items
       createMenuItem("http://" + WiFi.localIP().toString(), [this](MenuItem*) {});
+      createMenuItem("Change Wifi Settings", [this](MenuItem*) {
+        configuration::Configuration::getSingleton().setWifiSettings("", "");
+        ESP.restart();
+      });
       createMenuItem("Back", [this](MenuItem*) {
         configuration::ConfigurationServer::end();
         activatePreviousView();
