@@ -53,7 +53,8 @@ If the captive portal does not work, the necessary steps are also displayed on t
 \image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/WifiSetup.jpg height=300px
 </a>
 
-The webserver (see @ref configuration::WifiConfigurationServer::configureWebserver "configureWebserver()") also provides a generated text-file with all
+The webserver mainly provides the <a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexWifi.html">indexWifi.html</a>
+(see @ref configuration::WifiConfigurationServer::configureWebserver "configureWebserver()"). It also provides a generated text-file with all
 visible WiFi networks. The list is automatically updated in the @ref configuration::WifiConfigurationServer::loop "loop()" function. 
 
 \subsection subMainConfigurationServer Main Configuration Server
