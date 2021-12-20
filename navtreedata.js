@@ -28,12 +28,17 @@ var NAVTREE =
     [ "Overview", "index.html#Overview", null ],
     [ "Configuration", "index.html#secConfiguration", [
       [ "WiFi Configuration Server", "index.html#subWifiConfigurationServer", null ],
-      [ "Main Configuration Server", "index.html#subMainConfigurationServer", null ]
+      [ "Main Configuration Server", "index.html#subMainConfigurationServer", [
+        [ "Emlalock Settings", "index.html#subsubEmlaLockSettings", null ],
+        [ "Miscellaneous Settings", "index.html#subsubMiscellaneousSettings", null ],
+        [ "Hygiene Opening Settings", "index.html#subsubHygieneOpeningSettings", null ]
+      ] ]
     ] ],
     [ "Lockstate", "index.html#secLockstate", null ],
     [ "EmlaLock API", "index.html#secEmlaLockApi", null ],
     [ "Views", "index.html#secViews", [
-      [ "Preferences Menu", "index.html#subPreferencesMenu", null ]
+      [ "Preferences Menu", "index.html#subPreferencesMenu", null ],
+      [ "Configuration Server View", "index.html#subConfigurationServerView", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
