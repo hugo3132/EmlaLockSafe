@@ -29,7 +29,6 @@ protected:
     // Add files to webserver which are loaded from the file system
     addSpiffsFileToServer("/jquery-3.6.0.min.js", "text/javascript");
     addSpiffsFileToServer("/main.css", "text/css");
-    addSpiffsFileToServer("/zones.json", "text/json");
   }
 
 protected:

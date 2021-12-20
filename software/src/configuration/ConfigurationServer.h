@@ -68,6 +68,7 @@ private:
     : ConfigurationServerBase() {
     // Add files to webserver which are loaded from the file system
     addSpiffsFileToServer("/", "text/html", "/indexConfig.html");
+    addSpiffsFileToServer("/zones.json", "text/json");
 
     // Add file to webserver returning the current settings
     server.on("/lastValues", HTTP_GET, [this](AsyncWebServerRequest* request) {
