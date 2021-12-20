@@ -22,7 +22,10 @@ public:
    * @param numberOfColumns number of display-columns
    * @param numberOfRows number of display-rows
    */
-  ConfigurationServerView(LiquidCrystal_PCF8574* display, RotaryEncoder* encoder, const int& numberOfColumns, const int& numberOfRows)
+  ConfigurationServerView(LiquidCrystal_PCF8574* display,
+                          RotaryEncoder* encoder,
+                          const int& numberOfColumns,
+                          const int& numberOfRows)
     : lcd::MenuView(display, "ConfigurationServerView", encoder, "Open in Browser:", numberOfColumns, numberOfRows) {}
 
 public:
@@ -64,13 +67,13 @@ protected:
 public:
   /**
    * @brief Overload Tick
-   * 
+   *
    * This is necessary directly after a reboot, localIP returns 0.0.0.0
    */
   virtual void tick(const bool& forceRedraw) {
     static unsigned long nextCheck = millis();
 
-    if(nextCheck < millis()) {
+    if (nextCheck < millis()) {
       static String ip = "";
       String tmpIp = WiFi.localIP().toString();
       if (ip != tmpIp) {
@@ -81,6 +84,5 @@ public:
     }
     lcd::MenuView::tick(forceRedraw);
   }
-
 };
 } // namespace views
