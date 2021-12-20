@@ -1,7 +1,8 @@
 /**
 \mainpage EmlaLockSafe
 
-Documentation for the software of the EmlaLockSafe.
+Documentation for the software of the EmlaLockSafe which can be found under
+<a href="https://github.com/hugo3132/EmlaLockSafe">https://github.com/hugo3132/EmlaLockSafe</a>.
 
 <a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/safe.png">
 \image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/safe.png height=300px
@@ -53,7 +54,7 @@ If the captive portal does not work, the necessary steps are also displayed on t
 </a>
 
 The webserver (see @ref configuration::WifiConfigurationServer::configureWebserver "configureWebserver()") also provides a generated text-file with all
-visible WiFi networks. The list is automatically updated in the configuration::WifiConfigurationServer::loop "loop()" function.
+visible WiFi networks. The list is automatically updated in the @ref configuration::WifiConfigurationServer::loop "loop()" function. 
 
 \subsection subMainConfigurationServer Main Configuration Server
 
@@ -71,7 +72,7 @@ visible WiFi networks. The list is automatically updated in the configuration::W
 \section secViews Views
 
 \subsection subPreferencesMenu Preferences Menu
-Only available when unlocked
+@note Only available when unlocked
 
 */
 
