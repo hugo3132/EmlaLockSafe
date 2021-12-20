@@ -15,6 +15,9 @@
 #include <list>
 #include <mutex>
 
+/**
+ * @brief Name of the the temporary WiFi for the configuration
+ */
 #define CONFIGURATION_SSID "SafeSetup"
 
 namespace configuration {
@@ -103,6 +106,26 @@ private:
     , display(display)
     , IP(10, 0, 0, 1)
     , netMsk(255, 255, 255, 0) {
+    createAp();
+    configureWebserver();
+    server.begin(); // Web server start
+    initialLcdMessage();
+  }
+
+public:
+  /**
+   * @brief Forward of the Arduino loop function
+   */
+  void loop() {
+    dnsServer.processNextRequest(); // DNS
+    scanWiFi();
+  }
+
+protected:
+  /**
+   * @brief Create and configures the WiFi in AP mode
+   */
+  void createAp() {
     // open access point
     WiFi.setAutoReconnect(false);
     WiFi.persistent(false);
@@ -130,20 +153,25 @@ private:
     WiFi.softAPConfig(IP, IP, netMsk);
     dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
     dnsServer.start(53, "*", IP);
+  }
 
+protected:
+  /**
+   * @brief adds the handlers for the different webpages
+   */
+  void configureWebserver() {
     // Setup Webserver
     display.clear();
     display.setCursor(0, 0);
     display.print("Setting up Webserver");
     Serial.println("Setting up Webserver");
     delay(500);
+
     addSpiffsFileToServer("/", "text/html", "/indexWifi.html");
+    // Captive Portal forwards
     addSpiffsFileToServer("/generate_204", "text/html", "/indexWifi.html");
     addSpiffsFileToServer("/favicon.ico", "text/html", "/indexWifi.html");
     addSpiffsFileToServer("/fwlink", "text/html", "/indexWifi.html");
-    addSpiffsFileToServer("/jquery-3.6.0.min.js", "text/javascript");
-    addSpiffsFileToServer("/main.css", "text/css");
-    addSpiffsFileToServer("/zones.json", "text/json");
 
     // Add file to webserver listing all visible SSIDs
     server.on("/ssids", HTTP_GET, [this](AsyncWebServerRequest* request) {
@@ -155,6 +183,7 @@ private:
       request->send(200, "text/plain", resp);
     });
 
+    // Callback for if the modifications should be saved
     server.on("/saveData", HTTP_GET, [this](AsyncWebServerRequest* request) {
       Configuration::getSingleton().setWifiSettings(request->getParam("ssid")->value(), request->getParam("pwd")->value());
       request->send(200, "text/plain", "Configuration Updated. Rebooting...");
@@ -162,14 +191,20 @@ private:
       ESP.restart();
     });
 
+    // Callback if the a site is requested which does not exist
     server.onNotFound([](AsyncWebServerRequest* request) {
-      // forward to index
+      // just always forward to the main page
       AsyncWebServerResponse* response = request->beginResponse(302, "text/plain", "");
       response->addHeader("Location", String("http://") + WiFi.softAPIP().toString());
       request->send(response);
     });
+  }
 
-    server.begin(); // Web server start
+protected:
+  /**
+   * @brief shows the ssid of the AP and the address to which the user should connect
+   */
+  void initialLcdMessage() {
     // Update the LCD
     display.clear();
     display.setCursor(0, 0);
@@ -191,13 +226,11 @@ private:
     Serial.print(IP);
   }
 
-public:
+protected:
   /**
-   * @brief Forward of the Arduino loop function
+   * @brief scans the visible wifis and saves them into @ref ssids. Should be continuously called during @ref loop.
    */
-  void loop() {
-    dnsServer.processNextRequest(); // DNS
-
+  void scanWiFi() {
     // check the state scanning for wifis
     int16_t scanState = WiFi.scanComplete();
     if (scanState == -2) {
@@ -208,7 +241,7 @@ public:
       // scan completed
       std::unique_lock<std::mutex> lock(mtx);
       ssids.clear();
-      for (int i = 0; i < scanState; ++i) {
+      for (int i = 0; i < scanState; i++) {
         ssids.push_back(WiFi.SSID(i));
       }
       WiFi.scanNetworks(true);
