@@ -193,8 +193,6 @@ void setup() {
     }
   }
 
-  views::ViewStore::activateView(views::ViewStore::HardwareTestView);
-
   #if !defined(DISABLE_RTC)
   // Check if the RTC is reachable
   Wire.beginTransmission(DS3231_I2C_ADDR);
@@ -221,6 +219,11 @@ void setup() {
   }
   else {
     views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
+    Serial.println("DEBUG!");
+    Serial.println("DEBUG!");
+    Serial.println("DEBUG!");
+    Serial.println("Replaced initial view");
+    views::ViewStore::activateView(views::ViewStore::ConfigurationServerView);
   }
 
 #else
