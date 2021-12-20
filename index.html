@@ -122,10 +122,10 @@ WiFi Configuration Server</h2>
 Main Configuration Server</h2>
 <p >The main configuration server is a webserver to configure everything except of the WiFi settings. The main website provided by the server is the file <a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexConfig.html">indexConfig.html</a>. The webserver is automatically started and stopped by the <a class="el" href="index.html#subConfigurationServerView">Configuration Server View</a>. As mentioned before, the <a class="el" href="index.html#subConfigurationServerView">view</a> and therefore also the webserver is activated automatically after a reboot if the EmlaLock API is not configured. When the <a class="el" href="index.html#subConfigurationServerView">Configuration Server View</a> is active, it provides a menu entry to reset the WiFi settings and reboot. After the reboot, the <a class="el" href="index.html#subWifiConfigurationServer">WiFi Configuration Server</a> will be automatically started. This might become necessary if the software is not able to connect to your WiFi. In addition, the <a class="el" href="index.html#subWifiConfigurationServer">WiFi Configuration Server</a> shows the IP which can be used to access the configuration site.</p>
 <p > 
-<div id="subMainConfigurationServerView" class="lcd-container" style="background-color:#33F;"></div>
+<div id="_subMainConfigurationServerView" class="lcd-container" style="background-color:#33F;"></div>
 <script>
   document.addEventListener('DOMContentLoaded', function(){
-    lcd = new LCD({elem: document.getElementById("subMainConfigurationServerView"),rows: 4,columns: 20,pixelSize: 4,pixelColor: "#FFF"});
+    lcd = new LCD({elem: document.getElementById("_subMainConfigurationServerView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
     lcd.writeString({string: "Open in Browser:", offset: 0});
     lcd.writeString({string: " http://192.168.1.1 ", offset: 20});
     lcd.writeString({string: " Change WiFi Setting ", offset: 40});
@@ -153,20 +153,30 @@ Hygiene Opening Settings</h3>
 </ul>
 <h1><a class="anchor" id="secLockstate"></a>
 Lockstate</h1>
+<p >TBD</p>
 <h1><a class="anchor" id="secEmlaLockApi"></a>
 EmlaLock API</h1>
+<p >TBD</p>
 <h1><a class="anchor" id="secViews"></a>
 Views</h1>
+<p >TBD</p>
 <h2><a class="anchor" id="subPreferencesMenu"></a>
 Preferences Menu</h2>
 <dl class="section note"><dt>Note</dt><dd>Only available when unlocked</dd></dl>
 <h2><a class="anchor" id="subConfigurationServerView"></a>
 Configuration Server View</h2>
-<dl class="section note"><dt>Note</dt><dd>Only available when unlocked</dd></dl>
-<p><a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/ConfigurationServerView.jpg"><div class="image">
-<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/ConfigurationServerView.jpg" alt=""/>
-</div>
- </a> </p>
+<p >TBD  
+<div id="_subConfigurationServerView" class="lcd-container" style="background-color:#33F;"></div>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd = new LCD({elem: document.getElementById("_subConfigurationServerView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd.writeString({string: "Open in Browser:", offset: 0});
+    lcd.writeString({string: " http://192.168.1.1 ", offset: 20});
+    lcd.writeString({string: " Change WiFi Setting ", offset: 40});
+    lcd.writeString({string: ">Back ", offset: 60});
+  });
+</script>
+ </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
