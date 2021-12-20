@@ -100,14 +100,20 @@ $(document).ready(function(){initNavTree('_used_interrupts_8h_source.html',''); 
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="class_used_interrupts.html#a7783d371f93af2c1c7d70c4183304047">   58</a></span>  <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_used_interrupts.html#a7783d371f93af2c1c7d70c4183304047">executeWithoutInterrupts</a>(std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">void</span>)&gt; f) {</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_used_interrupts.html#aee21dc8f245b73605c5441d6f5a9b424">interruptsAttached</a>) {</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      <a class="code hl_function" href="class_used_interrupts.html#af79f25961986a8f91fa207b8381682f9">detach</a>();</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>      f();</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>      <a class="code hl_function" href="class_used_interrupts.html#aad496f7de1b405ad5e8e1996283e87c1">attach</a>();</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    }</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>      f();</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    }</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  }</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>};</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>      <span class="keywordflow">try</span>{</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        f();</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>      }</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      <span class="keywordflow">catch</span>(...) {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <a class="code hl_function" href="class_used_interrupts.html#aad496f7de1b405ad5e8e1996283e87c1">attach</a>();</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="keywordflow">throw</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>      }</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>      <a class="code hl_function" href="class_used_interrupts.html#aad496f7de1b405ad5e8e1996283e87c1">attach</a>();</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    }</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      f();</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>};</div>
 <div class="ttc" id="a_hardware_configuration_8h_html"><div class="ttname"><a href="_hardware_configuration_8h.html">HardwareConfiguration.h</a></div></div>
 <div class="ttc" id="a_hardware_configuration_8h_html_a1acf770781598a8e272bed409e9e7baa"><div class="ttname"><a href="_hardware_configuration_8h.html#a1acf770781598a8e272bed409e9e7baa">ENCODER_PIN_DT</a></div><div class="ttdeci">#define ENCODER_PIN_DT</div><div class="ttdoc">GPIO of the ky-040 dt pin.</div><div class="ttdef"><b>Definition:</b> HardwareConfiguration.h:30</div></div>
 <div class="ttc" id="a_hardware_configuration_8h_html_a6116ee493d3b9538c2a9904c54a8ab48"><div class="ttname"><a href="_hardware_configuration_8h.html#a6116ee493d3b9538c2a9904c54a8ab48">ENCODER_SWITCH</a></div><div class="ttdeci">#define ENCODER_SWITCH</div><div class="ttdoc">GPIO of the ky-040 sw pin.</div><div class="ttdef"><b>Definition:</b> HardwareConfiguration.h:35</div></div>

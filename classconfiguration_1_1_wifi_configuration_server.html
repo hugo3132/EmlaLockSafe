@@ -62,6 +62,7 @@ $(document).ready(function(){initNavTree('classconfiguration_1_1_wifi_configurat
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
@@ -98,6 +99,21 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a693b4501bb219b779cf433255b1632ef"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#a693b4501bb219b779cf433255b1632ef">begin</a> (LiquidCrystal_PCF8574 &amp;<a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#aa992155d3fb592be8a019bb3976e1c97">display</a>)</td></tr>
 <tr class="memdesc:a693b4501bb219b779cf433255b1632ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <a class="el" href="classconfiguration_1_1_configuration.html" title="Static class accessing the configuration.">Configuration</a> server.  <a href="classconfiguration_1_1_wifi_configuration_server.html#a693b4501bb219b779cf433255b1632ef">More...</a><br /></td></tr>
 <tr class="separator:a693b4501bb219b779cf433255b1632ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a615859554e70e2b06a1611ecb28585fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#a615859554e70e2b06a1611ecb28585fa">createAp</a> ()</td></tr>
+<tr class="memdesc:a615859554e70e2b06a1611ecb28585fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and configures the WiFi in AP mode.  <a href="classconfiguration_1_1_wifi_configuration_server.html#a615859554e70e2b06a1611ecb28585fa">More...</a><br /></td></tr>
+<tr class="separator:a615859554e70e2b06a1611ecb28585fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac46fe0f0dfa7a242b6799ae3422db5cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#ac46fe0f0dfa7a242b6799ae3422db5cd">configureWebserver</a> ()</td></tr>
+<tr class="memdesc:ac46fe0f0dfa7a242b6799ae3422db5cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">adds the handlers for the different webpages  <a href="classconfiguration_1_1_wifi_configuration_server.html#ac46fe0f0dfa7a242b6799ae3422db5cd">More...</a><br /></td></tr>
+<tr class="separator:ac46fe0f0dfa7a242b6799ae3422db5cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81bffe845db7487f929d4c4e4fb43d9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#a81bffe845db7487f929d4c4e4fb43d9e">initialLcdMessage</a> ()</td></tr>
+<tr class="memdesc:a81bffe845db7487f929d4c4e4fb43d9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">shows the ssid of the AP and the address to which the user should connect  <a href="classconfiguration_1_1_wifi_configuration_server.html#a81bffe845db7487f929d4c4e4fb43d9e">More...</a><br /></td></tr>
+<tr class="separator:a81bffe845db7487f929d4c4e4fb43d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace18e51ee086a59d3dbe104382351653"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#ace18e51ee086a59d3dbe104382351653">scanWiFi</a> ()</td></tr>
+<tr class="memdesc:ace18e51ee086a59d3dbe104382351653"><td class="mdescLeft">&#160;</td><td class="mdescRight">scans the visible wifis and saves them into <a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#a68c5280ab9dbe589ce5c22108cc063ef">ssids</a>. Should be continuously called during <a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#abcce3bc2776758a2a5e57660f9b1f0b0">loop</a>.  <a href="classconfiguration_1_1_wifi_configuration_server.html#ace18e51ee086a59d3dbe104382351653">More...</a><br /></td></tr>
+<tr class="separator:ace18e51ee086a59d3dbe104382351653"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
@@ -219,6 +235,60 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="ac46fe0f0dfa7a242b6799ae3422db5cd" name="ac46fe0f0dfa7a242b6799ae3422db5cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac46fe0f0dfa7a242b6799ae3422db5cd">&#9670;&nbsp;</a></span>configureWebserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void configuration::WifiConfigurationServer::configureWebserver </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>adds the handlers for the different webpages </p>
+
+</div>
+</div>
+<a id="a615859554e70e2b06a1611ecb28585fa" name="a615859554e70e2b06a1611ecb28585fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a615859554e70e2b06a1611ecb28585fa">&#9670;&nbsp;</a></span>createAp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void configuration::WifiConfigurationServer::createAp </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create and configures the WiFi in AP mode. </p>
+
+</div>
+</div>
 <a id="a095b8e074305d03daadee7bae0924ec3" name="a095b8e074305d03daadee7bae0924ec3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a095b8e074305d03daadee7bae0924ec3">&#9670;&nbsp;</a></span>getInstance()</h2>
 
@@ -273,6 +343,33 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a81bffe845db7487f929d4c4e4fb43d9e" name="a81bffe845db7487f929d4c4e4fb43d9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81bffe845db7487f929d4c4e4fb43d9e">&#9670;&nbsp;</a></span>initialLcdMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void configuration::WifiConfigurationServer::initialLcdMessage </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>shows the ssid of the AP and the address to which the user should connect </p>
+
+</div>
+</div>
 <a id="abcce3bc2776758a2a5e57660f9b1f0b0" name="abcce3bc2776758a2a5e57660f9b1f0b0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abcce3bc2776758a2a5e57660f9b1f0b0">&#9670;&nbsp;</a></span>loop()</h2>
 
@@ -297,6 +394,33 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Forward of the Arduino loop function. </p>
+
+</div>
+</div>
+<a id="ace18e51ee086a59d3dbe104382351653" name="ace18e51ee086a59d3dbe104382351653"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace18e51ee086a59d3dbe104382351653">&#9670;&nbsp;</a></span>scanWiFi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void configuration::WifiConfigurationServer::scanWiFi </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>scans the visible wifis and saves them into <a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#a68c5280ab9dbe589ce5c22108cc063ef">ssids</a>. Should be continuously called during <a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#abcce3bc2776758a2a5e57660f9b1f0b0">loop</a>. </p>
 
 </div>
 </div>
