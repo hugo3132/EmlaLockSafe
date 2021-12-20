@@ -83,10 +83,10 @@ might become necessary if the software is not able to connect to your WiFi. In a
 be used to access the configuration site.
 
 @htmlonly
-<div id="subMainConfigurationServerView" class="lcd-container" style="background-color:#33F;"></div>
+<div id="_subMainConfigurationServerView" class="lcd-container" style="background-color:#33F;"></div>
 <script>
   document.addEventListener('DOMContentLoaded', function(){
-    lcd = new LCD({elem: document.getElementById("subMainConfigurationServerView"),rows: 4,columns: 20,pixelSize: 4,pixelColor: "#FFF"});
+    lcd = new LCD({elem: document.getElementById("_subMainConfigurationServerView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
     lcd.writeString({string: "Open in Browser:", offset: 0});
     lcd.writeString({string: " http://192.168.1.1 ", offset: 20});
     lcd.writeString({string: " Change WiFi Setting ", offset: 40});
@@ -112,25 +112,34 @@ Currently the following values can be set:
 
 
 \section secLockstate Lockstate
-
+TBD
 
 
 \section secEmlaLockApi EmlaLock API
+TBD
 
 
 
 \section secViews Views
+TBD
 
 \subsection subPreferencesMenu Preferences Menu
 @note Only available when unlocked
 
 \subsection subConfigurationServerView Configuration Server View
-@note Only available when unlocked
-
-<a href=https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/ConfigurationServerView.jpg>
-\image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/ConfigurationServerView.jpg
-</a>
-
+TBD
+@htmlonly
+<div id="_subConfigurationServerView" class="lcd-container" style="background-color:#33F;"></div>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd = new LCD({elem: document.getElementById("_subConfigurationServerView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd.writeString({string: "Open in Browser:", offset: 0});
+    lcd.writeString({string: " http://192.168.1.1 ", offset: 20});
+    lcd.writeString({string: " Change WiFi Setting ", offset: 40});
+    lcd.writeString({string: ">Back ", offset: 60});
+  });
+</script>
+@endhtmlonly
 */
 
 
