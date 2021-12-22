@@ -25,20 +25,33 @@
 var NAVTREE =
 [
   [ "EmlaLockSafe", "index.html", [
-    [ "Overview", "index.html#Overview", null ],
-    [ "Configuration", "index.html#secConfiguration", [
-      [ "WiFi Configuration Server", "index.html#subWifiConfigurationServer", null ],
-      [ "Main Configuration Server", "index.html#subMainConfigurationServer", [
-        [ "Emlalock Settings", "index.html#subsubEmlaLockSettings", null ],
-        [ "Miscellaneous Settings", "index.html#subsubMiscellaneousSettings", null ],
-        [ "Hygiene Opening Settings", "index.html#subsubHygieneOpeningSettings", null ]
+    [ "Setup Safe", "index.html#secSetupSafe", [
+      [ "Howto Flash the Software", "index.html#subHowtoFlashTheSoftware", null ],
+      [ "WiFi Configuration", "index.html#subWiFiConfig", null ],
+      [ "Software Configuration", "index.html#subSoftwareConfiguration", null ]
+    ] ],
+    [ "Hardware Description", "index.html#secHardwareDescription", [
+      [ "Understanding the locking mechanism", "index.html#subUnderstandingTheLockingMechanism", null ],
+      [ "New electronics", "index.html#subNewElectronics", [
+        [ "Controller board", "index.html#subsubControllerBoard", null ],
+        [ "I/O module", "index.html#subsubIOModule", null ]
       ] ]
     ] ],
-    [ "Lockstate", "index.html#secLockstate", null ],
-    [ "EmlaLock API", "index.html#secEmlaLockApi", null ],
-    [ "Views", "index.html#secViews", [
-      [ "Preferences Menu", "index.html#subPreferencesMenu", null ],
-      [ "Configuration Server View", "index.html#subConfigurationServerView", null ]
+    [ "Overview about Software", "index.html#secOverviewAboutSoftware", [
+      [ "Configuration", "index.html#subConfiguration", [
+        [ "WiFi Configuration Server", "index.html#subsubWifiConfigurationServer", null ],
+        [ "Main Configuration Server", "index.html#subsubMainConfigurationServer", [
+          [ "Emlalock Settings", "index.html#parEmlaLockSettings", null ],
+          [ "Miscellaneous Settings", "index.html#parMiscellaneousSettings", null ],
+          [ "Hygiene Opening Settings", "index.html#parHygieneOpeningSettings", null ]
+        ] ]
+      ] ],
+      [ "Lockstate", "index.html#subLockstate", null ],
+      [ "EmlaLock API", "index.html#subEmlaLockApi", null ],
+      [ "Views", "index.html#subViews", [
+        [ "Preferences Menu", "index.html#subsubPreferencesMenu", null ],
+        [ "Configuration Server View", "index.html#subsubConfigurationServerView", null ]
+      ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
