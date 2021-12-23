@@ -69,7 +69,7 @@ protected:
           emlalock::EmergencyKey::generateNewKey(key);
 
           // update the menu item
-          String keyItemText = "Current Key: " + String(key);
+          String keyItemText = "Current key: " + String(key);
           menuItems.front().setText(keyItemText);
         }
       });
