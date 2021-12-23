@@ -41,14 +41,14 @@ var NAVTREE =
         [ "Hygiene Opening Menu", "index.html#subsubHygieneOpeningMenu", null ]
       ] ],
       [ "Manual Timer Mode", "index.html#subManualMode", [
-        [ "Select Display Time Left", "index.html#subsubSelectDisplayTimeLeft", null ],
+        [ "Set Timer View", "index.html#subsubSetTimerView", null ],
         [ "Select Display Time Passed", "index.html#subsubSelectDisplayTimePassed", null ],
-        [ "Set Timer View", "index.html#subsubSetTimerView", null ]
+        [ "Select Display Time Left", "index.html#subsubSelectDisplayTimeLeft", null ]
       ] ],
       [ "Safe Mode", "index.html#subSafeMode", [
         [ "Emergency Enter Menu View", "index.html#subsubEmergencyEnterMenuView", null ],
-        [ "Emergency Enter Key View", "index.html#subsubEmergencyEnterKeyView", null ],
-        [ "Emergency Menu", "index.html#subsubEmergencyMenu", null ]
+        [ "Emergency Menu", "index.html#subsubEmergencyMenu", null ],
+        [ "Emergency Enter Key View", "index.html#subsubEmergencyEnterKeyView", null ]
       ] ]
     ] ],
     [ "Hardware Description", "index.html#secHardwareDescription", [
@@ -69,9 +69,7 @@ var NAVTREE =
       ] ],
       [ "Lockstate", "index.html#subLockstate", null ],
       [ "EmlaLock API", "index.html#subEmlaLockApi", null ],
-      [ "Views", "index.html#subViews", [
-        [ "Configuration Server View", "index.html#subsubConfigurationServerView", null ]
-      ] ]
+      [ "Views", "index.html#subViews", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]

@@ -77,14 +77,14 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <li class="level3"><a href="#subsubHygieneOpeningMenu">Hygiene Opening Menu</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#subManualMode">Manual Timer Mode</a><ul><li class="level3"><a href="#subsubSelectDisplayTimeLeft">Select Display Time Left</a></li>
+<li class="level2"><a href="#subManualMode">Manual Timer Mode</a><ul><li class="level3"><a href="#subsubSetTimerView">Set Timer View</a></li>
 <li class="level3"><a href="#subsubSelectDisplayTimePassed">Select Display Time Passed</a></li>
-<li class="level3"><a href="#subsubSetTimerView">Set Timer View</a></li>
+<li class="level3"><a href="#subsubSelectDisplayTimeLeft">Select Display Time Left</a></li>
 </ul>
 </li>
 <li class="level2"><a href="#subSafeMode">Safe Mode</a><ul><li class="level3"><a href="#subsubEmergencyEnterMenuView">Emergency Enter Menu View</a></li>
-<li class="level3"><a href="#subsubEmergencyEnterKeyView">Emergency Enter Key View</a></li>
 <li class="level3"><a href="#subsubEmergencyMenu">Emergency Menu</a></li>
+<li class="level3"><a href="#subsubEmergencyEnterKeyView">Emergency Enter Key View</a></li>
 </ul>
 </li>
 </ul>
@@ -106,9 +106,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </li>
 <li class="level2"><a href="#subLockstate">Lockstate</a></li>
 <li class="level2"><a href="#subEmlaLockApi">EmlaLock API</a></li>
-<li class="level2"><a href="#subViews">Views</a><ul><li class="level3"><a href="#subsubConfigurationServerView">Configuration Server View</a></li>
-</ul>
-</li>
+<li class="level2"><a href="#subViews">Views</a></li>
 </ul>
 </li>
 </ul>
@@ -448,7 +446,7 @@ Hygiene Opening Menu</h3>
       i = 3599;
     }
     
-    menuItem.text = "Time Left: 00:" + zeroPad(Math.floor(i/60)%60, 2) + ":" + zeroPad(i%60);
+    menuItem.text = "Time Left: 00:" + zeroPad(Math.floor(i/60)%60, 2) + ":" + zeroPad(i%60, 2);
     setTimeout(subsubHygieneOpeningMenu.bind(null, menuItem, i - 1), 1000);
   }
   
@@ -466,26 +464,11 @@ Hygiene Opening Menu</h3>
 <p >In addition, the time left in the hygiene opening is displayed.</p>
 <h2><a class="anchor" id="subManualMode"></a>
 Manual Timer Mode</h2>
-<p >TBD</p>
-<h3><a class="anchor" id="subsubSelectDisplayTimeLeft"></a>
-Select Display Time Left</h3>
-<p >TBD  
-<div id="_subsubSelectDisplayTimeLeft"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subsubSelectDisplayTimeLeft", "Display time left?", ["Yes", "No", "Temperature", "Cancel"]));
-});</script>
-</p>
-<h3><a class="anchor" id="subsubSelectDisplayTimePassed"></a>
-Select Display Time Passed</h3>
-<p >TBD  
-<div id="_subsubSelectDisplayTimePassed"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subsubSelectDisplayTimePassed", "Display time passed?", ["Yes", "No", "Cancel"]));
-});</script>
-</p>
+<p >The manual timer mode is an alternative to emlalock. It allows to lock the safe for a certain time. From the <a class="el" href="index.html#subsubUnlockedMainMenu">Unlocked Main Menu</a> the entry Set Custom Timer should be selected to start the <a class="el" href="index.html#subsubSetTimerView">Set Timer View</a>.</p>
 <h3><a class="anchor" id="subsubSetTimerView"></a>
 Set Timer View</h3>
-<p >TBD  
+<p >The view allows to set the a custom timer. The number marked with "&gt; &lt;" can be changed by rotating the encoder. To switch to the next number the encoder must be pressed. At the bottom, the computed end date is displayed. After the time is set and confirmed, <a class="el" href="index.html#subsubSelectDisplayTimePassed">Select Display Time Passed</a> will be displayed next.</p>
+<p > 
 <div align="center">
 <div id="_subsubSetTimerView" class="lcd-container" style="background-color:#33F;"></div>
 </div>
@@ -499,14 +482,30 @@ Set Timer View</h3>
   });
 </script>
 </p>
+<h3><a class="anchor" id="subsubSelectDisplayTimePassed"></a>
+Select Display Time Passed</h3>
+<p >After the time is set, the this view allows to select if the the time passed should be displayed or not. If Yes or No is selected, the view <a class="el" href="index.html#subsubSelectDisplayTimeLeft">Select Display Time Left</a> will be activated. If Cancel is selected, the safe will return to the <a class="el" href="index.html#subsubUnlockedMainMenu">Unlocked Main Menu</a>.</p>
+<p > 
+<div id="_subsubSelectDisplayTimePassed"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubSelectDisplayTimePassed", "Display time passed?", ["Yes", "No", "Cancel"]));
+});</script>
+</p>
+<h3><a class="anchor" id="subsubSelectDisplayTimeLeft"></a>
+Select Display Time Left</h3>
+<p >This this view allows to select if the the time left should be displayed or not. After selecting Yes, No or Temperature, the safe will be locked until the time is up. If Cancel is selected, the safe will return to the <a class="el" href="index.html#subsubUnlockedMainMenu">Unlocked Main Menu</a>.</p>
+<p > 
+<div id="_subsubSelectDisplayTimeLeft"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubSelectDisplayTimeLeft", "Display time left?", ["Yes", "No", "Temperature", "Cancel"]));
+});</script>
+</p>
 <h2><a class="anchor" id="subSafeMode"></a>
 Safe Mode</h2>
-<p >TBD</p>
-<p ><b>Notes for this chapter:</b></p>
-<p >[11:20 AM] hugo3132: The software fallback is to use the emergency code. You anyway have to upload a picture to emlalock. You should just make a photo of the 6-character emergency code and use that. If there is a problem with the software you can start the safe in a safe-mode without an internet connection. In this mode you can use the code and open the safe with it. [11:22 AM] hugo3132: The last fallback or if you need fast opening is the original manual key. I can use a hammer and destroy the plastic housing of the display. Then I can access the keyhole and mechanically open the safe [11:24 AM] hugo3132: As far as I can think of problems, I've covered them all. But if you find something please let me know.</p>
+<p >The safe mode can be used to open the safe in case of software problems. As long as the safe is unlocked the <a class="el" href="index.html#subsubEmlalockUnlockKeyMenu">Emlalock Unlock Key Menu</a> can be opened to display or change the emergency unlock key. To enter the safe mode, the encoder nob must be pressed while connecting the power supply. If the nob is pressed during booting, the <a class="el" href="index.html#subsubEmergencyEnterMenuView">Emergency Enter Menu View</a> is displayed. After 2 seconds the safe will enter the <a class="el" href="index.html#subsubEmergencyMenu">Emergency Menu</a> without connecting to the WiFi.</p>
 <h3><a class="anchor" id="subsubEmergencyEnterMenuView"></a>
 Emergency Enter Menu View</h3>
-<p >TBD  
+<p > 
 <div align="center">
 <div id="_subsubEmergencyEnterMenuView" class="lcd-container" style="background-color:#33F;"></div>
 </div>
@@ -538,9 +537,24 @@ Emergency Enter Menu View</h3>
   });
 </script>
 </p>
+<h3><a class="anchor" id="subsubEmergencyMenu"></a>
+Emergency Menu</h3>
+<p > 
+<div id="_subsubEmergencyMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubEmergencyMenu", "Emergency Menu", ["Unlock with key", "Start Wifi", "Offline Mode"]));
+});</script>
+</p>
+<p >The emergency menu allows to select one of the following actions:</p><ul>
+<li><b>Unlock with key:</b> Opens the <a class="el" href="index.html#subsubEmergencyEnterKeyView">Emergency Enter Key View</a> to open the safe with the emergency unlock key</li>
+<li><b>Start Wifi:</b> Connects to the WiFi and continues booting</li>
+<li><b>Offline Mode:</b> Continues booting without connecting to the WiFi</li>
+</ul>
 <h3><a class="anchor" id="subsubEmergencyEnterKeyView"></a>
 Emergency Enter Key View</h3>
-<p >TBD  
+<p >In this view the emergency key can be entered to unlock the safe. The letter marked with "&gt; &lt;" can be changed by rotating the encoder nob. To switch to the next letter, the nob must be pushed.</p>
+<p >After entering the last character of the key, the key is verified. If the correct key was entered, the safe unlocks.</p>
+<p > 
 <div align="center">
 <div id="_subsubEmergencyEnterKeyView" class="lcd-container" style="background-color:#33F;"></div>
 </div>
@@ -551,14 +565,6 @@ Emergency Enter Key View</h3>
     lcd.writeString({string: "   U>S<A A A A", offset: 60});
   });
 </script>
-</p>
-<h3><a class="anchor" id="subsubEmergencyMenu"></a>
-Emergency Menu</h3>
-<p >TBD  
-<div id="_subsubEmergencyMenu"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subsubEmergencyMenu", "Emergency Menu", ["Unlock with key", "Start Wifi", "Offline Mode"]));
-});</script>
 </p>
 <h1><a class="anchor" id="secHardwareDescription"></a>
 Hardware Description</h1>
@@ -626,7 +632,7 @@ WiFi Configuration Server</h3>
 <p >The webserver mainly provides the <a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexWifi.html">indexWifi.html</a> (see <a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#ac46fe0f0dfa7a242b6799ae3422db5cd">configureWebserver()</a>). It also provides a generated text-file with all visible WiFi networks. The list is automatically updated in the <a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#abcce3bc2776758a2a5e57660f9b1f0b0">loop()</a> function.</p>
 <h3><a class="anchor" id="subsubMainConfigurationServer"></a>
 Main Configuration Server</h3>
-<p >The main configuration server is a webserver to configure everything except of the WiFi settings. The main website provided by the server is the file <a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexConfig.html">indexConfig.html</a>. The webserver is automatically started and stopped by the <a class="el" href="index.html#subsubConfigurationServerView">Configuration Server View</a>. As mentioned before, the <a class="el" href="index.html#subsubConfigurationServerView">view</a> and therefore also the webserver is activated automatically after a reboot if the EmlaLock API is not configured. When the <a class="el" href="index.html#subsubConfigurationServerView">Configuration Server View</a> is active, it provides a menu entry to reset the WiFi settings and reboot. After the reboot, the <a class="el" href="index.html#subsubWifiConfigurationServer">WiFi Configuration Server</a> will be automatically started. This might become necessary if the software is not able to connect to your WiFi. In addition, the <a class="el" href="index.html#subsubWifiConfigurationServer">WiFi Configuration Server</a> shows the IP which can be used to access the configuration site.</p>
+<p >The main configuration server is a webserver to configure everything except of the WiFi settings. The main website provided by the server is the file <a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexConfig.html">indexConfig.html</a>. The webserver is automatically started and stopped by the <a class="el" href="classviews_1_1_configuration_server_view.html">views::ConfigurationServerView</a>. As mentioned before, the <a class="el" href="classviews_1_1_configuration_server_view.html">view</a> and therefore also the webserver is activated automatically after a reboot if the EmlaLock API is not configured. When the <a class="el" href="classviews_1_1_configuration_server_view.html">views::ConfigurationServerView</a> is active, it provides a menu entry to reset the WiFi settings and reboot. After the reboot, the <a class="el" href="index.html#subsubWifiConfigurationServer">WiFi Configuration Server</a> will be automatically started. This might become necessary if the software is not able to connect to your WiFi. In addition, the <a class="el" href="index.html#subsubWifiConfigurationServer">WiFi Configuration Server</a> shows the IP which can be used to access the configuration site.</p>
 <p > 
 <div id="_subMainConfigurationServerView"></div>
 <script>document.addEventListener('DOMContentLoaded', function() {
@@ -659,15 +665,8 @@ EmlaLock API</h2>
 <p >TBD</p>
 <h2><a class="anchor" id="subViews"></a>
 Views</h2>
-<p >TBD</p>
-<h3><a class="anchor" id="subsubConfigurationServerView"></a>
-Configuration Server View</h3>
-<p >TBD  
-<div id="_subConfigurationServerView"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subConfigurationServerView", "Open in Browser:", ["http://192.168.1.1", "Change WiFi Settings", "Back"]));
-});</script>
- </p>
+<p >The views itself are described in <a class="el" href="index.html#secUsingTheSafe">Using the Safe</a>. All views are global and can be accessed over the <a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/software/src/views/ViewStore.h">ViewStore</a>.</p>
+<p >TBD </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
