@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "EmlaLockSafe", "index.html", [
+    [ "xxxxxx", "index.html#sec", null ],
     [ "Setup Safe", "index.html#secSetupSafe", [
       [ "Howto Flash the Software", "index.html#subHowtoFlashTheSoftware", null ],
       [ "WiFi Configuration", "index.html#subWiFiConfig", null ],
@@ -49,8 +50,19 @@ var NAVTREE =
       [ "Lockstate", "index.html#subLockstate", null ],
       [ "EmlaLock API", "index.html#subEmlaLockApi", null ],
       [ "Views", "index.html#subViews", [
+        [ "Configuration Server View", "index.html#subsubConfigurationServerView", null ],
+        [ "Emlalock Unlock Key Menu", "index.html#subsubEmlalockUnlockKeyMenu", null ],
+        [ "Locked View", "index.html#subsubLockedView", null ],
+        [ "Emergency Enter Menu View", "index.html#subsubEmergencyEnterMenuView", null ],
+        [ "Emergency Enter Key View", "index.html#subsubEmergencyEnterKeyView", null ],
+        [ "Emergency Menu", "index.html#subsubEmergencyMenu", null ],
+        [ "Hardware Test View", "index.html#subsubHardwareTestView", null ],
+        [ "Hygiene Opening Menu", "index.html#subsubHygieneOpeningMenu", null ],
         [ "Preferences Menu", "index.html#subsubPreferencesMenu", null ],
-        [ "Configuration Server View", "index.html#subsubConfigurationServerView", null ]
+        [ "Select Display Time Left", "index.html#subsubSelectDisplayTimeLeft", null ],
+        [ "Select Display Time Passed", "index.html#subsubSelectDisplayTimePassed", null ],
+        [ "Set Timer View", "index.html#subsubSetTimerView", null ],
+        [ "Unlocked Main Menu", "index.html#subsubUnlockedMainMenu", null ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
