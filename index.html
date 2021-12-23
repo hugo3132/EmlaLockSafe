@@ -63,10 +63,30 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#sec">xxxxxx</a></li>
-<li class="level1"><a href="#secSetupSafe">Setup Safe</a><ul><li class="level2"><a href="#subHowtoFlashTheSoftware">Howto Flash the Software</a></li>
+<ul><li class="level1"><a href="#secSetupSafe">Setup the Safe</a><ul><li class="level2"><a href="#subHowtoFlashTheSoftware">Howto Flash the Software</a></li>
 <li class="level2"><a href="#subWiFiConfig">WiFi Configuration</a></li>
 <li class="level2"><a href="#subSoftwareConfiguration">Software Configuration</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#secUsingTheSafe">Using the Safe</a><ul><li class="level2"><a href="#subSafetyAspect">Safety Aspects</a></li>
+<li class="level2"><a href="#subNormalOperationMode">Normal Operation Mode</a><ul><li class="level3"><a href="#subsubLockedView">Locked View</a></li>
+<li class="level3"><a href="#subsubUnlockedMainMenu">Unlocked Main Menu</a></li>
+<li class="level3"><a href="#subsubEmlalockUnlockKeyMenu">Emlalock Unlock Key Menu</a></li>
+<li class="level3"><a href="#subsubPreferencesMenu">Preferences Menu</a></li>
+<li class="level3"><a href="#subsubHardwareTestView">Hardware Test View</a></li>
+<li class="level3"><a href="#subsubHygieneOpeningMenu">Hygiene Opening Menu</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#subManualMode">Manual Timer Mode</a><ul><li class="level3"><a href="#subsubSelectDisplayTimeLeft">Select Display Time Left</a></li>
+<li class="level3"><a href="#subsubSelectDisplayTimePassed">Select Display Time Passed</a></li>
+<li class="level3"><a href="#subsubSetTimerView">Set Timer View</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#subSafeMode">Safe Mode</a><ul><li class="level3"><a href="#subsubEmergencyEnterMenuView">Emergency Enter Menu View</a></li>
+<li class="level3"><a href="#subsubEmergencyEnterKeyView">Emergency Enter Key View</a></li>
+<li class="level3"><a href="#subsubEmergencyMenu">Emergency Menu</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="level1"><a href="#secHardwareDescription">Hardware Description</a><ul><li class="level2"><a href="#subUnderstandingTheLockingMechanism">Understanding the locking mechanism</a></li>
@@ -87,18 +107,6 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <li class="level2"><a href="#subLockstate">Lockstate</a></li>
 <li class="level2"><a href="#subEmlaLockApi">EmlaLock API</a></li>
 <li class="level2"><a href="#subViews">Views</a><ul><li class="level3"><a href="#subsubConfigurationServerView">Configuration Server View</a></li>
-<li class="level3"><a href="#subsubEmlalockUnlockKeyMenu">Emlalock Unlock Key Menu</a></li>
-<li class="level3"><a href="#subsubLockedView">Locked View</a></li>
-<li class="level3"><a href="#subsubEmergencyEnterMenuView">Emergency Enter Menu View</a></li>
-<li class="level3"><a href="#subsubEmergencyEnterKeyView">Emergency Enter Key View</a></li>
-<li class="level3"><a href="#subsubEmergencyMenu">Emergency Menu</a></li>
-<li class="level3"><a href="#subsubHardwareTestView">Hardware Test View</a></li>
-<li class="level3"><a href="#subsubHygieneOpeningMenu">Hygiene Opening Menu</a></li>
-<li class="level3"><a href="#subsubPreferencesMenu">Preferences Menu</a></li>
-<li class="level3"><a href="#subsubSelectDisplayTimeLeft">Select Display Time Left</a></li>
-<li class="level3"><a href="#subsubSelectDisplayTimePassed">Select Display Time Passed</a></li>
-<li class="level3"><a href="#subsubSetTimerView">Set Timer View</a></li>
-<li class="level3"><a href="#subsubUnlockedMainMenu">Unlocked Main Menu</a></li>
 </ul>
 </li>
 </ul>
@@ -246,16 +254,8 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/safe.png" alt="" height="300px"/>
 </div>
  </a></p>
-<h1><a class="anchor" id="sec"></a>
-xxxxxx</h1>
-<p > 
-<div id="_testXXXX"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_testXXXX", "Open in Browser:", ["http://192.168.178.105", "Change WiFi Settings", "Back", "sadf", "afdsy"]));
-});</script>
-</p>
 <h1><a class="anchor" id="secSetupSafe"></a>
-Setup Safe</h1>
+Setup the Safe</h1>
 <h2><a class="anchor" id="subHowtoFlashTheSoftware"></a>
 Howto Flash the Software</h2>
 <p >For the development on arduino the free <a href="https://code.visualstudio.com/">Visual Studio Code</a> together with the extension <a href="https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide">PlatformIO</a> was used. After both are installed and the controller board is connected to the computer, the folder <a href="https://github.com/hugo3132/EmlaLockSafe/tree/master/software">software</a> must be opened in Visual Studio Code. selected to create an image containg everything from the <a href="https://github.com/hugo3132/EmlaLockSafe/tree/master/software/data">data</a> folder. Next, Upload Filesystem Image must be selected to flash the data folder to the controller board. Finally, Upload should be selected to compile and upload the firmware:</p>
@@ -281,6 +281,285 @@ menus.push(new MenuView("_subSoftwareConfigurationView", "Open in Browser:", ["h
 </p>
 <p >Since the controller is now part of your normal network it can be reached by any computer, phone, ... connected to your network.</p>
 <p >For the detailed description of the software behind this chapter please refer to <a class="el" href="index.html#subsubMainConfigurationServer">Main Configuration Server</a>.</p>
+<h1><a class="anchor" id="secUsingTheSafe"></a>
+Using the Safe</h1>
+<p >The main interaction with the safe is done using the display and the encoder knob. Everything which is displayed on the LCD is handled by so called views. One variant of such views are menus:  
+<div id="_secUsingTheSafeExampleMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_secUsingTheSafeExampleMenu", "Menu Title", ["Menu Item 1", "Menu Item 2"]));
+});</script>
+ A menu always consists of a menu title and several menu items. A menu item can be selected by rotating the encoder. To execute the action associated with the selected item the encoder must be pushed. In case not all menu items fit onto the display, a scrollbar is displayed and the menu items are distributed to different pages.</p>
+<p >When the software of the safe is booted it enters the <a class="el" href="index.html#subNormalOperationMode">Normal Operation Mode</a>. In case there are problems with the software, the safe can be started into <a class="el" href="index.html#subSafeMode">Safe Mode</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>To be able to use the <a class="el" href="index.html#subSafeMode">Safe Mode</a>, it is recommended to use a photo of the <a class="el" href="index.html#subsubEmlalockUnlockKeyMenu">Emlalock Unlock Key Menu</a> as combination picture when setting up a new emlalock session!</dd></dl>
+<h2><a class="anchor" id="subSafetyAspect"></a>
+Safety Aspects</h2>
+<p >The safe depends on an external 5V power supply. Therefore, it is recommended to have an charged powerbank to be able to use the safe even if there is an power outage.</p>
+<p >The software is designed to make use of emlalock but not fully rely on its availability. The locking itself is not driven by the emlalock site. There is the field <a class="el" href="class_lock_state.html#aabef97159c4bd986250293b184dc8f52">LockState::endDate</a>. If it is after the current timestamp the safe will open. All values of the class <a class="el" href="class_lock_state.html">LockState</a> are stored in the internal flash memory. Therefore, it won't be lost in case of power failures.</p>
+<p >As long as there is an internet connection and the emlalock site is available, the <a class="el" href="class_lock_state.html#aabef97159c4bd986250293b184dc8f52">LockState::endDate</a> is updated with the values of your current session. If there are connection problems the <a class="el" href="class_lock_state.html#aabef97159c4bd986250293b184dc8f52">LockState::endDate</a> is just no longer updated.</p>
+<p >In all cases a correct system time is required to evaluate the <a class="el" href="class_lock_state.html#aabef97159c4bd986250293b184dc8f52">LockState::endDate</a>. To be independent of an working internet connection, a real-time clock module (RTC) is used. The RTC has its own battery which will keep the clock running if no external power source is connected. When the software is booting it first sets the internal system to the time provided by the RTC. As soon as a internet connection is available, the system time is synchronized with the internet using the network time protocol (NTP). The more accurate internet time is than used to update the RTC module. Therefore, the system time can be always assumed to be correct.</p>
+<p >In addition, a <a class="el" href="index.html#subSafeMode">Safe Mode</a> is implemented which allows to open safe with a code.</p>
+<dl class="section warning"><dt>Warning</dt><dd>In case the end date is not visible in your sesssion, it cannot be read over the API as well. Therefore, the safe can only be open if the connection to the emlalock site works. Alternatively, the <a class="el" href="index.html#subSafeMode">Safe Mode</a> must be used.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>At least in my case the mechanical keyhole is coverd by the housing of the display. Therefore, I can store the mechanical key next to the safe and just smash the display housing with an hammer in case of an emergency.</dd></dl>
+<h2><a class="anchor" id="subNormalOperationMode"></a>
+Normal Operation Mode</h2>
+<p >Assume the safe is already properly configured as described in the previous chapter. After a reboot the software will activate the <a class="el" href="index.html#subsubLockedView">Locked View</a> in case you are in a session or if a <a class="el" href="index.html#subManualMode">manual timer</a> was set. As soon as the <a class="el" href="index.html#subEmlaLockApi">EmlaLock API</a> detects that a session was created, the safe will enter the <a class="el" href="index.html#subsubLockedView">Locked View</a> as well. In case a hygiene opening is started on the emlalock site, the <a class="el" href="index.html#subsubHygieneOpeningMenu">Hygiene Opening Menu</a> will be activated.</p>
+<p >In case no session is active, the <a class="el" href="index.html#subsubUnlockedMainMenu">Unlocked Main Menu</a> will be displayed.</p>
+<h3><a class="anchor" id="subsubLockedView"></a>
+Locked View</h3>
+<p >This view is always displayed if the safe is locked by an active session. Dependent on the configuration of the emlalock session or the <a class="el" href="index.html#subManualMode">manual timer</a>, the displayed content differs. The first line always shows the message that the safe is locked as well as the current system time.</p>
+<p >The first example shows the passed time, and time which is left as well as the end date. The second example shows the content of the display in case only the temperature should be shown as indication of the time left.</p>
+<p > 
+<div align="center">
+<div id="_subsubLockedView1" class="lcd-container" style="background-color:#33F;"></div>
+<div id="_subsubLockedView2" class="lcd-container" style="background-color:#33F;"></div>
+</div>
+<script>
+  function subsubLockedViewAnimation(lcd1, lcd2, i) {
+    var minutes = Math.floor(i/60)%60;
+
+    lcd1.writeString({string: zeroPad(59-minutes, 2), offset: 55});
+    lcd1.writeString({string: zeroPad(59-i%60, 2), offset: 58});
+
+    i++;
+    if(i == 3600)
+      i = 1;
+    var minutes = Math.floor(i/60)%60;
+
+    lcd1.writeString({string: zeroPad(minutes, 2), offset: 16});
+
+    lcd1.writeString({string: zeroPad(minutes, 2), offset: 35});
+    lcd1.writeString({string: zeroPad(i%60, 2), offset: 38});
+    lcd2.writeString({string: zeroPad(minutes, 2), offset: 35});
+    lcd2.writeString({string: zeroPad(i%60, 2), offset: 38});
+
+
+    setTimeout(subsubLockedViewAnimation.bind(null, lcd1, lcd2, i), 1000);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd1 = new LCD({elem: document.getElementById("_subsubLockedView1"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd1.writeString({string: "Safe Locked  12:45", offset: 0});
+    lcd1.writeString({string: "Passed: 000:00:00:30", offset: 20});
+    lcd1.writeString({string: "Left:   006:23:59:30", offset: 40});
+    lcd1.writeString({string: " 12.09.2020 12:43:46", offset: 60});
+    lcd2 = new LCD({elem: document.getElementById("_subsubLockedView2"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd2.writeString({string: "Safe Locked  12:45", offset: 0});
+    lcd2.writeString({string: "Passed: 000:00:00:30", offset: 20});
+    lcd2.writeString({string: "Left: verycold", offset: 40});
+
+    setTimeout(subsubLockedViewAnimation.bind(null, lcd1, lcd2, 1351), 1000);
+  });
+</script>
+</p>
+<h3><a class="anchor" id="subsubUnlockedMainMenu"></a>
+Unlocked Main Menu</h3>
+<p >In case the safe should not be locked this is the main menu.</p>
+<p > 
+<div id="_subsubEmptyMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubEmptyMenu", "Unlocked Main Menu", 
+             ["Open Safe", "Set Custom Timer", "Emlalock Unlock Key", "Preferences", "Hardware Test View", "Reboot"]));
+});</script>
+</p>
+<p >From the main menu the following can be done:</p><ul>
+<li><b>Open safe:</b> After selecting this option, the software will trigger a refresh of the emlalock safe. In case there is still no session active, the coil will be pulled an the safe can be opened. In case a session was created in the meantime, the safe will enter the <a class="el" href="index.html#subsubLockedView">Locked View</a>.</li>
+<li><b>Set Custom Timer:</b> With this option the <a class="el" href="index.html#subManualMode">Manual Timer Mode</a> can be configured.</li>
+<li><b>Emlalock Unlock Key:</b> This option will activate the <a class="el" href="index.html#subsubEmlalockUnlockKeyMenu">Emlalock Unlock Key Menu</a>. In the <a class="el" href="index.html#subsubEmlalockUnlockKeyMenu">Emlalock Unlock Key Menu</a> the emergency unlock key is displayed and can be changed (see also <a class="el" href="index.html#subSafeMode">Safe Mode</a>).</li>
+<li><b>Preferences:</b> Opens the <a class="el" href="index.html#subsubPreferencesMenu">Preferences Menu</a>.</li>
+<li><b>Hardware Test View:</b> Starts the <a class="el" href="index.html#subsubHardwareTestView">Hardware Test View</a> which allows to see the state of the RTC and test the encoder and coil. The view can only be left by disconnecting the power supply.</li>
+<li><b>Reboot:</b> Reboots the controller.</li>
+</ul>
+<h3><a class="anchor" id="subsubEmlalockUnlockKeyMenu"></a>
+Emlalock Unlock Key Menu</h3>
+<p >This menu can be entered using the <a class="el" href="index.html#subsubUnlockedMainMenu">Unlocked Main Menu</a>. It shows the current emergency unlock key which can be used to unlock the safe in the ref subSafeMode. A photograph of this view should be used as combination picture for your emlalock session.</p>
+<p >It is also possible to select generate a new key. The previous key will then no longer be valid.</p>
+<p > 
+<div id="_subsubEmlalockUnlockKeyMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubEmlalockUnlockKeyMenu", "Emlalock Unlock Key", ["Current key: USPV02", "Generate new key", "Back"]));
+});</script>
+</p>
+<h3><a class="anchor" id="subsubPreferencesMenu"></a>
+Preferences Menu</h3>
+<p >This menu can be entered using the <a class="el" href="index.html#subsubUnlockedMainMenu">Unlocked Main Menu</a>.</p>
+<p > 
+<div id="_subsubPreferencesMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubPreferencesMenu", "Preferences", ["Change Wifi Settings", "Start Configuration Server", "Back"]));
+});</script>
+</p>
+<p >The following actions can be selected:</p><ul>
+<li><b>Change Wifi Settings:</b> Deletes the WiFi credentials and restarts the controller. After the reboot the controller will start the <a class="el" href="index.html#subWiFiConfig">WiFi Configuration</a> server.</li>
+<li><b>Start Configuration Server:</b> Activates the <a class="el" href="index.html#subSoftwareConfiguration">Software Configuration</a> server.</li>
+<li><b>Back:</b> Return to the <a class="el" href="index.html#subsubUnlockedMainMenu">Unlocked Main Menu</a></li>
+</ul>
+<h3><a class="anchor" id="subsubHardwareTestView"></a>
+Hardware Test View</h3>
+<p >This view can be used to test the hardware. As soon as it is activated, the coil is pulled and released with 0.5Hz. In addition, if the encoder nob used the action is diplayed. Finally the current time of the real-time clock (R) and local system time (S) is displayed. </p><dl class="section note"><dt>Note</dt><dd>The RTC is always set to UTC.</dd></dl>
+<p> 
+<div align="center">
+<div id="_subsubHardwareTestView" class="lcd-container" style="background-color:#33F;"></div>
+</div>
+<script>
+  function subsubHardwareTestViewAnimation(lcd, i) {
+    switch(i%4) {
+      case 0:
+        s = "Clicked             ";
+        break;
+      case 1:
+        s = "CLOCKWISE           ";
+        break;
+      case 2:
+        s = "COUNTERCLOCKWISE    ";
+        break;
+      case 3:
+        s = "                    ";
+        break;
+    }
+    lcd.writeString({string: s, offset: 20});
+
+    var minutes = Math.floor(i/60)%60;
+    lcd.writeString({string: zeroPad(minutes, 2), offset: 54});
+    lcd.writeString({string: zeroPad(minutes, 2), offset: 74});
+    lcd.writeString({string: zeroPad(i%60, 2), offset: 57});
+    lcd.writeString({string: zeroPad(i%60, 2), offset: 77});
+
+    setTimeout(subsubHardwareTestViewAnimation.bind(null, lcd, i + 1), 1000);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd = new LCD({elem: document.getElementById("_subsubHardwareTestView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd.writeString({string: "Encoder Test", offset: 0});
+    lcd.writeString({string: "R 23.12.21 13:00:21", offset: 40});
+    lcd.writeString({string: "S 23.12.21 14:00:21", offset: 60});
+
+    setTimeout(subsubHardwareTestViewAnimation.bind(null, lcd, 25), 1000);
+  });
+</script>
+</p>
+<h3><a class="anchor" id="subsubHygieneOpeningMenu"></a>
+Hygiene Opening Menu</h3>
+<p >This menu is activated in case a hygiene opening is started on the emlalock site.</p>
+<p > 
+<div id="_subsubHygieneOpeningMenu"></div>
+<script>
+  function subsubHygieneOpeningMenu(menuItem, i) {
+    if(i < 0) {
+      i = 3599;
+    }
+    
+    menuItem.text = "Time Left: 00:" + zeroPad(Math.floor(i/60)%60, 2) + ":" + zeroPad(i%60);
+    setTimeout(subsubHygieneOpeningMenu.bind(null, menuItem, i - 1), 1000);
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var menu = new MenuView("_subsubHygieneOpeningMenu", "Hygiene Opening", ["Open Safe", "Emlalock Unlock Key", "Time Left: 00:00:00"]);
+    menus.push(menu);
+    setTimeout(subsubHygieneOpeningMenu.bind(null, menu.menuItems[2], 3599), 1000);
+
+});</script>
+</p>
+<p >From the menu the following can be done:</p><ul>
+<li><b>Open safe:</b> After selecting this option, the software will trigger a refresh of the emlalock safe. In case the hygiene opening is still active, the coil will be pulled an the safe can be opened.</li>
+<li><b>Emlalock Unlock Key:</b> This option will activate the <a class="el" href="index.html#subsubEmlalockUnlockKeyMenu">Emlalock Unlock Key Menu</a>. In the <a class="el" href="index.html#subsubEmlalockUnlockKeyMenu">Emlalock Unlock Key Menu</a> the emergency unlock key is displayed and can be changed (see also <a class="el" href="index.html#subSafeMode">Safe Mode</a>).</li>
+</ul>
+<p >In addition, the time left in the hygiene opening is displayed.</p>
+<h2><a class="anchor" id="subManualMode"></a>
+Manual Timer Mode</h2>
+<p >TBD</p>
+<h3><a class="anchor" id="subsubSelectDisplayTimeLeft"></a>
+Select Display Time Left</h3>
+<p >TBD  
+<div id="_subsubSelectDisplayTimeLeft"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubSelectDisplayTimeLeft", "Display time left?", ["Yes", "No", "Temperature", "Cancel"]));
+});</script>
+</p>
+<h3><a class="anchor" id="subsubSelectDisplayTimePassed"></a>
+Select Display Time Passed</h3>
+<p >TBD  
+<div id="_subsubSelectDisplayTimePassed"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubSelectDisplayTimePassed", "Display time passed?", ["Yes", "No", "Cancel"]));
+});</script>
+</p>
+<h3><a class="anchor" id="subsubSetTimerView"></a>
+Set Timer View</h3>
+<p >TBD  
+<div align="center">
+<div id="_subsubSetTimerView" class="lcd-container" style="background-color:#33F;"></div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd = new LCD({elem: document.getElementById("_subsubSetTimerView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd.writeString({string: "Set Lock Timer:", offset: 0});
+    lcd.writeString({string: "0 days", offset: 20});
+    lcd.writeString({string: ">1<hours 0 minutes", offset: 40});
+    lcd.writeString({string: "(23.12.2021 15:32)", offset: 60});
+  });
+</script>
+</p>
+<h2><a class="anchor" id="subSafeMode"></a>
+Safe Mode</h2>
+<p >TBD</p>
+<p ><b>Notes for this chapter:</b></p>
+<p >[11:20 AM] hugo3132: The software fallback is to use the emergency code. You anyway have to upload a picture to emlalock. You should just make a photo of the 6-character emergency code and use that. If there is a problem with the software you can start the safe in a safe-mode without an internet connection. In this mode you can use the code and open the safe with it. [11:22 AM] hugo3132: The last fallback or if you need fast opening is the original manual key. I can use a hammer and destroy the plastic housing of the display. Then I can access the keyhole and mechanically open the safe [11:24 AM] hugo3132: As far as I can think of problems, I've covered them all. But if you find something please let me know.</p>
+<h3><a class="anchor" id="subsubEmergencyEnterMenuView"></a>
+Emergency Enter Menu View</h3>
+<p >TBD  
+<div align="center">
+<div id="_subsubEmergencyEnterMenuView" class="lcd-container" style="background-color:#33F;"></div>
+</div>
+<script>
+  function subsubEmergencyEnterMenuViewAnimation(lcd, i) {
+    s = "";
+    if(i < 25) {
+      for(var j = 0; j < Math.min(20, i); j++) {
+        s = s + "*";
+      }
+    }
+    else {
+      s = "                    ";      
+      if(i > 30) {
+        i = -1;
+      }
+    }
+    lcd.writeString({string: s, offset: 60});
+    setTimeout(subsubEmergencyEnterMenuViewAnimation.bind(null, lcd, i + 1), 100);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd = new LCD({elem: document.getElementById("_subsubEmergencyEnterMenuView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd.writeString({string: "Keep button pressed", offset: 0});
+    lcd.writeString({string: "to enter emergency", offset: 20});
+    lcd.writeString({string: "menu.", offset: 40});
+
+    setTimeout(subsubEmergencyEnterMenuViewAnimation.bind(null, lcd, 0), 100);
+  });
+</script>
+</p>
+<h3><a class="anchor" id="subsubEmergencyEnterKeyView"></a>
+Emergency Enter Key View</h3>
+<p >TBD  
+<div align="center">
+<div id="_subsubEmergencyEnterKeyView" class="lcd-container" style="background-color:#33F;"></div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd = new LCD({elem: document.getElementById("_subsubEmergencyEnterKeyView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd.writeString({string: "Enter emergency key:", offset: 0});
+    lcd.writeString({string: "   U>S<A A A A", offset: 60});
+  });
+</script>
+</p>
+<h3><a class="anchor" id="subsubEmergencyMenu"></a>
+Emergency Menu</h3>
+<p >TBD  
+<div id="_subsubEmergencyMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubEmergencyMenu", "Emergency Menu", ["Unlock with key", "Start Wifi", "Offline Mode"]));
+});</script>
+</p>
 <h1><a class="anchor" id="secHardwareDescription"></a>
 Hardware Description</h1>
 <h2><a class="anchor" id="subUnderstandingTheLockingMechanism"></a>
@@ -387,225 +666,6 @@ Configuration Server View</h3>
 <div id="_subConfigurationServerView"></div>
 <script>document.addEventListener('DOMContentLoaded', function() {
 menus.push(new MenuView("_subConfigurationServerView", "Open in Browser:", ["http://192.168.1.1", "Change WiFi Settings", "Back"]));
-});</script>
-</p>
-<h3><a class="anchor" id="subsubEmlalockUnlockKeyMenu"></a>
-Emlalock Unlock Key Menu</h3>
-<p >TBD  
-<div id="_subsubEmlalockUnlockKeyMenu"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subsubEmlalockUnlockKeyMenu", "Emlalock Unlock Key", ["Current key: USPV02", "Generate new key", "Back"]));
-});</script>
-</p>
-<h3><a class="anchor" id="subsubLockedView"></a>
-Locked View</h3>
-<p >TBD  
-<div align="center">
-<div id="_subsubLockedView1" class="lcd-container" style="background-color:#33F;"></div>
-<div id="_subsubLockedView2" class="lcd-container" style="background-color:#33F;"></div>
-</div>
-<script>
-  function subsubLockedViewAnimation(lcd1, lcd2, i) {
-    var minutes = Math.floor(i/60)%60;
-
-    lcd1.writeString({string: zeroPad(59-minutes, 2), offset: 55});
-    lcd1.writeString({string: zeroPad(59-i%60, 2), offset: 58});
-
-    i++;
-    if(i == 3600)
-      i = 1;
-    var minutes = Math.floor(i/60)%60;
-
-    lcd1.writeString({string: zeroPad(minutes, 2), offset: 35});
-    lcd1.writeString({string: zeroPad(i%60, 2), offset: 38});
-    lcd2.writeString({string: zeroPad(minutes, 2), offset: 35});
-    lcd2.writeString({string: zeroPad(i%60, 2), offset: 38});
-
-
-    setTimeout(subsubLockedViewAnimation.bind(null, lcd1, lcd2, i), 1000);
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    lcd1 = new LCD({elem: document.getElementById("_subsubLockedView1"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
-    lcd1.writeString({string: "Safe Locked  12:45", offset: 0});
-    lcd1.writeString({string: "Passed: 000:00:00:30", offset: 20});
-    lcd1.writeString({string: "Left:   006:23:59:30", offset: 40});
-    lcd1.writeString({string: " 12.09.2020 12:43:46", offset: 60});
-    lcd2 = new LCD({elem: document.getElementById("_subsubLockedView2"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
-    lcd2.writeString({string: "Safe Locked  12:45", offset: 0});
-    lcd2.writeString({string: "Passed: 000:00:00:30", offset: 20});
-    lcd2.writeString({string: "Left: verycold", offset: 40});
-
-    setTimeout(subsubLockedViewAnimation.bind(null, lcd1, lcd2, 3525), 1000);
-  });
-</script>
-</p>
-<h3><a class="anchor" id="subsubEmergencyEnterMenuView"></a>
-Emergency Enter Menu View</h3>
-<p >TBD  
-<div align="center">
-<div id="_subsubEmergencyEnterMenuView" class="lcd-container" style="background-color:#33F;"></div>
-</div>
-<script>
-  function subsubEmergencyEnterMenuViewAnimation(lcd, i) {
-    s = "";
-    if(i < 25) {
-      for(var j = 0; j < Math.min(20, i); j++) {
-        s = s + "*";
-      }
-    }
-    else {
-      s = "                    ";      
-      if(i > 30) {
-        i = -1;
-      }
-    }
-    lcd.writeString({string: s, offset: 60});
-    setTimeout(subsubEmergencyEnterMenuViewAnimation.bind(null, lcd, i + 1), 100);
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    lcd = new LCD({elem: document.getElementById("_subsubEmergencyEnterMenuView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
-    lcd.writeString({string: "Keep button pressed", offset: 0});
-    lcd.writeString({string: "to enter emergency", offset: 20});
-    lcd.writeString({string: "menu.", offset: 40});
-
-    setTimeout(subsubEmergencyEnterMenuViewAnimation.bind(null, lcd, 0), 100);
-  });
-</script>
-</p>
-<h3><a class="anchor" id="subsubEmergencyEnterKeyView"></a>
-Emergency Enter Key View</h3>
-<p >TBD  
-<div align="center">
-<div id="_subsubEmergencyEnterKeyView" class="lcd-container" style="background-color:#33F;"></div>
-</div>
-<script>
-  document.addEventListener('DOMContentLoaded', function(){
-    lcd = new LCD({elem: document.getElementById("_subsubEmergencyEnterKeyView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
-    lcd.writeString({string: "Enter emergency key:", offset: 0});
-    lcd.writeString({string: "   U>S<A A A A", offset: 60});
-  });
-</script>
-</p>
-<h3><a class="anchor" id="subsubEmergencyMenu"></a>
-Emergency Menu</h3>
-<p >TBD  
-<div id="_subsubEmergencyMenu"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subsubEmergencyMenu", "Emergency Menu", ["Unlock with key", "Start Wifi", "Offline Mode"]));
-});</script>
-</p>
-<h3><a class="anchor" id="subsubHardwareTestView"></a>
-Hardware Test View</h3>
-<p >TBD  
-<div align="center">
-<div id="_subsubHardwareTestView" class="lcd-container" style="background-color:#33F;"></div>
-</div>
-<script>
-  function subsubHardwareTestViewAnimation(lcd, i) {
-    switch(i%4) {
-      case 0:
-        s = "Clicked             ";
-        break;
-      case 1:
-        s = "CLOCKWISE           ";
-        break;
-      case 2:
-        s = "COUNTERCLOCKWISE    ";
-        break;
-      case 3:
-        s = "                    ";
-        break;
-    }
-    lcd.writeString({string: s, offset: 20});
-
-    var minutes = Math.floor(i/60)%60;
-    lcd.writeString({string: zeroPad(minutes, 2), offset: 54});
-    lcd.writeString({string: zeroPad(minutes, 2), offset: 74});
-    lcd.writeString({string: zeroPad(i%60, 2), offset: 57});
-    lcd.writeString({string: zeroPad(i%60, 2), offset: 77});
-
-    setTimeout(subsubHardwareTestViewAnimation.bind(null, lcd, i + 1), 1000);
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    lcd = new LCD({elem: document.getElementById("_subsubHardwareTestView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
-    lcd.writeString({string: "Encoder Test", offset: 0});
-    lcd.writeString({string: "R 23.12.21 13:00:21", offset: 40});
-    lcd.writeString({string: "S 23.12.21 14:00:21", offset: 60});
-
-    setTimeout(subsubHardwareTestViewAnimation.bind(null, lcd, 25), 1000);
-  });
-</script>
-</p>
-<h3><a class="anchor" id="subsubHygieneOpeningMenu"></a>
-Hygiene Opening Menu</h3>
-<p >TBD  
-<div id="_subsubHygieneOpeningMenu"></div>
-<script>
-  function subsubHygieneOpeningMenu(menuItem, i) {
-    if(i < 0) {
-      i = 3599;
-    }
-    
-    menuItem.text = "Time Left: 00:" + zeroPad(Math.floor(i/60)%60, 2) + ":" + zeroPad(i%60);
-    setTimeout(subsubHygieneOpeningMenu.bind(null, menuItem, i - 1), 1000);
-  }
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    var menu = new MenuView("_subsubHygieneOpeningMenu", "Hygiene Opening", ["Open Safe", "Emlalock Unlock Key", "Time Left: 00:00:00"]);
-    menus.push(menu);
-    setTimeout(subsubHygieneOpeningMenu.bind(null, menu.menuItems[2], 3599), 1000);
-
-});</script>
-</p>
-<h3><a class="anchor" id="subsubPreferencesMenu"></a>
-Preferences Menu</h3>
-<dl class="section note"><dt>Note</dt><dd>Only available when unlocked TBD  
-<div id="_subsubPreferencesMenu"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subsubPreferencesMenu", "Preferences", ["Format Flash", "Change Wifi Settings", "Start Configuration Server", "Back"]));
-});</script>
-</dd></dl>
-<h3><a class="anchor" id="subsubSelectDisplayTimeLeft"></a>
-Select Display Time Left</h3>
-<p >TBD  
-<div id="_subsubSelectDisplayTimeLeft"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subsubSelectDisplayTimeLeft", "Display time left?", ["Yes", "No", "Temperature", "Cancel"]));
-});</script>
-</p>
-<h3><a class="anchor" id="subsubSelectDisplayTimePassed"></a>
-Select Display Time Passed</h3>
-<p >TBD  
-<div id="_subsubSelectDisplayTimePassed"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subsubSelectDisplayTimePassed", "Display time passed?", ["Yes", "No", "Cancel"]));
-});</script>
-</p>
-<h3><a class="anchor" id="subsubSetTimerView"></a>
-Set Timer View</h3>
-<p >TBD  
-<div align="center">
-<div id="_subsubSetTimerView" class="lcd-container" style="background-color:#33F;"></div>
-</div>
-<script>
-  document.addEventListener('DOMContentLoaded', function(){
-    lcd = new LCD({elem: document.getElementById("_subsubSetTimerView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
-    lcd.writeString({string: "Set Lock Timer:", offset: 0});
-    lcd.writeString({string: "0 days", offset: 20});
-    lcd.writeString({string: ">1<hours 0 minutes", offset: 40});
-    lcd.writeString({string: "(23.12.2021 15:32)", offset: 60});
-  });
-</script>
-</p>
-<h3><a class="anchor" id="subsubUnlockedMainMenu"></a>
-Unlocked Main Menu</h3>
-<p >TBD  
-<div id="_subsubEmptyMenu"></div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subsubEmptyMenu", "Unlocked Main Menu", ["Open Safe", "Set Custom Timer", "Emlalock Unlock Key", "Preferences", "Hardware Test View", "Reboot"]));
 });</script>
  </p>
 </div></div><!-- PageDoc -->

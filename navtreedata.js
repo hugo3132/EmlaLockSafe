@@ -25,11 +25,31 @@
 var NAVTREE =
 [
   [ "EmlaLockSafe", "index.html", [
-    [ "xxxxxx", "index.html#sec", null ],
-    [ "Setup Safe", "index.html#secSetupSafe", [
+    [ "Setup the Safe", "index.html#secSetupSafe", [
       [ "Howto Flash the Software", "index.html#subHowtoFlashTheSoftware", null ],
       [ "WiFi Configuration", "index.html#subWiFiConfig", null ],
       [ "Software Configuration", "index.html#subSoftwareConfiguration", null ]
+    ] ],
+    [ "Using the Safe", "index.html#secUsingTheSafe", [
+      [ "Safety Aspects", "index.html#subSafetyAspect", null ],
+      [ "Normal Operation Mode", "index.html#subNormalOperationMode", [
+        [ "Locked View", "index.html#subsubLockedView", null ],
+        [ "Unlocked Main Menu", "index.html#subsubUnlockedMainMenu", null ],
+        [ "Emlalock Unlock Key Menu", "index.html#subsubEmlalockUnlockKeyMenu", null ],
+        [ "Preferences Menu", "index.html#subsubPreferencesMenu", null ],
+        [ "Hardware Test View", "index.html#subsubHardwareTestView", null ],
+        [ "Hygiene Opening Menu", "index.html#subsubHygieneOpeningMenu", null ]
+      ] ],
+      [ "Manual Timer Mode", "index.html#subManualMode", [
+        [ "Select Display Time Left", "index.html#subsubSelectDisplayTimeLeft", null ],
+        [ "Select Display Time Passed", "index.html#subsubSelectDisplayTimePassed", null ],
+        [ "Set Timer View", "index.html#subsubSetTimerView", null ]
+      ] ],
+      [ "Safe Mode", "index.html#subSafeMode", [
+        [ "Emergency Enter Menu View", "index.html#subsubEmergencyEnterMenuView", null ],
+        [ "Emergency Enter Key View", "index.html#subsubEmergencyEnterKeyView", null ],
+        [ "Emergency Menu", "index.html#subsubEmergencyMenu", null ]
+      ] ]
     ] ],
     [ "Hardware Description", "index.html#secHardwareDescription", [
       [ "Understanding the locking mechanism", "index.html#subUnderstandingTheLockingMechanism", null ],
@@ -50,19 +70,7 @@ var NAVTREE =
       [ "Lockstate", "index.html#subLockstate", null ],
       [ "EmlaLock API", "index.html#subEmlaLockApi", null ],
       [ "Views", "index.html#subViews", [
-        [ "Configuration Server View", "index.html#subsubConfigurationServerView", null ],
-        [ "Emlalock Unlock Key Menu", "index.html#subsubEmlalockUnlockKeyMenu", null ],
-        [ "Locked View", "index.html#subsubLockedView", null ],
-        [ "Emergency Enter Menu View", "index.html#subsubEmergencyEnterMenuView", null ],
-        [ "Emergency Enter Key View", "index.html#subsubEmergencyEnterKeyView", null ],
-        [ "Emergency Menu", "index.html#subsubEmergencyMenu", null ],
-        [ "Hardware Test View", "index.html#subsubHardwareTestView", null ],
-        [ "Hygiene Opening Menu", "index.html#subsubHygieneOpeningMenu", null ],
-        [ "Preferences Menu", "index.html#subsubPreferencesMenu", null ],
-        [ "Select Display Time Left", "index.html#subsubSelectDisplayTimeLeft", null ],
-        [ "Select Display Time Passed", "index.html#subsubSelectDisplayTimePassed", null ],
-        [ "Set Timer View", "index.html#subsubSetTimerView", null ],
-        [ "Unlocked Main Menu", "index.html#subsubUnlockedMainMenu", null ]
+        [ "Configuration Server View", "index.html#subsubConfigurationServerView", null ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
@@ -97,7 +105,7 @@ var NAVTREEINDEX =
 [
 "_configuration_8h.html",
 "classemlalock_1_1_emla_lock_api.html#a1bcdc03a84196bccef1772546ca3c0f1",
-"classviews_1_1_view_store.html"
+"classviews_1_1_view_store.html#a0b9a3e54e18db0b8f958b868cb251875"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
