@@ -172,6 +172,7 @@ void setup() {
     }
     else {
       Serial.println("Real-time Clock not found.");
+      // NO RETURN LIKE BELOW!!!!!
     }
   #endif
 
