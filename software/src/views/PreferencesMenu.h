@@ -49,10 +49,6 @@ protected:
   virtual void activate() {
     // is this the first time activate is called?
     if (menuItems.empty()) {
-      // create menu items
-      createMenuItem("Format Flash", [this](MenuItem*) {
-        onFormatFlash();
-      });
 
       createMenuItem("Change Wifi Settings", [this](MenuItem*) {
         configuration::Configuration::getSingleton().setWifiSettings("", "");
@@ -69,38 +65,6 @@ protected:
     }
 
     lcd::MenuView::activate();
-  }
-
-protected:
-  /**
-   * @brief Callback if the flash should be formatted
-   */
-  void onFormatFlash() {
-    if (lcd::DialogYesNo(display, encoder, "Are you sure to\nformat the\nfilesystem?", numberOfColumns, numberOfRows)
-          .showModal(false)) {
-      display->clear();
-      display->setCursor(0, 0);
-      display->print("Formatting Flash...");
-      display->setCursor(0, 1);
-      display->print("This will take a");
-      display->setCursor(0, 2);
-      display->print("while! Input must be");
-      display->setCursor(0, 3);
-      display->print("disabled.");
-      // Backup the unlock key to memory
-      char key[7];
-      emlalock::EmergencyKey::getCurrentKey(key);
-
-      // detach interrputs which would crash the ESP while accessing the
-      // file-system
-      UsedInterrupts::executeWithoutInterrupts([](){SPIFFS.format();});
-
-      // Save the key back to memory
-      emlalock::EmergencyKey::setKey(key);
-
-      // reset display
-      lcd::MenuView::activate();
-    }
   }
 };
 } // namespace views
