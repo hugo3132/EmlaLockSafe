@@ -1,0 +1,688 @@
+/**
+@mainpage EmlaLockSafe
+
+@htmlonly
+<script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="MenuView.js"></script>
+@endhtmlonly
+
+This is the documentation for the EmlaLockSafe. The sources can be found under
+[https://github.com/hugo3132/EmlaLockSafe](https://github.com/hugo3132/EmlaLockSafe).
+
+<a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/safe.png">
+@image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/safe.png height=300px
+</a>
+
+@tableofcontents
+
+
+
+
+
+
+
+
+
+
+
+@section secSetupSafe Setup the Safe
+@subsection subHowtoFlashTheSoftware Howto Flash the Software
+For the development on arduino the free [Visual Studio Code](https://code.visualstudio.com/) together with the extension 
+[PlatformIO](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide) was used. After both are installed and the controller board
+is connected to the computer, the folder [software](https://github.com/hugo3132/EmlaLockSafe/tree/master/software) must be opened in Visual Studio Code. 
+selected to create an image containg everything from the [data](https://github.com/hugo3132/EmlaLockSafe/tree/master/software/data) folder. Next, Upload
+Filesystem Image must be selected to flash the data folder to the controller board. Finally, Upload should be selected to compile and upload the firmware:
+
+@image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/FlashControllerBoard.png height=400px
+
+
+
+@subsection subWiFiConfig WiFi Configuration
+After the firmware is flashed and the filesystem is uploaded the controller should automatically reboot and show the following on the display:
+
+@image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/WifiSetup.jpg
+
+Since your WiFi credentials are not known yet, the controller creates a new WiFi called "SafeSetup". After connecting to the "SafeSetup" WiFi the WiFi 
+configuration website should open automatically. If not, try to manually navigate to the website http://10.0.0.1. On the website you should select your
+WiFi and enter the password which is required to connect to the network. After selecting Save Data the controller will reboot and connect to your WiFi.
+If anything goes wrong, you can always reset everything by flashing the filesystem image (see @ref subHowtoFlashTheSoftware).
+
+For the detailed description of the software behind this chapter please refer to @ref subsubWifiConfigurationServer.
+
+
+
+@subsection subSoftwareConfiguration Software Configuration
+After the controller rebooted and has connected to the WiFi a webserver is started. The address of the webserver is shown in the display:
+
+@htmlonly
+<div id="_subSoftwareConfigurationView"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subSoftwareConfigurationView", "Open in Browser:", ["http://192.168.1.1", "Change WiFi Settings", "Back"]));
+});</script>
+@endhtmlonly
+
+Since the controller is now part of your normal network it can be reached by any computer, phone, ... connected to your network.
+
+For the detailed description of the software behind this chapter please refer to @ref subsubMainConfigurationServer.
+
+
+
+
+
+
+
+
+
+@section secUsingTheSafe Using the Safe
+
+The main interaction with the safe is done using the display and the encoder knob. Everything which is displayed on the LCD is handled by so called
+views. One variant of such views are menus:
+@htmlonly
+<div id="_secUsingTheSafeExampleMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_secUsingTheSafeExampleMenu", "Menu Title", ["Menu Item 1", "Menu Item 2"]));
+});</script>
+@endhtmlonly
+A menu always consists of a menu title and several menu items. A menu item can be selected by rotating the encoder. To execute the action associated 
+with the selected item the encoder must be pushed. In case not all menu items fit onto the display, a scrollbar is displayed and the menu items are
+distributed to different pages.
+
+When the software of the safe is booted it enters the @ref subNormalOperationMode. In case there are problems with the software, the safe can
+be started into @ref subSafeMode. 
+
+@note To be able to use the @ref subSafeMode, it is recommended to use a photo of the @ref subsubEmlalockUnlockKeyMenu as combination picture when 
+setting up a new emlalock session!
+
+@subsection subSafetyAspect Safety Aspects
+
+The safe depends on an external 5V power supply. Therefore, it is recommended to have an charged powerbank to be able to use the safe even if there 
+is an power outage.
+
+The software is designed to make use of emlalock but not fully rely on its availability. The locking itself is not driven by the emlalock site. There 
+is the field @ref LockState::endDate. If it is after the current timestamp the safe will open. All values of the class @ref LockState are stored in 
+the internal flash memory. Therefore, it won't be lost in case of power failures. 
+
+As long as there is an internet connection and the emlalock site is available, the @ref LockState::endDate is updated with the values of your current
+session. If there are connection problems the @ref LockState::endDate is just no longer updated.
+
+In all cases a correct system time is required to evaluate the @ref LockState::endDate. To be independent of an working internet connection, a 
+real-time clock module (RTC) is used. The RTC has its own battery which will keep the clock running if no external power source is connected. When
+the software is booting it first sets the internal system to the time provided by the RTC. As soon as a internet connection is available, the system
+time is synchronized with the internet using the network time protocol (NTP). The more accurate internet time is than used to update the RTC module.
+Therefore, the system time can be always assumed to be correct.
+
+In addition, a @ref subSafeMode is implemented which allows to open safe with a code.
+
+@warning In case the end date is not visible in your sesssion, it cannot be read over the API as well. Therefore, the safe can only be open if the 
+connection to the emlalock site works. Alternatively, the @ref subSafeMode must be used.
+
+@note At least in my case the mechanical keyhole is coverd by the housing of the display. Therefore, I can store the mechanical key next to the safe 
+and just smash the display housing with an hammer in case of an emergency. 
+
+
+@subsection subNormalOperationMode Normal Operation Mode
+Assume the safe is already properly configured as described in the previous chapter. After a reboot the software will activate the @ref subsubLockedView
+in case you are in a session or if a @ref subManualMode "manual timer" was set. As soon as the @ref subEmlaLockApi detects that a session was created, 
+the safe will enter the @ref subsubLockedView as well. In case a hygiene opening is started on the emlalock site, the @ref subsubHygieneOpeningMenu will
+be activated.
+
+In case no session is active, the @ref subsubUnlockedMainMenu will be displayed.
+
+
+\subsubsection subsubLockedView Locked View
+This view is always displayed if the safe is locked by an active session. Dependent on the configuration of the emlalock session or the 
+@ref subManualMode "manual timer", the displayed content differs. The first line always shows the message that the safe is locked as well as the current
+system time.
+
+The first example shows the passed time, and time which is left as well as the end date. The second example shows the content of the display in case
+only the temperature should be shown as indication of the time left.
+
+@htmlonly
+<div align="center">
+<div id="_subsubLockedView1" class="lcd-container" style="background-color:#33F;"></div>
+<div id="_subsubLockedView2" class="lcd-container" style="background-color:#33F;"></div>
+</div>
+<script>
+  function subsubLockedViewAnimation(lcd1, lcd2, i) {
+    var minutes = Math.floor(i/60)%60;
+
+    lcd1.writeString({string: zeroPad(59-minutes, 2), offset: 55});
+    lcd1.writeString({string: zeroPad(59-i%60, 2), offset: 58});
+
+    i++;
+    if(i == 3600)
+      i = 1;
+    var minutes = Math.floor(i/60)%60;
+
+    lcd1.writeString({string: zeroPad(minutes, 2), offset: 16});
+
+    lcd1.writeString({string: zeroPad(minutes, 2), offset: 35});
+    lcd1.writeString({string: zeroPad(i%60, 2), offset: 38});
+    lcd2.writeString({string: zeroPad(minutes, 2), offset: 35});
+    lcd2.writeString({string: zeroPad(i%60, 2), offset: 38});
+
+
+    setTimeout(subsubLockedViewAnimation.bind(null, lcd1, lcd2, i), 1000);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd1 = new LCD({elem: document.getElementById("_subsubLockedView1"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd1.writeString({string: "Safe Locked  12:45", offset: 0});
+    lcd1.writeString({string: "Passed: 000:00:00:30", offset: 20});
+    lcd1.writeString({string: "Left:   006:23:59:30", offset: 40});
+    lcd1.writeString({string: " 12.09.2020 12:43:46", offset: 60});
+    lcd2 = new LCD({elem: document.getElementById("_subsubLockedView2"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd2.writeString({string: "Safe Locked  12:45", offset: 0});
+    lcd2.writeString({string: "Passed: 000:00:00:30", offset: 20});
+    lcd2.writeString({string: "Left: verycold", offset: 40});
+
+    setTimeout(subsubLockedViewAnimation.bind(null, lcd1, lcd2, 1351), 1000);
+  });
+</script>
+@endhtmlonly
+
+@subsubsection subsubUnlockedMainMenu Unlocked Main Menu
+In case the safe should not be locked this is the main menu. 
+
+@htmlonly
+<div id="_subsubEmptyMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubEmptyMenu", "Unlocked Main Menu", 
+             ["Open Safe", "Set Custom Timer", "Emlalock Unlock Key", "Preferences", "Hardware Test View", "Reboot"]));
+});</script>
+@endhtmlonly
+
+From the main menu the following can be done:
+- <b>Open safe:</b> After selecting this option, the software will trigger a refresh of the emlalock safe. In case there is still no session active, the
+coil will be pulled an the safe can be opened. In case a session was created in the meantime, the safe will enter the  @ref subsubLockedView.
+- <b>Set Custom Timer:</b> With this option the @ref subManualMode can be configured.
+- <b>Emlalock Unlock Key:</b> This option will activate the @ref subsubEmlalockUnlockKeyMenu. In the @ref subsubEmlalockUnlockKeyMenu the emergency unlock
+key is displayed and can be changed (see also @ref subSafeMode).
+- <b>Preferences:</b> Opens the @ref subsubPreferencesMenu.
+- <b>Hardware Test View:</b> Starts the @ref subsubHardwareTestView which allows to see the state of the RTC and test the encoder and coil. The view can
+only be left by disconnecting the power supply.
+- <b>Reboot:</b> Reboots the controller.
+
+
+
+\subsubsection subsubEmlalockUnlockKeyMenu Emlalock Unlock Key Menu
+This menu can be entered using the @ref subsubUnlockedMainMenu. It shows the current emergency unlock key which can be used to unlock the safe in the
+ref subSafeMode. A photograph of this view should be used as combination picture for your emlalock session.
+
+It is also possible to select generate a new key. The previous key will then no longer be valid.
+
+@htmlonly
+<div id="_subsubEmlalockUnlockKeyMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubEmlalockUnlockKeyMenu", "Emlalock Unlock Key", ["Current key: USPV02", "Generate new key", "Back"]));
+});</script>
+@endhtmlonly
+
+
+
+@subsubsection subsubPreferencesMenu Preferences Menu
+This menu can be entered using the @ref subsubUnlockedMainMenu.
+
+@htmlonly
+<div id="_subsubPreferencesMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubPreferencesMenu", "Preferences", ["Change Wifi Settings", "Start Configuration Server", "Back"]));
+});</script>
+@endhtmlonly
+
+The following actions can be selected:
+- <b>Change Wifi Settings:</b> Deletes the WiFi credentials and restarts the controller. After the reboot the controller will start the 
+@ref subWiFiConfig server.
+- <b>Start Configuration Server:</b> Activates the @ref subSoftwareConfiguration server.
+- <b>Back:</b> Return to the @ref subsubUnlockedMainMenu
+
+
+
+
+\subsubsection subsubHardwareTestView Hardware Test View
+This view can be used to test the hardware. As soon as it is activated, the coil is pulled and released with 0.5Hz. In addition, if the encoder nob 
+used the action is diplayed. Finally the current time of the real-time clock (R) and local system time (S) is displayed.
+@note The RTC is always set to UTC.
+
+@htmlonly
+<div align="center">
+<div id="_subsubHardwareTestView" class="lcd-container" style="background-color:#33F;"></div>
+</div>
+<script>
+  function subsubHardwareTestViewAnimation(lcd, i) {
+    switch(i%4) {
+      case 0:
+        s = "Clicked             ";
+        break;
+      case 1:
+        s = "CLOCKWISE           ";
+        break;
+      case 2:
+        s = "COUNTERCLOCKWISE    ";
+        break;
+      case 3:
+        s = "                    ";
+        break;
+    }
+    lcd.writeString({string: s, offset: 20});
+
+    var minutes = Math.floor(i/60)%60;
+    lcd.writeString({string: zeroPad(minutes, 2), offset: 54});
+    lcd.writeString({string: zeroPad(minutes, 2), offset: 74});
+    lcd.writeString({string: zeroPad(i%60, 2), offset: 57});
+    lcd.writeString({string: zeroPad(i%60, 2), offset: 77});
+
+    setTimeout(subsubHardwareTestViewAnimation.bind(null, lcd, i + 1), 1000);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd = new LCD({elem: document.getElementById("_subsubHardwareTestView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd.writeString({string: "Encoder Test", offset: 0});
+    lcd.writeString({string: "R 23.12.21 13:00:21", offset: 40});
+    lcd.writeString({string: "S 23.12.21 14:00:21", offset: 60});
+
+    setTimeout(subsubHardwareTestViewAnimation.bind(null, lcd, 25), 1000);
+  });
+</script>
+@endhtmlonly
+
+
+\subsubsection subsubHygieneOpeningMenu Hygiene Opening Menu
+This menu is activated in case a hygiene opening is started on the emlalock site.
+
+@htmlonly
+<div id="_subsubHygieneOpeningMenu"></div>
+<script>
+  function subsubHygieneOpeningMenu(menuItem, i) {
+    if(i < 0) {
+      i = 3599;
+    }
+    
+    menuItem.text = "Time Left: 00:" + zeroPad(Math.floor(i/60)%60, 2) + ":" + zeroPad(i%60, 2);
+    setTimeout(subsubHygieneOpeningMenu.bind(null, menuItem, i - 1), 1000);
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var menu = new MenuView("_subsubHygieneOpeningMenu", "Hygiene Opening", ["Open Safe", "Emlalock Unlock Key", "Time Left: 00:00:00"]);
+    menus.push(menu);
+    setTimeout(subsubHygieneOpeningMenu.bind(null, menu.menuItems[2], 3599), 1000);
+
+});</script>
+@endhtmlonly
+
+From the menu the following can be done:
+- <b>Open safe:</b> After selecting this option, the software will trigger a refresh of the emlalock safe. In case the hygiene opening is still active, 
+the coil will be pulled an the safe can be opened.
+- <b>Emlalock Unlock Key:</b> This option will activate the @ref subsubEmlalockUnlockKeyMenu. In the @ref subsubEmlalockUnlockKeyMenu the emergency unlock
+key is displayed and can be changed (see also @ref subSafeMode).
+
+In addition, the time left in the hygiene opening is displayed.
+
+
+
+
+
+@subsection subManualMode Manual Timer Mode
+The manual timer mode is an alternative to emlalock. It allows to lock the safe for a certain time. From the @ref subsubUnlockedMainMenu the entry
+Set Custom Timer should be selected to start the @ref subsubSetTimerView.
+
+\subsubsection subsubSetTimerView Set Timer View
+The view allows to set the a custom timer. The number marked with "> <" can be changed by rotating the encoder. To switch to the next number the
+encoder must be pressed. At the bottom, the computed end date is displayed. After the time is set and confirmed, @ref subsubSelectDisplayTimePassed 
+will be displayed next.
+
+@htmlonly
+<div align="center">
+<div id="_subsubSetTimerView" class="lcd-container" style="background-color:#33F;"></div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd = new LCD({elem: document.getElementById("_subsubSetTimerView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd.writeString({string: "Set Lock Timer:", offset: 0});
+    lcd.writeString({string: "0 days", offset: 20});
+    lcd.writeString({string: ">1<hours 0 minutes", offset: 40});
+    lcd.writeString({string: "(23.12.2021 15:32)", offset: 60});
+  });
+</script>
+@endhtmlonly
+
+@subsubsection subsubSelectDisplayTimePassed Select Display Time Passed
+After the time is set, the this view allows to select if the the time passed should be displayed or not. If Yes or No is selected, the view
+@ref subsubSelectDisplayTimeLeft will be activated. If Cancel is selected, the safe will return to the @ref subsubUnlockedMainMenu. 
+
+@htmlonly
+<div id="_subsubSelectDisplayTimePassed"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubSelectDisplayTimePassed", "Display time passed?", ["Yes", "No", "Cancel"]));
+});</script>
+@endhtmlonly
+
+
+@subsubsection subsubSelectDisplayTimeLeft Select Display Time Left
+This this view allows to select if the the time left should be displayed or not. After selecting Yes, No or Temperature, the safe will be locked
+until the time is up. If Cancel is selected, the safe will return to the @ref subsubUnlockedMainMenu. 
+
+@htmlonly
+<div id="_subsubSelectDisplayTimeLeft"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubSelectDisplayTimeLeft", "Display time left?", ["Yes", "No", "Temperature", "Cancel"]));
+});</script>
+@endhtmlonly
+
+
+
+
+
+
+
+
+
+
+@subsection subSafeMode Safe Mode
+The safe mode can be used to open the safe in case of software problems. As long as the safe is unlocked the @ref subsubEmlalockUnlockKeyMenu can be
+opened to display or change the emergency unlock key. To enter the safe mode, the encoder nob must be pressed while connecting the power supply. If 
+the nob is pressed during booting, the @ref subsubEmergencyEnterMenuView is displayed. After 2 seconds the safe will enter the @ref subsubEmergencyMenu 
+without connecting to the WiFi. 
+
+\subsubsection subsubEmergencyEnterMenuView Emergency Enter Menu View
+@htmlonly
+<div align="center">
+<div id="_subsubEmergencyEnterMenuView" class="lcd-container" style="background-color:#33F;"></div>
+</div>
+<script>
+  function subsubEmergencyEnterMenuViewAnimation(lcd, i) {
+    s = "";
+    if(i < 25) {
+      for(var j = 0; j < Math.min(20, i); j++) {
+        s = s + "*";
+      }
+    }
+    else {
+      s = "                    ";      
+      if(i > 30) {
+        i = -1;
+      }
+    }
+    lcd.writeString({string: s, offset: 60});
+    setTimeout(subsubEmergencyEnterMenuViewAnimation.bind(null, lcd, i + 1), 100);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd = new LCD({elem: document.getElementById("_subsubEmergencyEnterMenuView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd.writeString({string: "Keep button pressed", offset: 0});
+    lcd.writeString({string: "to enter emergency", offset: 20});
+    lcd.writeString({string: "menu.", offset: 40});
+
+    setTimeout(subsubEmergencyEnterMenuViewAnimation.bind(null, lcd, 0), 100);
+  });
+</script>
+@endhtmlonly
+
+
+\subsubsection subsubEmergencyMenu Emergency Menu
+@htmlonly
+<div id="_subsubEmergencyMenu"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subsubEmergencyMenu", "Emergency Menu", ["Unlock with key", "Start Wifi", "Offline Mode"]));
+});</script>
+@endhtmlonly
+
+The emergency menu allows to select one of the following actions:
+- <b>Unlock with key:</b> Opens the @ref subsubEmergencyEnterKeyView to open the safe with the emergency unlock key
+- <b>Start Wifi:</b> Connects to the WiFi and continues booting
+- <b>Offline Mode:</b> Continues booting without connecting to the WiFi
+
+
+
+\subsubsection subsubEmergencyEnterKeyView Emergency Enter Key View
+In this view the emergency key can be entered to unlock the safe. The letter marked with "> <" can be changed by rotating the encoder nob. To switch to 
+the next letter, the nob must be pushed. 
+
+After entering the last character of the key, the key is verified. If the correct key was entered, the safe unlocks.
+
+@htmlonly
+<div align="center">
+<div id="_subsubEmergencyEnterKeyView" class="lcd-container" style="background-color:#33F;"></div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    lcd = new LCD({elem: document.getElementById("_subsubEmergencyEnterKeyView"),rows: 4,columns: 20,pixelSize: 2,pixelColor: "#FFF"});
+    lcd.writeString({string: "Enter emergency key:", offset: 0});
+    lcd.writeString({string: "   U>S<A A A A", offset: 60});
+  });
+</script>
+@endhtmlonly
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section secHardwareDescription Hardware Description 
+@subsection subUnderstandingTheLockingMechanism Understanding the locking mechanism
+@note The following might be outdated since it was written for V1.0.0.
+
+As described above, I've used a [cheap safe from a local hardware store](https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628). 
+But any cheap safe should do the trick as long as it can be electronically unlocked and easily disassembled. Try to look for a safe which is powered by 
+4 batteries (4 x 1.5V). Then the chances are high that the 5V of the controller board are high enough to pull the coil. The cheaper the safe the easier it
+might be to drill the holes into it to mount everything. After removing the cover on the inside of the safe, the original electronics board can be removed
+and the mechanism looks as follows:
+
+@image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/coil.png
+
+On the left side of the picture the safe is locked. The pin of the coil is pushed upwards by a spring and the mechanism is blocked. As soon as a current is 
+applied to the coil, the pin is pulled down and the safe can be opened. The mechanism is also the reason why these safe must be mounted to something solid 
+(e.g. a wall). Otherwise you can hit the safe from the top which pushes down the spring for a few milliseconds in which the safe can be unlocked.
+
+
+
+@subsection subNewElectronics New electronics
+@note The following might be outdated since it was written for V1.0.0.
+
+The idea of this project is now to replace the original electronics with a controller which checks the EmlaLock API if it can be opened or not. To be able 
+to connect to the internet I first started using a ESP8266. After a while I ran out of memory while parsing the JSON file delivered by the EmlaLock API. 
+Therefore, I had to switch to the more powerful [ESP32 module](https://www.amazon.de/AZDelivery-ESP32-NodeMCU-Module-Parent/dp/B07Z6CSD9K).
+The controller module is extended by a [real-time clock (RTC) module](https://www.amazon.de/AZDelivery-Real-Clock-DS3231-Parent/dp/B07ZQGBH14). As long as 
+the controller has a WiFi connection the time of the RTC module is set using the [network time protocol](https://en.wikipedia.org/wiki/Network_Time_Protocol). 
+In case the WiFi connection is lost the controller is able to get the time from the RTC module even after the power outage. 
+This is important in case the [manual mode](#manual-mode) is used.
+
+The controller and RTC module are both part of the [controller board](#controller-board) which is mounted inside the safe. The 
+[controller board](#controller-board) is extended by the [I/O module](#io-module) mounted to the outside of the safe which contains a 
+[HD44780 display with an I²C converter](https://www.amazon.de/AZDelivery-Bundle-2004-blau-Parent/dp/B07Z6CPTF4) and a 
+[rotary encoder](https://www.amazon.de/WayinTop-Encoder-Drehgeber-Drehwinkelgeber-Druckknopf/dp/B07T3672VK). Since the controller display requires 5V and 
+the controller runs with 3.3V, a [logic level converter](https://www.amazon.de/gp/product/B07LG6RK7L) is added between the controller board and the LCD 
+module.
+
+
+
+@subsubsection subsubControllerBoard Controller board
+@note The following might be outdated since it was written for V1.0.0.
+
+The controller board contains the ESP32 controller and the RTC as well as some electronics which can open the coil. The controller board is mounted inside 
+the safe to ensure the firmware cannot be modified while the safe is locked. For the power supply of the controller a USB cable without data-pins should be
+used (either by disconnecting them or using a USB power cable). 
+
+@htmlonly
+<div align="center"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_Controller_Board.svg" width="1024px"></div>
+@endhtmlonly
+
+The controller board can be easily soldered to a prototype PCB:
+
+@image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/ControllerBoard.jpg width=500px
+
+The only SMD part is the MOSFET in its SOT23 housing which can be placed between 3 pads of the PCB.
+
+
+
+@subsubsection subsubIOModule I/O module
+The I/O module is responsible for displaying the current state and is therefore mounted to the outside of the safe. It consists of:
+- HD44780 based LCD module
+- HD44780 to I2C converter
+- logic level converter
+- rotary encoder
+
+As shown in the first picture the module is glued to the safe. This is because the keyhole for the emergency key is below the I/O module.
+
+@htmlonly
+<div align="center"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_IO_Module_Schematic.svg" width="1024px"></div>
+@endhtmlonly
+
+Everything is mounted to a 3D printed case. The STL file can be downloaded from https://github.com/hugo3132/EmlaLockSafe/raw/master/hardware/EmlaLockSafe_IO_Module_Case.7z. 
+The case itself was created using the free version of onshape. If it should be modified you can use the following link
+https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374 and modify it to your own needs.
+
+@htmlonly
+<div align="center">
+<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/DisplayModule_Back.png" height="300">
+<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/DisplayModule_Front.png" height="300">
+</div>
+@endhtmlonly
+
+For the I/O module no PCB is required. Everything is directly soldered to each other or connected with some cables.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section secOverviewAboutSoftware Overview about Software
+The EmlaLockSafe uses an ESP32 processor board to open the attached safe dependent on your session on [emlalock.com](https://www.emlalock.com).
+The software running on the EPS32 is speparated into different parts which are described in the following sections.
+
+The @ref subConfiguration "first section" covers how the webservers are used to configure the software. The section @ref subLockstate shows how the 
+software handles if it should open or not and what is shown on the display. The section @ref subEmlaLockApi shows how the software interacts with the API
+of [emlalock.com](https://www.emlalock.com).
+
+Except of the @ref subsubWifiConfigurationServer, everything what is displayed on the LCD is using @ref subViews. A view can be what's currently displayed, 
+a dialog or an menu. For the navigation within the views, the encoder nob can be used.
+
+@warning If the filesystem in the flash memory (SPIFFS) is accessed the interrupts must be temorarily deactivated. The class @ref UsedInterrupts provides
+an @ref UsedInterrupts::attach "attach" and @ref UsedInterrupts::detach "detach" function to temporarily deactivated the interrupts. An other option is
+to use the function @ref UsedInterrupts::executeWithoutInterrupts "executeWithoutInterrupts" which accepts a lamda expression which is executed while the
+interrupts are detached.
+
+@subsection subConfiguration Configuration
+
+The configuration is stored in the fields of the @ref configuration::Configuration class. It automatically loads and saves all parameters to the file 
+/configuration.txt. The filesystem is located in an SPIFFS in the ESP32's flash memory.
+To change the configuration two webservers are used. The first sever (see @ref subsubWifiConfigurationServer) is always started automatically when the WiFi 
+credentials are not complete. The second server (see @ref subsubMainConfigurationServer) is automatically started if the EmlaLock API is not configured. 
+Both servers can also be started using the @ref subsubPreferencesMenu.
+The webservers are derived @ref configuration::ConfigurationServerBase. The base class provides the function
+@ref configuration::ConfigurationServerBase::addSpiffsFileToServer "addSpiffsFileToServer()" which makes a file in the SPIFFS available on the webserver.
+In addition, jquery and the main CSS file is added.
+
+
+@subsubsection subsubWifiConfigurationServer WiFi Configuration Server
+The server is started as soon as the WiFi SSID or password is empty in the @ref configuration::Configuration class. Since the WiFi credentials are not 
+known, the ESP32 acts as access point with the SSID SafeSetup (see @ref configuration::WifiConfigurationServer::createAp "createAp()"). Additionally, a
+DNS server is started which resolves any request to the IP address of the ESP32. This is necessary to implemented a captive portal which automatically 
+forwards any client which connects to the WiFi to the configuration website. 
+If the captive portal does not work, the necessary steps are also displayed on the LCD:
+
+<a href=https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/WifiSetup.jpg>
+@image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/WifiSetup.jpg height=300px
+</a>
+
+The webserver mainly provides the [indexWifi.html](https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexWifi.html)
+(see @ref configuration::WifiConfigurationServer::configureWebserver "configureWebserver()"). It also provides a generated text-file with all
+visible WiFi networks. The list is automatically updated in the @ref configuration::WifiConfigurationServer::loop "loop()" function. 
+
+@subsubsection subsubMainConfigurationServer Main Configuration Server
+
+The main configuration server is a webserver to configure everything except of the WiFi settings. The main website provided by the server is the file 
+[indexConfig.html](https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexConfig.html"). The webserver is automatically 
+started and stopped by the @ref views::ConfigurationServerView. As mentioned before, the @ref views::ConfigurationServerView "view" and therefore also the 
+webserver is activated automatically after a reboot if the EmlaLock API is not configured. When the @ref views::ConfigurationServerView is active, it 
+provides a menu entry to reset the WiFi settings and reboot. After the reboot, the @ref subsubWifiConfigurationServer will be automatically started. This
+might become necessary if the software is not able to connect to your WiFi. In addition, the @ref subsubWifiConfigurationServer shows the IP which can 
+be used to access the configuration site.
+
+@htmlonly
+<div id="_subMainConfigurationServerView"></div>
+<script>document.addEventListener('DOMContentLoaded', function() {
+menus.push(new MenuView("_subMainConfigurationServerView", "Open in Browser:", ["http://192.168.1.1", "Change WiFi Settings", "Back"]));
+});</script>
+@endhtmlonly
+
+Currently the following values can be set:
+
+@paragraph parEmlaLockSettings Emlalock Settings
+- User ID
+- API Key
+
+@paragraph parMiscellaneousSettings Miscellaneous Settings
+- Timezone
+- Backlight Timeout
+
+@paragraph parHygieneOpeningSettings Hygiene Opening Settings
+- AutoLock after time is over
+
+
+
+
+@subsection subLockstate Lockstate
+TBD
+
+
+@subsection subEmlaLockApi EmlaLock API
+TBD
+
+@subsection subViews Views
+The views itself are described in @ref secUsingTheSafe. All views are global and can be accessed over the 
+[ViewStore](https://github.com/hugo3132/EmlaLockSafe/blob/master/software/src/views/ViewStore.h). 
+
+TBD
+
+
+
+*/

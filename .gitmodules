@@ -1,3 +1,6 @@
 [submodule "hardware/libraries/ESP32_mini_KiCad_Library"]
 	path = hardware/libraries/ESP32_mini_KiCad_Library
 	url = https://github.com/r0oland/ESP32_mini_KiCad_Library
+[submodule "software/documentation/dot-matrix-lcd"]
+	path = software/documentation/dot-matrix-lcd
+	url = https://github.com/thatisuday/dot-matrix-lcd
