@@ -1,5 +1,5 @@
 Ctrl:
-https://www.amazon.de/KeeYees-Bluetooth-Internet-Entwicklungsboard-ESP-WROOM-32/dp/B08TBPBJGV/
+https://www.amazon.de/AZDelivery-Bluetooth-Internet-Entwicklungsboard-kompatibel/dp/B08BTYCGVV
 
 MicroUSB Breakout:
 https://www.amazon.de/ZXUEZHENG-Adapterplatine-Micro-USB-Micro-USB-Schnittstelle-Breakout-Modul/dp/B07KS1RPMP
