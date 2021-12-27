@@ -461,29 +461,25 @@ Emergency Enter Key View</h3>
 Hardware Description</h1>
 <h2><a class="anchor" id="subUnderstandingTheLockingMechanism"></a>
 Understanding the locking mechanism</h2>
-<dl class="section note"><dt>Note</dt><dd>The following might be outdated since it was written for V1.0.0.</dd></dl>
-<p>As described above, I've used a <a href="https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628">cheap safe from a local hardware store</a>. But any cheap safe should do the trick as long as it can be electronically unlocked and easily disassembled. Try to look for a safe which is powered by 4 batteries (4 x 1.5V). Then the chances are high that the 5V of the controller board are high enough to pull the coil. The cheaper the safe the easier it might be to drill the holes into it to mount everything. After removing the cover on the inside of the safe, the original electronics board can be removed and the mechanism looks as follows:</p>
+<p >I've used a <a href="https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628">cheap safe from a local hardware store</a>. But any cheap safe should do the trick as long as it can be electronically unlocked and easily disassembled. Try to look for a safe which is powered by 4 batteries (4 x 1.5V). Then the chances are high that the 5V of the controller board are high enough to pull the coil. The cheaper the safe the easier it might be to drill the holes into it to mount everything. After removing the cover on the inside of the safe, the original electronics board can be removed and the mechanism looks as follows:</p>
 <div class="image">
 <img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/coil.png" alt=""/>
 </div>
 <p >On the left side of the picture the safe is locked. The pin of the coil is pushed upwards by a spring and the mechanism is blocked. As soon as a current is applied to the coil, the pin is pulled down and the safe can be opened. The mechanism is also the reason why these safe must be mounted to something solid (e.g. a wall). Otherwise you can hit the safe from the top which pushes down the spring for a few milliseconds in which the safe can be unlocked.</p>
 <h2><a class="anchor" id="subNewElectronics"></a>
 New electronics</h2>
-<dl class="section note"><dt>Note</dt><dd>The following might be outdated since it was written for V1.0.0.</dd></dl>
-<p>The idea of this project is now to replace the original electronics with a controller which checks the EmlaLock API if it can be opened or not. To be able to connect to the internet I first started using a ESP8266. After a while I ran out of memory while parsing the JSON file delivered by the EmlaLock API. Therefore, I had to switch to the more powerful <a href="https://www.amazon.de/AZDelivery-ESP32-NodeMCU-Module-Parent/dp/B07Z6CSD9K">ESP32 module</a>. The controller module is extended by a <a href="https://www.amazon.de/AZDelivery-Real-Clock-DS3231-Parent/dp/B07ZQGBH14">real-time clock (RTC) module</a>. As long as the controller has a WiFi connection the time of the RTC module is set using the <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol">network time protocol</a>. In case the WiFi connection is lost the controller is able to get the time from the RTC module even after the power outage. This is important in case the <a href="#manual-mode">manual mode</a> is used.</p>
-<p >The controller and RTC module are both part of the <a href="#controller-board">controller board</a> which is mounted inside the safe. The <a href="#controller-board">controller board</a> is extended by the <a href="#io-module">I/O module</a> mounted to the outside of the safe which contains a <a href="https://www.amazon.de/AZDelivery-Bundle-2004-blau-Parent/dp/B07Z6CPTF4">HD44780 display with an I²C converter</a> and a <a href="https://www.amazon.de/WayinTop-Encoder-Drehgeber-Drehwinkelgeber-Druckknopf/dp/B07T3672VK">rotary encoder</a>. Since the controller display requires 5V and the controller runs with 3.3V, a <a href="https://www.amazon.de/gp/product/B07LG6RK7L">logic level converter</a> is added between the controller board and the LCD module.</p>
+<p >The idea of this project is now to replace the original electronics with a controller which checks the EmlaLock API if it can be opened or not. To be able to connect to the internet I first started using a ESP8266. After a while I ran out of memory while parsing the JSON file delivered by the EmlaLock API. Therefore, I had to switch to the more powerful <a href="https://www.amazon.de/AZDelivery-Bluetooth-Internet-Entwicklungsboard-kompatibel/dp/B08BTYCGVV">ESP32 D1 mini module</a>. The controller module is extended by a <a href="https://www.amazon.de/AZDelivery-Real-Clock-DS3231-Parent/dp/B07ZQGBH14">real-time clock (RTC) module</a>. As long as the controller has a WiFi connection the time of the RTC module is set using the <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol">network time protocol</a>. In case the WiFi connection is lost the controller is able to get the time from the RTC module even after the power outage (see also <a class="el" href="index.html#subSafetyAspect">Safety Aspects</a>). This is important in case the @refg subManualMode is used.</p>
+<p >The controller and RTC module are both part of the <a class="el" href="index.html#subsubControllerBoard">Controller board</a> which is mounted inside the safe. The <a class="el" href="index.html#subsubControllerBoard">Controller board</a> is extended by the <a class="el" href="index.html#subsubIOModule">I/O module</a> mounted to the outside of the safe which contains a <a href="https://www.amazon.de/AZDelivery-Bundle-2004-blau-Parent/dp/B07Z6CPTF4">HD44780 display with an I²C converter</a> and a <a href="https://www.amazon.de/WayinTop-Encoder-Drehgeber-Drehwinkelgeber-Druckknopf/dp/B07T3672VK">rotary encoder</a>. Since the controller display requires 5V and the controller runs with 3.3V, a <a href="https://www.amazon.de/gp/product/B07LG6RK7L">logic level converter</a> is added between the controller board and the LCD module.</p>
 <h3><a class="anchor" id="subsubControllerBoard"></a>
 Controller board</h3>
-<dl class="section note"><dt>Note</dt><dd>The following might be outdated since it was written for V1.0.0.</dd></dl>
-<p>The controller board contains the ESP32 controller and the RTC as well as some electronics which can open the coil. The controller board is mounted inside the safe to ensure the firmware cannot be modified while the safe is locked. For the power supply of the controller a USB cable without data-pins should be used (either by disconnecting them or using a USB power cable).</p>
+<p >The controller board contains the ESP32 controller and the RTC as well as some electronics which can open the coil. The controller board is mounted inside the safe to ensure the firmware cannot be modified while the safe is locked. For the power supply of the controller a USB cable without data-pins should be used (either by disconnecting them or using a USB power cable).</p>
 <p > 
 <div align="center"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_Controller_Board.svg" width="1024px"></div>
 </p>
-<p >The controller board can be easily soldered to a prototype PCB:</p>
+<p >A two-layer board layout can be found under <a href="https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware">https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware</a>. I also added the files I've used when I ordered the PCB from [<a href="https://www.jlcpcb.com/">https://www.jlcpcb.com/</a>](jlcpcb) under <a href="https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/JLCPCB%20Job">https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/JLCPCB%20Job</a>. The assembled board looks like:</p>
 <div class="image">
 <img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/ControllerBoard.jpg" alt="" width="500px"/>
 </div>
-<p >The only SMD part is the MOSFET in its SOT23 housing which can be placed between 3 pads of the PCB.</p>
 <h3><a class="anchor" id="subsubIOModule"></a>
 I/O module</h3>
 <p >The I/O module is responsible for displaying the current state and is therefore mounted to the outside of the safe. It consists of:</p><ul>
@@ -492,7 +488,6 @@ I/O module</h3>
 <li>logic level converter</li>
 <li>rotary encoder</li>
 </ul>
-<p >As shown in the first picture the module is glued to the safe. This is because the keyhole for the emergency key is below the I/O module.</p>
 <p > 
 <div align="center"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_IO_Module_Schematic.svg" width="1024px"></div>
 </p>
@@ -564,7 +559,7 @@ Views</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Dec 27 2021 14:44:54 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Mon Dec 27 2021 15:08:46 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>
