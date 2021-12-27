@@ -496,9 +496,8 @@ After entering the last character of the key, the key is verified. If the correc
 
 @section secHardwareDescription Hardware Description 
 @subsection subUnderstandingTheLockingMechanism Understanding the locking mechanism
-@note The following might be outdated since it was written for V1.0.0.
 
-As described above, I've used a [cheap safe from a local hardware store](https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628). 
+I've used a [cheap safe from a local hardware store](https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628). 
 But any cheap safe should do the trick as long as it can be electronically unlocked and easily disassembled. Try to look for a safe which is powered by 
 4 batteries (4 x 1.5V). Then the chances are high that the 5V of the controller board are high enough to pull the coil. The cheaper the safe the easier it
 might be to drill the holes into it to mount everything. After removing the cover on the inside of the safe, the original electronics board can be removed
@@ -513,18 +512,17 @@ applied to the coil, the pin is pulled down and the safe can be opened. The mech
 
 
 @subsection subNewElectronics New electronics
-@note The following might be outdated since it was written for V1.0.0.
 
 The idea of this project is now to replace the original electronics with a controller which checks the EmlaLock API if it can be opened or not. To be able 
 to connect to the internet I first started using a ESP8266. After a while I ran out of memory while parsing the JSON file delivered by the EmlaLock API. 
-Therefore, I had to switch to the more powerful [ESP32 module](https://www.amazon.de/AZDelivery-ESP32-NodeMCU-Module-Parent/dp/B07Z6CSD9K).
+Therefore, I had to switch to the more powerful [ESP32 D1 mini module](https://www.amazon.de/AZDelivery-Bluetooth-Internet-Entwicklungsboard-kompatibel/dp/B08BTYCGVV).
 The controller module is extended by a [real-time clock (RTC) module](https://www.amazon.de/AZDelivery-Real-Clock-DS3231-Parent/dp/B07ZQGBH14). As long as 
 the controller has a WiFi connection the time of the RTC module is set using the [network time protocol](https://en.wikipedia.org/wiki/Network_Time_Protocol). 
-In case the WiFi connection is lost the controller is able to get the time from the RTC module even after the power outage. 
-This is important in case the [manual mode](#manual-mode) is used.
+In case the WiFi connection is lost the controller is able to get the time from the RTC module even after the power outage (see also @ref subSafetyAspect). 
+This is important in case the @refg subManualMode is used.
 
-The controller and RTC module are both part of the [controller board](#controller-board) which is mounted inside the safe. The 
-[controller board](#controller-board) is extended by the [I/O module](#io-module) mounted to the outside of the safe which contains a 
+The controller and RTC module are both part of the @ref subsubControllerBoard which is mounted inside the safe. The 
+@ref subsubControllerBoard is extended by the @ref subsubIOModule mounted to the outside of the safe which contains a 
 [HD44780 display with an I²C converter](https://www.amazon.de/AZDelivery-Bundle-2004-blau-Parent/dp/B07Z6CPTF4) and a 
 [rotary encoder](https://www.amazon.de/WayinTop-Encoder-Drehgeber-Drehwinkelgeber-Druckknopf/dp/B07T3672VK). Since the controller display requires 5V and 
 the controller runs with 3.3V, a [logic level converter](https://www.amazon.de/gp/product/B07LG6RK7L) is added between the controller board and the LCD 
@@ -533,7 +531,6 @@ module.
 
 
 @subsubsection subsubControllerBoard Controller board
-@note The following might be outdated since it was written for V1.0.0.
 
 The controller board contains the ESP32 controller and the RTC as well as some electronics which can open the coil. The controller board is mounted inside 
 the safe to ensure the firmware cannot be modified while the safe is locked. For the power supply of the controller a USB cable without data-pins should be
@@ -543,11 +540,10 @@ used (either by disconnecting them or using a USB power cable).
 <div align="center"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_Controller_Board.svg" width="1024px"></div>
 @endhtmlonly
 
-The controller board can be easily soldered to a prototype PCB:
+A two-layer board layout can be found under https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware. I also added the files I've used when I ordered the PCB from
+[https://www.jlcpcb.com/](jlcpcb) under https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/JLCPCB%20Job. The assembled board looks like:
 
 @image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/ControllerBoard.jpg width=500px
-
-The only SMD part is the MOSFET in its SOT23 housing which can be placed between 3 pads of the PCB.
 
 
 
@@ -557,8 +553,6 @@ The I/O module is responsible for displaying the current state and is therefore 
 - HD44780 to I2C converter
 - logic level converter
 - rotary encoder
-
-As shown in the first picture the module is glued to the safe. This is because the keyhole for the emergency key is below the I/O module.
 
 @htmlonly
 <div align="center"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_IO_Module_Schematic.svg" width="1024px"></div>
