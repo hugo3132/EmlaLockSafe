@@ -19,3 +19,13 @@ https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50
 Safe (must have some kind of electronic opening mechanism):
 https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628
 
+Controller Board:
+=================
+1x Resistor 1k
+1x Resitor 470
+1x 5mm LED
+1x Diode (e.g. 1N4148) 
+1x MOSFET IRLML6244
+1x 100µF Capacitor
+1x 100nF Capacitor
+Some connectors to connect the board to the modules (see pictures)
