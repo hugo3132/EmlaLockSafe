@@ -220,11 +220,6 @@ void setup() {
   }
   else {
     views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
-    Serial.println("DEBUG!");
-    Serial.println("DEBUG!");
-    Serial.println("DEBUG!");
-    Serial.println("Replaced initial view");
-    views::ViewStore::activateView(views::ViewStore::ConfigurationServerView);
   }
 
 #else
