@@ -72,7 +72,6 @@ For the detailed description of the software behind this chapter please refer to
 
 
 
-
 @section secUsingTheSafe Using the Safe
 
 The main interaction with the safe is done using the display and the encoder knob. Everything which is displayed on the LCD is handled by so called
@@ -634,7 +633,8 @@ visible WiFi networks. The list is automatically updated in the @ref configurati
 @subsubsection subsubMainConfigurationServer Main Configuration Server
 
 The main configuration server is a webserver to configure everything except of the WiFi settings. The main website provided by the server is the file 
-[indexConfig.html](https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexConfig.html"). The webserver is automatically 
+[indexConfig.html](https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexConfig.html") (preview without backend
+ <a href="indexConfig.html" target="_blank">indexConfig.html</a>). The webserver is automatically 
 started and stopped by the @ref views::ConfigurationServerView. As mentioned before, the @ref views::ConfigurationServerView "view" and therefore also the 
 webserver is activated automatically after a reboot if the EmlaLock API is not configured. When the @ref views::ConfigurationServerView is active, it 
 provides a menu entry to reset the WiFi settings and reboot. After the reboot, the @ref subsubWifiConfigurationServer will be automatically started. This
