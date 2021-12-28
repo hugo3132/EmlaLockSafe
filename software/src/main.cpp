@@ -31,6 +31,7 @@
   #include "views/SelectDisplayTimeLeft.h"
   #include "views/SelectDisplayTimePassed.h"
   #include "views/SetTimerView.h"
+  #include "views/TimeRestrictedView.h"
   #include "views/UnlockSafeView.h"
   #include "views/UnlockedMainMenu.h"
   #include "views/ViewStore.h"
@@ -64,6 +65,7 @@ views::PreferencesMenu preferencesMenu(&display, &encoder, LCD_NUMBER_OF_COLS, L
 views::SelectDisplayTimeLeft selectDisplayTimeLeft(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::SelectDisplayTimePassed selectDisplayTimePassed(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::SetTimerView setTimerView(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
+views::TimeRestrictedView timeRestrictedView(&display);
 views::UnlockedMainMenu unlockedMainMenu(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::UnlockSafeView unlockSafeView(&display, &encoder, LCD_NUMBER_OF_COLS, LCD_NUMBER_OF_ROWS);
 views::WifiConnectingView wifiConnectingView(&display);
@@ -152,6 +154,7 @@ void setup() {
     ViewStore::addView(ViewStore::SelectDisplayTimeLeft, selectDisplayTimeLeft);
     ViewStore::addView(ViewStore::SelectDisplayTimePassed, selectDisplayTimePassed);
     ViewStore::addView(ViewStore::SetTimerView, setTimerView);
+    ViewStore::addView(ViewStore::TimeRestrictedView, timeRestrictedView);
     ViewStore::addView(ViewStore::UnlockedMainMenu, unlockedMainMenu);
     ViewStore::addView(ViewStore::UnlockSafeView, unlockSafeView);
     ViewStore::addView(ViewStore::WifiConnectingView, wifiConnectingView);
@@ -315,6 +318,7 @@ void loop() {
           (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterMenuView)) &&
           (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyMenu)) &&
           (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::EmergencyEnterKeyView)) &&
+          (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::TimeRestrictedView)) &&
           (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::WifiConnectingView))) {
         // No activate it
         views::ViewStore::activateView(views::ViewStore::LockedView);

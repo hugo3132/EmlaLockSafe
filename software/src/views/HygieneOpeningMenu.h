@@ -47,7 +47,13 @@ protected:
     if (menuItems.empty()) {
       // create menu items
       createMenuItem("Open Safe", [](MenuItem*) {
-        ViewStore::activateView(ViewStore::UnlockSafeView);
+        const auto& timeRestictions = configuration::Configuration::getSingleton().getTimeRestrictions();
+        if(!timeRestictions.restrictHygieneOpeningTimes || timeRestictions.checkTime()) {
+          ViewStore::activateView(ViewStore::UnlockSafeView);
+        }
+        else {
+          ViewStore::activateView(ViewStore::TimeRestrictedView);
+        }
       });
       createMenuItem("Emlalock Unlock Key", [](MenuItem*) {
         ViewStore::activateView(ViewStore::EmlalockUnlockKeyMenu);

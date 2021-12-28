@@ -661,7 +661,12 @@ Currently the following values can be set:
 @paragraph parHygieneOpeningSettings Hygiene Opening Settings
 - AutoLock after time is over
 
-
+@paragraph parTimeRestrictionsSettings Time Restrictions Settings
+It is possible to limit the time when the safe can be opened. The specified time span can be applied one or several of the following aspects:
+- the normal unlock function
+- the configuration server
+- unlock during hygiene openings
+- unlock using the emergency key
 
 
 @subsection subLockstate Lockstate

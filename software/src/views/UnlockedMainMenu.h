@@ -50,7 +50,13 @@ protected:
       // create menu items
 
       createMenuItem("Open Safe", [](MenuItem*) {
-        ViewStore::activateView(ViewStore::UnlockSafeView);
+        const auto& timeRestictions = configuration::Configuration::getSingleton().getTimeRestrictions();
+        if(!timeRestictions.restrictUnlockTimes || timeRestictions.checkTime()) {
+          ViewStore::activateView(ViewStore::UnlockSafeView);
+        }
+        else {
+          ViewStore::activateView(ViewStore::TimeRestrictedView);
+        }
       });
       createMenuItem("Set Custom Timer", [](MenuItem*) {
         ViewStore::activateView(ViewStore::SetTimerView);

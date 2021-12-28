@@ -6,16 +6,95 @@
 
 #include "..\UsedInterrupts.h"
 
+#include <algorithm>
 #include <Arduino.h>
 #include <SPIFFS.h>
-#include <stdlib.h>
 #include <ViewBase.h>
+#include <stdlib.h>
+#include <time.h>
 
 namespace configuration {
 /**
  * @brief Static class accessing the configuration
  */
 class Configuration {
+public:
+  /**
+   * @brief Container to restrict the time when the safe can be opened.
+   *
+   * The safe can only be opened between start and endTime
+   */
+  class TimeRestrictions {
+  public:
+    /**
+     * @brief The number of seconds after midnight after which the safe can be opened
+     */
+    uint32_t startTime;
+
+  public:
+    /**
+     * @brief The number of seconds after midnight until which the safe can be opened
+     */
+    uint32_t endTime;
+
+  public:
+    /**
+     * @brief If set, the safe can only be opened during the specified time using the normal unlock function
+     */
+    bool restrictUnlockTimes;
+
+  public:
+    /**
+     * @brief If set, the time for hygiene openings is restricted
+     */
+    bool restrictHygieneOpeningTimes;
+
+  public:
+    /**
+     * @brief If set, the time when the emergency key is accepted is restricted
+     */
+    bool restrictEmergencyKeyTimes;
+
+  public:
+    /**
+     * @brief If set, the time when the configuration server can be started is restricted
+     */
+    bool restrictConfigurationServer;
+
+  public:
+    TimeRestrictions()
+      : startTime(0)
+      , endTime(86400)
+      , restrictUnlockTimes(false)
+      , restrictHygieneOpeningTimes(false)
+      , restrictEmergencyKeyTimes(false)
+      , restrictConfigurationServer(false) {}
+
+  public:
+    /**
+     * @brief check if the current time is valid for opening the safe
+     */
+    bool checkTime() const {
+      // compute the number of seconds of this day
+      time_t currentTime = time(NULL);
+      tm tmBuf;
+      localtime_r(&currentTime, &tmBuf);
+      uint32_t currentSeconds = tmBuf.tm_hour * 3600 + tmBuf.tm_min * 60 + tmBuf.tm_sec;
+
+      if(startTime == endTime) {
+        return true;
+      }
+      else if (endTime > startTime) {
+        return (currentSeconds >= startTime) && (currentSeconds <= endTime);
+      }
+      else {
+        // Midnight overflow
+        return (currentSeconds >= endTime) && (currentSeconds <= startTime);
+      }
+
+    }
+  };
+
 #pragma region Singelton
 protected:
   /**
@@ -93,15 +172,19 @@ protected:
    * @brief Timeout of display backlight in seconds
    */
   unsigned long backlightTimeOut;
-#pragma endregion
 
-#pragma region Hygiene Opening Settings
 protected:
   /**
    * @brief Automatically lock after the time for hygiene opening is over. If not set, the safe stays unlocked until the hygiene
    * opening is ended on the website.
    */
   bool autoLockHygieneOpeningTimeout;
+
+protected:
+  /**
+   * @brief Container to restrict the time when the safe can be opened
+   */
+  TimeRestrictions timeRestrictions;
 #pragma endregion
 
 public:
@@ -128,6 +211,32 @@ public:
       timezoneName.trim();
       backlightTimeOut = strtoul(file.readStringUntil('\n').c_str(), NULL, 0);
       autoLockHygieneOpeningTimeout = strtol(file.readStringUntil('\n').c_str(), NULL, 0) == 1;
+
+      // read time restrictions
+      String start = file.readStringUntil('\n');
+      String end = file.readStringUntil('\n');
+      String restrictions = file.readStringUntil('\n');
+      start.trim();
+      end.trim();
+      restrictions.end();
+      if (start.isEmpty() || end.isEmpty() || restrictions.isEmpty()) {
+        timeRestrictions.startTime = 0;
+        timeRestrictions.endTime = 86400;
+        timeRestrictions.restrictUnlockTimes = false;
+        timeRestrictions.restrictHygieneOpeningTimes = false;
+        timeRestrictions.restrictEmergencyKeyTimes = false;
+        timeRestrictions.restrictConfigurationServer = false;
+      }
+      else {
+        timeRestrictions.startTime = strtoul(start.c_str(), NULL, 0);
+        timeRestrictions.endTime = strtoul(end.c_str(), NULL, 0);
+
+        unsigned long l = strtoul(restrictions.c_str(), NULL, 0);
+        timeRestrictions.restrictUnlockTimes = l & (1 << 0);
+        timeRestrictions.restrictHygieneOpeningTimes = l & (1 << 1);
+        timeRestrictions.restrictEmergencyKeyTimes = l & (1 << 2);
+        timeRestrictions.restrictConfigurationServer = l & (1 << 3);
+      }
 
       file.close();
       file = SPIFFS.open("/configuration.txt", "r");
@@ -197,8 +306,7 @@ public:
   const unsigned long& getBacklightTimeOut() const {
     return backlightTimeOut;
   }
-#pragma endregion
-#pragma region Hygiene Opening Settings
+
 public:
   /**
    * @brief return if the safe should automatically lock after the time for hygiene opening is over. If not set, the safe stays
@@ -206,6 +314,14 @@ public:
    */
   const bool& getAutoLockHygieneOpeningTimeout() const {
     return autoLockHygieneOpeningTimeout;
+  }
+
+public:
+  /**
+   * @brief get the timeout of display backlight in seconds
+   */
+  const TimeRestrictions& getTimeRestrictions() const {
+    return timeRestrictions;
   }
 #pragma endregion
 #pragma endregion
@@ -234,26 +350,30 @@ public:
    * @param backlightTimeOut new timeout of display backlight in seconds
    * @param autoLockHygieneOpeningTimeout Automatically lock after the time for hygiene opening is over. If not set, the safe
    * stays unlocked until the hygiene opening is ended on the website.
+   * @param timeRestrictions the new time restrictions
    */
   void setConfigurationSettings(const String& userId,
                                 const String& apiKey,
                                 const String& timezoneName,
                                 const String& timezone,
                                 const long& backlightTimeOut,
-                                const bool& autoLockHygieneOpeningTimeout) {
+                                const bool& autoLockHygieneOpeningTimeout,
+                                const TimeRestrictions& timeRestrictions) {
     this->userId = userId;
     this->apiKey = apiKey;
 
     this->timezoneName = timezoneName;
     this->timezone = timezone;
     setenv("TZ", timezone.c_str(), 1);
-    tzset();    
+    tzset();
 
     this->backlightTimeOut = backlightTimeOut;
     lcd::ViewBase::setBacklightTimeout(backlightTimeOut * 1000);
 
     this->autoLockHygieneOpeningTimeout = autoLockHygieneOpeningTimeout;
-    Serial.println((autoLockHygieneOpeningTimeout)?"1":"0");
+    this->timeRestrictions = timeRestrictions;
+    this->timeRestrictions.startTime = std::min(this->timeRestrictions.startTime, (uint32_t)86400);
+    this->timeRestrictions.endTime = std::min(this->timeRestrictions.endTime, (uint32_t)86400);
 
     writeConfiguration();
   }
@@ -278,7 +398,11 @@ protected:
       file.println(timezone);
       file.println(timezoneName);
       file.println(backlightTimeOut);
-      file.println((autoLockHygieneOpeningTimeout)?"1":"0");
+      file.println((autoLockHygieneOpeningTimeout) ? "1" : "0");
+
+      file.println(timeRestrictions.startTime);
+      file.println(timeRestrictions.endTime);
+      file.println((timeRestrictions.restrictUnlockTimes << 0) | (timeRestrictions.restrictHygieneOpeningTimes << 1) | (timeRestrictions.restrictEmergencyKeyTimes << 2) | (timeRestrictions.restrictConfigurationServer << 3));
     });
   }
 #pragma endregion

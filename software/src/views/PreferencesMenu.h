@@ -56,8 +56,14 @@ protected:
       });
 
       createMenuItem("Start Configuration Server", [this](MenuItem*) {
-        ViewStore::activateView(ViewStore::ConfigurationServerView);
-      });
+        const auto& timeRestictions = configuration::Configuration::getSingleton().getTimeRestrictions();
+        if(!timeRestictions.restrictConfigurationServer || timeRestictions.checkTime()) {
+          ViewStore::activateView(ViewStore::ConfigurationServerView);
+        }
+        else {
+          ViewStore::activateView(ViewStore::TimeRestrictedView);
+        }
+     });
 
       createMenuItem("Back", [this](MenuItem*) {
         activatePreviousView();

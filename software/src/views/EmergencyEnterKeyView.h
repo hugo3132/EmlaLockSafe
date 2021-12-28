@@ -114,11 +114,18 @@ public:
         char key[7];
         emlalock::EmergencyKey::getCurrentKey(key);
         if (strcmp(key, enteredKey) == 0) {
-          // Correct key was entered...
-          LockState::setEndDate(0); // set to unlock
-          LockState::setLastUpdateTime(time(NULL) + 10);
-          ViewStore::activateView(ViewStore::UnlockSafeView);
-          return;
+          const auto& timeRestictions = configuration::Configuration::getSingleton().getTimeRestrictions();
+          if(!timeRestictions.restrictEmergencyKeyTimes || timeRestictions.checkTime()) {
+            // Correct key was entered...
+            LockState::setEndDate(0); // set to unlock
+            LockState::setLastUpdateTime(time(NULL) + 10);
+            ViewStore::activateView(ViewStore::UnlockSafeView);
+            return;
+          }
+          else {
+            ViewStore::activateView(ViewStore::TimeRestrictedView);
+            return;
+          }
         }
         else {
           display->print("Invalid Key");

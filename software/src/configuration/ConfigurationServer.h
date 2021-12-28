@@ -69,6 +69,7 @@ private:
     // Add files to webserver which are loaded from the file system
     addSpiffsFileToServer("/", "text/html", "/indexConfig.html");
     addSpiffsFileToServer("/zones.json", "text/json");
+    addSpiffsFileToServer("/moment.js", "text/json");
 
     // Add file to webserver returning the current settings
     server.on("/lastValues", HTTP_GET, [this](AsyncWebServerRequest* request) {
@@ -77,16 +78,31 @@ private:
                     Configuration::getSingleton().getUserId() + "\r\n" + Configuration::getSingleton().getApiKey() + "\r\n" +
                       Configuration::getSingleton().getTimezoneName() + "\r\n" +
                       Configuration::getSingleton().getBacklightTimeOut() + "\r\n" +
-                      (Configuration::getSingleton().getAutoLockHygieneOpeningTimeout()?"true":"false"));
+                      (Configuration::getSingleton().getAutoLockHygieneOpeningTimeout()?"true":"false") + "\r\n" +
+                      Configuration::getSingleton().getTimeRestrictions().startTime + "\r\n" +
+                      Configuration::getSingleton().getTimeRestrictions().endTime + "\r\n" +
+                      (Configuration::getSingleton().getTimeRestrictions().restrictUnlockTimes?"true":"false") + "\r\n" +
+                      (Configuration::getSingleton().getTimeRestrictions().restrictHygieneOpeningTimes?"true":"false") + "\r\n" +
+                      (Configuration::getSingleton().getTimeRestrictions().restrictEmergencyKeyTimes?"true":"false") + "\r\n" +
+                      (Configuration::getSingleton().getTimeRestrictions().restrictConfigurationServer?"true":"false"));
     });
 
     server.on("/saveData", HTTP_GET, [](AsyncWebServerRequest* request) {
+      Configuration::TimeRestrictions restrictions;
+      restrictions.startTime = strtoul(getParam(request, "timeRestrictionsStartTime").c_str(), NULL, 0);
+      restrictions.endTime = strtoul(getParam(request, "timeRestrictionsEndTime").c_str(), NULL, 0);
+      restrictions.restrictUnlockTimes = getParam(request, "timeRestrictionsRestrictUnlockTimes") == "true";
+      restrictions.restrictHygieneOpeningTimes = getParam(request, "timeRestrictionsRestrictHygieneOpeningTimes") == "true";
+      restrictions.restrictEmergencyKeyTimes = getParam(request, "timeRestrictionsRestrictEmergencyKeyTimes") == "true";
+      restrictions.restrictConfigurationServer = getParam(request, "timeRestrictionsRestrictConfigurationServer") == "true";
+
       Configuration::getSingleton().setConfigurationSettings(getParam(request, "userId"),
                                                              getParam(request, "apiKey"),
                                                              getParam(request, "timezoneName"),
                                                              getParam(request, "timezone"),
                                                              strtoul(getParam(request, "backlightTimeOut").c_str(), NULL, 0),
-                                                             getParam(request, "autoLockHygieneOpeningTimeout") == "true");
+                                                             getParam(request, "autoLockHygieneOpeningTimeout") == "true", 
+                                                             restrictions);
       request->send(200, "text/plain", "Configuration updated");
     });
 

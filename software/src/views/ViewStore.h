@@ -33,6 +33,7 @@ public:
     SelectDisplayTimeLeft,
     SelectDisplayTimePassed,
     SetTimerView,
+    TimeRestrictedView,
     UnlockedMainMenu,
     UnlockSafeView,
     WifiConnectingView,
