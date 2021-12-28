@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="main.css">
+  <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+
+  <script type="text/javascript">
+    var timeZones = [];
+
+    $(document).ready(function () {
+      jQuery.ajaxSetup({async:false});
+
+      // load all time zones
+      $.getJSON("zones.json", function (data) {
+        $.each(data, function (key, val) {
+          timeZones[val[0]] = val[1];
+
+          var opt = document.createElement('option');
+          opt.value = val[0];
+          opt.innerHTML = val[0];
+          document.getElementById('timezone').appendChild(opt);
+        });
+      });
+
+      // load the last values
+      $.get("lastValues",
+        function (data, status) {
+          lastValues = data.split(/\r?\n/);
+          document.getElementById('userId').value = lastValues[0];
+          document.getElementById('apiKey').value = lastValues[1];
+          document.getElementById('timezone').value = lastValues[2];
+          document.getElementById('backlightTimeOut').value = lastValues[3];
+          document.getElementById('autoLockHygieneOpeningTimeout').checked = lastValues[4] == "true";
+        });
+
+      jQuery.ajaxSetup({async:true});
+    });
+
+    function saveData() {
+      $.get("saveData",
+        {
+          userId: document.getElementById('userId').value,
+          apiKey: document.getElementById('apiKey').value,
+          timezoneName: document.getElementById('timezone').value,
+          timezone: timeZones[document.getElementById('timezone').value],
+          backlightTimeOut: document.getElementById('backlightTimeOut').value,
+          autoLockHygieneOpeningTimeout: String(document.getElementById('autoLockHygieneOpeningTimeout').checked).toLowerCase()
+        },
+        function (data, status) {
+          alert(data);
+        });
+    }
+  </script>
+
+</head>
+
+<body>
+  <div class="container">
+    <h3>Emlalock Settings</h3>
+
+    <p>The following settings must be copied from tab "API" in your settings on <a href="https://www.emlalock.com/#/settings" target="_blank" rel="noopener noreferrer">emlalock.com</a>.</p>
+
+    <label for="userId">User ID</label>
+    <input type="text" id="userId" name="userId" placeholder="Your User ID">
+
+    <label for="apiKey">API Key</label>
+    <input type="text" id="apiKey" name="apiKey" placeholder="Your API Key">
+  </div>
+
+  <div class="container">
+    <h3>Miscellaneous Settings</h3>
+
+    <label for="timezone">Timezone</label>
+    <select id="timezone" name="timezone"></select>
+
+    <label for="backlightTimeOut">Timeout of display backlight in seconds. 0 disables the timeout.</label>
+    <input type="text" id="backlightTimeOut" name="backlightTimeOut">
+
+  </div>
+  <div class="container">
+    <h3>Hygiene Opening Settings</h3>
+
+    <input type="checkbox" id="autoLockHygieneOpeningTimeout" name="autoLockHygieneOpeningTimeout">
+    <label for="autoLockHygieneOpeningTimeout">Automatically lock after the time for hygiene opening is over. If not set, the safe stays unlocked until the hygiene opening is ended on the website.</label>
+  </div>
+
+
+  <div class="container">
+    <button type="button" onclick="saveData();">Save Data</button>
+  </div>
+
+</body>
+
+</html>

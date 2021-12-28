@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="main.css">
+  <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      // load all SSIDs
+      refreshSsids();
+    });
+
+    function refreshSsids() {
+      $.get("ssids",
+        function (data, status) {
+          ssids = data.split(/\r?\n/);
+
+          targetList = document.getElementById('ssid');
+          while (targetList.lastElementChild) {
+            targetList.removeChild(targetList.lastElementChild);
+          }
+          for (ssid of ssids) {
+            if(ssid.length == 0) {
+              continue;
+            }
+            var opt = document.createElement('option');
+            opt.value = ssid;
+            opt.innerHTML = ssid;
+            targetList.appendChild(opt);
+          }
+        });
+    }
+
+    function saveData() {
+      $.get("saveData",
+        {
+          ssid: document.getElementById('ssid').value,
+          pwd: document.getElementById('password').value,
+        },
+        function (data, status) {
+          alert(data);
+        });
+    }
+  </script>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <h3>WiFi Settings</h3>
+
+    <label for="fname">SSID:</label>
+    <select id="ssid" name="ssid">
+    </select>
+    <button type="button" onclick="refreshSsids();">Refresh SSIDs</button>
+
+    <BR>
+    <label for="lname">Password</label>
+    <input type="password" id="password" name="password" placeholder="Your WiFi Password">
+
+  </div>
+
+  <div class="container">
+    <P><B>Note:</B> After saving the data, the Wifi will no longer be available. Check the safe's display. If an error occurs, you have to reconnect to the SafeSetup WiFi and reload this site!</P>
+    <button type="button" onclick="saveData();">Save Data</button>
+  </div>
+
+</body>
+
+</html>
