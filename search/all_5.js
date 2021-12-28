@@ -22,9 +22,10 @@ var searchData=
   ['getssid_19',['getSsid',['../classconfiguration_1_1_configuration.html#aa4723406cbf76a0d4e6ce24ff3f21334',1,'configuration::Configuration']]],
   ['getstartdate_20',['getStartDate',['../class_lock_state.html#acdcf88a0e535a8e1297eb5c1445f1612',1,'LockState']]],
   ['gettemperaturestring_21',['getTemperatureString',['../class_lock_state.html#a701ea5696dfbdca6e3e7fc38b425d824',1,'LockState']]],
-  ['gettimezone_22',['getTimezone',['../classconfiguration_1_1_configuration.html#a183a5b197a874d7028097b0ffa6efa52',1,'configuration::Configuration']]],
-  ['gettimezonename_23',['getTimezoneName',['../classconfiguration_1_1_configuration.html#ab116782c71ee36386127196ab6bea2b4',1,'configuration::Configuration']]],
-  ['getuserid_24',['getUserId',['../classconfiguration_1_1_configuration.html#a4f050335d9770604fadd679e422cfb82',1,'configuration::Configuration']]],
-  ['getview_25',['getView',['../classviews_1_1_view_store.html#a0b9a3e54e18db0b8f958b868cb251875',1,'views::ViewStore']]],
-  ['gotostartofnextcertificate_26',['goToStartOfNextCertificate',['../classviews_1_1_update_certificates_view.html#a07fbe45a9f3ae8ead45ac81e5241509b',1,'views::UpdateCertificatesView']]]
+  ['gettimerestrictions_22',['getTimeRestrictions',['../classconfiguration_1_1_configuration.html#a7aca43d804af4b3e8544edee376b14ee',1,'configuration::Configuration']]],
+  ['gettimezone_23',['getTimezone',['../classconfiguration_1_1_configuration.html#a183a5b197a874d7028097b0ffa6efa52',1,'configuration::Configuration']]],
+  ['gettimezonename_24',['getTimezoneName',['../classconfiguration_1_1_configuration.html#ab116782c71ee36386127196ab6bea2b4',1,'configuration::Configuration']]],
+  ['getuserid_25',['getUserId',['../classconfiguration_1_1_configuration.html#a4f050335d9770604fadd679e422cfb82',1,'configuration::Configuration']]],
+  ['getview_26',['getView',['../classviews_1_1_view_store.html#a0b9a3e54e18db0b8f958b868cb251875',1,'views::ViewStore']]],
+  ['gotostartofnextcertificate_27',['goToStartOfNextCertificate',['../classviews_1_1_update_certificates_view.html#a07fbe45a9f3ae8ead45ac81e5241509b',1,'views::UpdateCertificatesView']]]
 ];

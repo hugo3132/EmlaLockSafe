@@ -12,6 +12,7 @@ var namespaceviews =
     [ "SelectDisplayTimeLeft", "classviews_1_1_select_display_time_left.html", "classviews_1_1_select_display_time_left" ],
     [ "SelectDisplayTimePassed", "classviews_1_1_select_display_time_passed.html", "classviews_1_1_select_display_time_passed" ],
     [ "SetTimerView", "classviews_1_1_set_timer_view.html", "classviews_1_1_set_timer_view" ],
+    [ "TimeRestrictedView", "classviews_1_1_time_restricted_view.html", "classviews_1_1_time_restricted_view" ],
     [ "UnlockedMainMenu", "classviews_1_1_unlocked_main_menu.html", "classviews_1_1_unlocked_main_menu" ],
     [ "UnlockSafeView", "classviews_1_1_unlock_safe_view.html", "classviews_1_1_unlock_safe_view" ],
     [ "UpdateCertificatesView", "classviews_1_1_update_certificates_view.html", "classviews_1_1_update_certificates_view" ],

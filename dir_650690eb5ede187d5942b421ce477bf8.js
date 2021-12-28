@@ -1,7 +1,8 @@
 var dir_650690eb5ede187d5942b421ce477bf8 =
 [
     [ "Configuration.h", "_configuration_8h.html", [
-      [ "configuration::Configuration", "classconfiguration_1_1_configuration.html", "classconfiguration_1_1_configuration" ]
+      [ "configuration::Configuration", "classconfiguration_1_1_configuration.html", "classconfiguration_1_1_configuration" ],
+      [ "configuration::Configuration::TimeRestrictions", "classconfiguration_1_1_configuration_1_1_time_restrictions.html", "classconfiguration_1_1_configuration_1_1_time_restrictions" ]
     ] ],
     [ "ConfigurationServer.h", "_configuration_server_8h.html", [
       [ "configuration::ConfigurationServer", "classconfiguration_1_1_configuration_server.html", "classconfiguration_1_1_configuration_server" ]

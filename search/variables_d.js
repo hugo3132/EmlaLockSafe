@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['server_0',['server',['../classconfiguration_1_1_configuration_server_base.html#af86efe328020175152e5db5dd8ac5306',1,'configuration::ConfigurationServerBase']]],
-  ['ssid_1',['ssid',['../classconfiguration_1_1_configuration.html#a59f8d0425ab5deaf118ed7aa0e283d8d',1,'configuration::Configuration']]],
-  ['ssids_2',['ssids',['../classconfiguration_1_1_wifi_configuration_server.html#a68c5280ab9dbe589ce5c22108cc063ef',1,'configuration::WifiConfigurationServer']]],
-  ['sslclient_3',['sslClient',['../classviews_1_1_update_certificates_view.html#a2127a7b5ff6e88f61a1a655869b15471',1,'views::UpdateCertificatesView']]],
-  ['startdate_4',['startDate',['../class_lock_state.html#a7058ee8151c2e34d1e860f7d7cce0407',1,'LockState']]]
+  ['restrictconfigurationserver_0',['restrictConfigurationServer',['../classconfiguration_1_1_configuration_1_1_time_restrictions.html#aa59c60039d19605dcabeec6f35b1c0cc',1,'configuration::Configuration::TimeRestrictions']]],
+  ['restrictemergencykeytimes_1',['restrictEmergencyKeyTimes',['../classconfiguration_1_1_configuration_1_1_time_restrictions.html#a1fbacd8865adab0762d26d50ecc2b02f',1,'configuration::Configuration::TimeRestrictions']]],
+  ['restricthygieneopeningtimes_2',['restrictHygieneOpeningTimes',['../classconfiguration_1_1_configuration_1_1_time_restrictions.html#a3252ff3e6736aad40e075ed149a8d0a0',1,'configuration::Configuration::TimeRestrictions']]],
+  ['restrictunlocktimes_3',['restrictUnlockTimes',['../classconfiguration_1_1_configuration_1_1_time_restrictions.html#a0b126743a59fbb74e74ee30bca008951',1,'configuration::Configuration::TimeRestrictions']]]
 ];

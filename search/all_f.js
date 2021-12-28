@@ -12,7 +12,7 @@ var searchData=
   ['server_9',['server',['../classconfiguration_1_1_configuration_server_base.html#af86efe328020175152e5db5dd8ac5306',1,'configuration::ConfigurationServerBase']]],
   ['setcachedenddate_10',['setCachedEndDate',['../class_lock_state.html#a4b899defe48e3709c924296d8b97f1bb',1,'LockState']]],
   ['setcleaningenddate_11',['setCleaningEndDate',['../class_lock_state.html#abece85fe7460c5a4f17a79435d42d6f8',1,'LockState']]],
-  ['setconfigurationsettings_12',['setConfigurationSettings',['../classconfiguration_1_1_configuration.html#a47a08c77b53ab2f1ff102b401f5b9d90',1,'configuration::Configuration']]],
+  ['setconfigurationsettings_12',['setConfigurationSettings',['../classconfiguration_1_1_configuration.html#a001d42e4b880cd2db12cbb478a9c880b',1,'configuration::Configuration']]],
   ['setdisplaytimeleft_13',['setDisplayTimeLeft',['../class_lock_state.html#aba9bc33a32918f1f8d427eefc5e4e0bc',1,'LockState']]],
   ['setdisplaytimepassed_14',['setDisplayTimePassed',['../class_lock_state.html#aa95434f1cef43898c6e2b1c01ac16e00',1,'LockState']]],
   ['setenddate_15',['setEndDate',['../class_lock_state.html#a5cbbc781d76d1575c4bb43c34a92c609',1,'LockState']]],
@@ -29,5 +29,6 @@ var searchData=
   ['ssid_26',['ssid',['../classconfiguration_1_1_configuration.html#a59f8d0425ab5deaf118ed7aa0e283d8d',1,'configuration::Configuration']]],
   ['ssids_27',['ssids',['../classconfiguration_1_1_wifi_configuration_server.html#a68c5280ab9dbe589ce5c22108cc063ef',1,'configuration::WifiConfigurationServer']]],
   ['sslclient_28',['sslClient',['../classviews_1_1_update_certificates_view.html#a2127a7b5ff6e88f61a1a655869b15471',1,'views::UpdateCertificatesView']]],
-  ['startdate_29',['startDate',['../class_lock_state.html#a7058ee8151c2e34d1e860f7d7cce0407',1,'LockState']]]
+  ['startdate_29',['startDate',['../class_lock_state.html#a7058ee8151c2e34d1e860f7d7cce0407',1,'LockState']]],
+  ['starttime_30',['startTime',['../classconfiguration_1_1_configuration_1_1_time_restrictions.html#a6b3e777e3cf4a09a4072f5c52f4745ca',1,'configuration::Configuration::TimeRestrictions']]]
 ];

@@ -36,6 +36,9 @@ var dir_a68c8b71bf3e0e982ae3d08b11290715 =
     [ "SetTimerView.h", "_set_timer_view_8h.html", [
       [ "views::SetTimerView", "classviews_1_1_set_timer_view.html", "classviews_1_1_set_timer_view" ]
     ] ],
+    [ "TimeRestrictedView.h", "_time_restricted_view_8h.html", [
+      [ "views::TimeRestrictedView", "classviews_1_1_time_restricted_view.html", "classviews_1_1_time_restricted_view" ]
+    ] ],
     [ "UnlockedMainMenu.h", "_unlocked_main_menu_8h.html", [
       [ "views::UnlockedMainMenu", "classviews_1_1_unlocked_main_menu.html", "classviews_1_1_unlocked_main_menu" ]
     ] ],

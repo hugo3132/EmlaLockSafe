@@ -19,6 +19,7 @@ var hierarchy =
       [ "views::UnlockedMainMenu", "classviews_1_1_unlocked_main_menu.html", null ]
     ] ],
     [ "RealTimeClock", "class_real_time_clock.html", null ],
+    [ "configuration::Configuration::TimeRestrictions", "classconfiguration_1_1_configuration_1_1_time_restrictions.html", null ],
     [ "Tools", "class_tools.html", null ],
     [ "UsedInterrupts", "class_used_interrupts.html", null ],
     [ "lcd::ViewBase", null, [
@@ -27,6 +28,7 @@ var hierarchy =
       [ "views::HardwareTestView", "classviews_1_1_hardware_test_view.html", null ],
       [ "views::LockedView", "classviews_1_1_locked_view.html", null ],
       [ "views::SetTimerView", "classviews_1_1_set_timer_view.html", null ],
+      [ "views::TimeRestrictedView", "classviews_1_1_time_restricted_view.html", null ],
       [ "views::UnlockSafeView", "classviews_1_1_unlock_safe_view.html", null ],
       [ "views::UpdateCertificatesView", "classviews_1_1_update_certificates_view.html", null ],
       [ "views::WifiConnectingView", "classviews_1_1_wifi_connecting_view.html", null ]

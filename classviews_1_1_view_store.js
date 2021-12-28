@@ -13,6 +13,7 @@ var classviews_1_1_view_store =
       [ "SelectDisplayTimeLeft", "classviews_1_1_view_store.html#af8a836be52dfc2f1e197adfaa6aedd79aa889ea2680f8d2b03963131aaf67fb4c", null ],
       [ "SelectDisplayTimePassed", "classviews_1_1_view_store.html#af8a836be52dfc2f1e197adfaa6aedd79abeb10228706fbff51cbf440388559649", null ],
       [ "SetTimerView", "classviews_1_1_view_store.html#af8a836be52dfc2f1e197adfaa6aedd79a9a40218e72c6e25e1b73bb6023655ba4", null ],
+      [ "TimeRestrictedView", "classviews_1_1_view_store.html#af8a836be52dfc2f1e197adfaa6aedd79a79b6d1b5b4a78e2a802b316c88937adb", null ],
       [ "UnlockedMainMenu", "classviews_1_1_view_store.html#af8a836be52dfc2f1e197adfaa6aedd79ae0f052206405a730b087da85bd7e7f1d", null ],
       [ "UnlockSafeView", "classviews_1_1_view_store.html#af8a836be52dfc2f1e197adfaa6aedd79a28abc1309a28cd6e3773066eb68471cc", null ],
       [ "WifiConnectingView", "classviews_1_1_view_store.html#af8a836be52dfc2f1e197adfaa6aedd79a877a4a9eee68ac96a5a6b0fe55d07bed", null ]

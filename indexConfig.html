@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="main.css">
   <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="moment.js"></script>
 
   <script type="text/javascript">
     var timeZones = [];
@@ -33,12 +34,31 @@
           document.getElementById('timezone').value = lastValues[2];
           document.getElementById('backlightTimeOut').value = lastValues[3];
           document.getElementById('autoLockHygieneOpeningTimeout').checked = lastValues[4] == "true";
+
+          d = moment();
+          d.hour(Math.floor(lastValues[5] / 3600));
+          d.minute(Math.floor(lastValues[5] / 60) % 60);
+          document.getElementById('timeRestrictionsStartTime').value = d.format("H:mm");
+          d.hour(Math.floor(lastValues[6] / 3600));
+          d.minute(Math.floor(lastValues[6] / 60) % 60);
+          document.getElementById('timeRestrictionsEndTime').value = d.format("H:mm");
+          document.getElementById('timeRestrictionsRestrictUnlockTimes').checked = lastValues[7] == "true";
+          document.getElementById('timeRestrictionsRestrictHygieneOpeningTimes').checked = lastValues[8] == "true";
+          document.getElementById('timeRestrictionsRestrictEmergencyKeyTimes').checked = lastValues[9] == "true";
+          document.getElementById('timeRestrictionsRestrictConfigurationServer').checked = lastValues[10] == "true";
         });
 
       jQuery.ajaxSetup({async:true});
     });
 
     function saveData() {
+      var startTime = moment(document.getElementById('timeRestrictionsStartTime').value, "H:mm");
+      startTime = startTime.hour()*3600 + startTime.minute();
+
+      var endTime = moment(document.getElementById('timeRestrictionsEndTime').value, "H:mm");
+      endTime = endTime.hour()*3600 + endTime.minute();
+      
+
       $.get("saveData",
         {
           userId: document.getElementById('userId').value,
@@ -46,7 +66,13 @@
           timezoneName: document.getElementById('timezone').value,
           timezone: timeZones[document.getElementById('timezone').value],
           backlightTimeOut: document.getElementById('backlightTimeOut').value,
-          autoLockHygieneOpeningTimeout: String(document.getElementById('autoLockHygieneOpeningTimeout').checked).toLowerCase()
+          autoLockHygieneOpeningTimeout: String(document.getElementById('autoLockHygieneOpeningTimeout').checked).toLowerCase(),
+          timeRestrictionsStartTime: startTime,
+          timeRestrictionsEndTime: endTime,
+          timeRestrictionsRestrictUnlockTimes: String(document.getElementById('timeRestrictionsRestrictUnlockTimes').checked).toLowerCase(),
+          timeRestrictionsRestrictHygieneOpeningTimes: String(document.getElementById('timeRestrictionsRestrictHygieneOpeningTimes').checked).toLowerCase(),
+          timeRestrictionsRestrictEmergencyKeyTimes: String(document.getElementById('timeRestrictionsRestrictEmergencyKeyTimes').checked).toLowerCase(),
+          timeRestrictionsRestrictConfigurationServer: String(document.getElementById('timeRestrictionsRestrictConfigurationServer').checked).toLowerCase()
         },
         function (data, status) {
           alert(data);
@@ -84,6 +110,30 @@
 
     <input type="checkbox" id="autoLockHygieneOpeningTimeout" name="autoLockHygieneOpeningTimeout">
     <label for="autoLockHygieneOpeningTimeout">Automatically lock after the time for hygiene opening is over. If not set, the safe stays unlocked until the hygiene opening is ended on the website.</label>
+  </div>
+
+  <div class="container">
+    <h3>Time Restrictions Settings</h3>
+
+    <p>The following settings allow to restrict the time when the safe can be opened to the range between start and end time.</p>
+    
+    <label for="timeRestrictionsStartTime">Start Time</label>
+    <input type="text" id="timeRestrictionsStartTime" name="timeRestrictionsStartTime">
+
+    <label for="timeRestrictionsEndTime">End Time</label>
+    <input type="text" id="timeRestrictionsEndTime" name="timeRestrictionsEndTime">
+
+    <input type="checkbox" id="timeRestrictionsRestrictUnlockTimes" name="timeRestrictionsRestrictUnlockTimes">
+    <label for="timeRestrictionsRestrictUnlockTimes">If selected, the safe can only be opened during the specified time using the normal unlock function.</label>
+    <br>
+    <input type="checkbox" id="timeRestrictionsRestrictConfigurationServer" name="timeRestrictionsRestrictConfigurationServer">
+    <label for="timeRestrictionsRestrictConfigurationServer">If selected, the time when this server can be started is restricted. Most likely should be selected together with the setting above.</label>
+    <br>
+    <input type="checkbox" id="timeRestrictionsRestrictHygieneOpeningTimes" name="timeRestrictionsRestrictHygieneOpeningTimes">
+    <label for="timeRestrictionsRestrictHygieneOpeningTimes">If selected, the time for hygiene openings is restricted.</label>
+    <br>
+    <input type="checkbox" id="timeRestrictionsRestrictEmergencyKeyTimes" name="timeRestrictionsRestrictEmergencyKeyTimes">
+    <label for="timeRestrictionsRestrictEmergencyKeyTimes">If selected, the time when the emergency key is accepted is restricted. Handle with great care!</label>
   </div>
 
 

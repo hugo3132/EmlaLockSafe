@@ -64,7 +64,8 @@ var NAVTREE =
         [ "Main Configuration Server", "index.html#subsubMainConfigurationServer", [
           [ "Emlalock Settings", "index.html#parEmlaLockSettings", null ],
           [ "Miscellaneous Settings", "index.html#parMiscellaneousSettings", null ],
-          [ "Hygiene Opening Settings", "index.html#parHygieneOpeningSettings", null ]
+          [ "Hygiene Opening Settings", "index.html#parHygieneOpeningSettings", null ],
+          [ "Time Restrictions Settings", "index.html#parTimeRestrictionsSettings", null ]
         ] ]
       ] ],
       [ "Lockstate", "index.html#subLockstate", null ],
@@ -102,8 +103,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_configuration_8h.html",
-"classemlalock_1_1_emla_lock_api.html#a1bcdc03a84196bccef1772546ca3c0f1",
-"classviews_1_1_view_store.html#a0b9a3e54e18db0b8f958b868cb251875"
+"classconfiguration_1_1_wifi_configuration_server.html#ace18e51ee086a59d3dbe104382351653",
+"classviews_1_1_unlocked_main_menu.html#aff40dd48d444b84770497ff37cea771f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

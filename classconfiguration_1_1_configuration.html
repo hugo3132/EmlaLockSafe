@@ -83,6 +83,7 @@ $(document).ready(function(){initNavTree('classconfiguration_1_1_configuration.h
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
@@ -98,6 +99,12 @@ $(document).ready(function(){initNavTree('classconfiguration_1_1_configuration.h
 
 <p><code>#include &lt;<a class="el" href="_configuration_8h_source.html">Configuration.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html">TimeRestrictions</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container to restrict the time when the safe can be opened.  <a href="classconfiguration_1_1_configuration_1_1_time_restrictions.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:adb8665fdcaf76fd7ba6aaccae621d8bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#adb8665fdcaf76fd7ba6aaccae621d8bb">Configuration</a> ()</td></tr>
@@ -126,12 +133,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a17e51f19af66435b0ac1a553fa85f245"><td class="memItemLeft" align="right" valign="top">const bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a17e51f19af66435b0ac1a553fa85f245">getAutoLockHygieneOpeningTimeout</a> () const</td></tr>
 <tr class="memdesc:a17e51f19af66435b0ac1a553fa85f245"><td class="mdescLeft">&#160;</td><td class="mdescRight">return if the safe should automatically lock after the time for hygiene opening is over. If not set, the safe stays unlocked until the hygiene opening is ended on the website.  <a href="classconfiguration_1_1_configuration.html#a17e51f19af66435b0ac1a553fa85f245">More...</a><br /></td></tr>
 <tr class="separator:a17e51f19af66435b0ac1a553fa85f245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aca43d804af4b3e8544edee376b14ee"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html">TimeRestrictions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a7aca43d804af4b3e8544edee376b14ee">getTimeRestrictions</a> () const</td></tr>
+<tr class="memdesc:a7aca43d804af4b3e8544edee376b14ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the timeout of display backlight in seconds  <a href="classconfiguration_1_1_configuration.html#a7aca43d804af4b3e8544edee376b14ee">More...</a><br /></td></tr>
+<tr class="separator:a7aca43d804af4b3e8544edee376b14ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf846709feae7b108637a08e838d2c84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#abf846709feae7b108637a08e838d2c84">setWifiSettings</a> (const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a59f8d0425ab5deaf118ed7aa0e283d8d">ssid</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#aefe0a07f75ae168439bde201c333c86b">pwd</a>)</td></tr>
 <tr class="memdesc:abf846709feae7b108637a08e838d2c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Wifi Settings.  <a href="classconfiguration_1_1_configuration.html#abf846709feae7b108637a08e838d2c84">More...</a><br /></td></tr>
 <tr class="separator:abf846709feae7b108637a08e838d2c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47a08c77b53ab2f1ff102b401f5b9d90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a47a08c77b53ab2f1ff102b401f5b9d90">setConfigurationSettings</a> (const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a8fa57236ecb80d1a1ba0507861e27690">userId</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a78074af3f9221418ab931c73eae01285">apiKey</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a0404e4cc36a1edeba5872e1755dbc6ce">timezoneName</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a74543ac7a7c5e9343fc3aad77219666f">timezone</a>, const long &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a9f622dae12903310fe43be53f3e4a3d4">backlightTimeOut</a>, const bool &amp;<a class="el" href="classconfiguration_1_1_configuration.html#adfffcc5d6a1ec877f175a28dfdf1b7a2">autoLockHygieneOpeningTimeout</a>)</td></tr>
-<tr class="memdesc:a47a08c77b53ab2f1ff102b401f5b9d90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <a class="el" href="classconfiguration_1_1_configuration.html" title="Static class accessing the configuration.">Configuration</a> Settings.  <a href="classconfiguration_1_1_configuration.html#a47a08c77b53ab2f1ff102b401f5b9d90">More...</a><br /></td></tr>
-<tr class="separator:a47a08c77b53ab2f1ff102b401f5b9d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a001d42e4b880cd2db12cbb478a9c880b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a001d42e4b880cd2db12cbb478a9c880b">setConfigurationSettings</a> (const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a8fa57236ecb80d1a1ba0507861e27690">userId</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a78074af3f9221418ab931c73eae01285">apiKey</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a0404e4cc36a1edeba5872e1755dbc6ce">timezoneName</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a74543ac7a7c5e9343fc3aad77219666f">timezone</a>, const long &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a9f622dae12903310fe43be53f3e4a3d4">backlightTimeOut</a>, const bool &amp;<a class="el" href="classconfiguration_1_1_configuration.html#adfffcc5d6a1ec877f175a28dfdf1b7a2">autoLockHygieneOpeningTimeout</a>, const <a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html">TimeRestrictions</a> &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a6a3bdb73942d2a36917885ca59a95838">timeRestrictions</a>)</td></tr>
+<tr class="memdesc:a001d42e4b880cd2db12cbb478a9c880b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <a class="el" href="classconfiguration_1_1_configuration.html" title="Static class accessing the configuration.">Configuration</a> Settings.  <a href="classconfiguration_1_1_configuration.html#a001d42e4b880cd2db12cbb478a9c880b">More...</a><br /></td></tr>
+<tr class="separator:a001d42e4b880cd2db12cbb478a9c880b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -180,6 +190,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:adfffcc5d6a1ec877f175a28dfdf1b7a2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#adfffcc5d6a1ec877f175a28dfdf1b7a2">autoLockHygieneOpeningTimeout</a></td></tr>
 <tr class="memdesc:adfffcc5d6a1ec877f175a28dfdf1b7a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically lock after the time for hygiene opening is over. If not set, the safe stays unlocked until the hygiene opening is ended on the website.  <a href="classconfiguration_1_1_configuration.html#adfffcc5d6a1ec877f175a28dfdf1b7a2">More...</a><br /></td></tr>
 <tr class="separator:adfffcc5d6a1ec877f175a28dfdf1b7a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a3bdb73942d2a36917885ca59a95838"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html">TimeRestrictions</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a6a3bdb73942d2a36917885ca59a95838">timeRestrictions</a></td></tr>
+<tr class="memdesc:a6a3bdb73942d2a36917885ca59a95838"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container to restrict the time when the safe can be opened.  <a href="classconfiguration_1_1_configuration.html#a6a3bdb73942d2a36917885ca59a95838">More...</a><br /></td></tr>
+<tr class="separator:a6a3bdb73942d2a36917885ca59a95838"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Static class accessing the configuration. </p>
@@ -426,6 +439,33 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a7aca43d804af4b3e8544edee376b14ee" name="a7aca43d804af4b3e8544edee376b14ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aca43d804af4b3e8544edee376b14ee">&#9670;&nbsp;</a></span>getTimeRestrictions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html">TimeRestrictions</a> &amp; configuration::Configuration::getTimeRestrictions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the timeout of display backlight in seconds </p>
+
+</div>
+</div>
 <a id="a183a5b197a874d7028097b0ffa6efa52" name="a183a5b197a874d7028097b0ffa6efa52"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a183a5b197a874d7028097b0ffa6efa52">&#9670;&nbsp;</a></span>getTimezone()</h2>
 
@@ -507,8 +547,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a47a08c77b53ab2f1ff102b401f5b9d90" name="a47a08c77b53ab2f1ff102b401f5b9d90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47a08c77b53ab2f1ff102b401f5b9d90">&#9670;&nbsp;</a></span>setConfigurationSettings()</h2>
+<a id="a001d42e4b880cd2db12cbb478a9c880b" name="a001d42e4b880cd2db12cbb478a9c880b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a001d42e4b880cd2db12cbb478a9c880b">&#9670;&nbsp;</a></span>setConfigurationSettings()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -550,7 +590,13 @@ Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const bool &amp;&#160;</td>
-          <td class="paramname"><em>autoLockHygieneOpeningTimeout</em>&#160;</td>
+          <td class="paramname"><em>autoLockHygieneOpeningTimeout</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html">TimeRestrictions</a> &amp;&#160;</td>
+          <td class="paramname"><em>timeRestrictions</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -574,6 +620,7 @@ Protected Attributes</h2></td></tr>
     <tr><td class="paramname">timezone</td><td>new timezone string </td></tr>
     <tr><td class="paramname">backlightTimeOut</td><td>new timeout of display backlight in seconds </td></tr>
     <tr><td class="paramname">autoLockHygieneOpeningTimeout</td><td>Automatically lock after the time for hygiene opening is over. If not set, the safe stays unlocked until the hygiene opening is ended on the website. </td></tr>
+    <tr><td class="paramname">timeRestrictions</td><td>the new time restrictions </td></tr>
   </table>
   </dd>
 </dl>
@@ -773,6 +820,30 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a6a3bdb73942d2a36917885ca59a95838" name="a6a3bdb73942d2a36917885ca59a95838"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a3bdb73942d2a36917885ca59a95838">&#9670;&nbsp;</a></span>timeRestrictions</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html">TimeRestrictions</a> configuration::Configuration::timeRestrictions</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Container to restrict the time when the safe can be opened. </p>
+
+</div>
+</div>
 <a id="a74543ac7a7c5e9343fc3aad77219666f" name="a74543ac7a7c5e9343fc3aad77219666f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a74543ac7a7c5e9343fc3aad77219666f">&#9670;&nbsp;</a></span>timezone</h2>
 
@@ -854,7 +925,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceconfiguration.html">configuration</a></li><li class="navelem"><a class="el" href="classconfiguration_1_1_configuration.html">Configuration</a></li>
-    <li class="footer">Generated on Tue Dec 28 2021 13:04:56 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Tue Dec 28 2021 21:22:36 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>
