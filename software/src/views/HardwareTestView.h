@@ -113,7 +113,7 @@ public:
       display->print(buf);
       lastTime = now;
 
-      digitalWrite(COIL_PIN, now%2);
+      digitalWrite(COIL_PIN, now % 2);
     }
 
     Tools::tickWifiSymbol(display, forceRedraw);

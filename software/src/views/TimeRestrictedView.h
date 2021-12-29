@@ -26,8 +26,7 @@ public:
    * @param display pointer to the LCD instance
    */
   TimeRestrictedView(LiquidCrystal_PCF8574* display)
-    : lcd::ViewBase(display, "TimeRestrictedView") {
-  }
+    : lcd::ViewBase(display, "TimeRestrictedView") {}
 
 public:
   /**
@@ -59,7 +58,7 @@ public:
    */
   virtual void tick(const bool& forceRedraw) {
     getBacklightTimeoutManager().delayTimeout();
-    if(activationMillis + 10000 < millis()) {
+    if (activationMillis + 10000 < millis()) {
       activatePreviousView();
     }
 
@@ -79,7 +78,7 @@ public:
       h = restrictions.endTime / 3600;
       m = (restrictions.startTime / 60) % 60;
       display->printf("End Time:      %02d:%02d", h, m);
-      
+
       display->setCursor(0, 3);
       display->print("Current Time:  00:00");
     }

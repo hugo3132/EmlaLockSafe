@@ -81,9 +81,9 @@ protected:
     display->print("Verifying Emlalock");
 
     activationTime = time(NULL);
-    // only update trigger the api if the last update time is not in the future. 
+    // only update trigger the api if the last update time is not in the future.
     // The time will be in the future if an emergency key was entered.
-    if(LockState::getLastUpdateTime() < time(NULL)) {
+    if (LockState::getLastUpdateTime() < time(NULL)) {
       emlalock::EmlaLockApi::getSingleton().triggerRefresh();
     }
 

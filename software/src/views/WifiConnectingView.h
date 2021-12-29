@@ -77,7 +77,10 @@ protected:
     display->setCursor(0, 0);
     display->print("Setting Timezone:");
     // configure NTP
-    configTzTime(configuration::Configuration::getSingleton().getTimezone().c_str(), "pool.ntp.org", "time.nist.gov", "time.google.com");
+    configTzTime(configuration::Configuration::getSingleton().getTimezone().c_str(),
+                 "pool.ntp.org",
+                 "time.nist.gov",
+                 "time.google.com");
 
     // go back to previous view
     activatePreviousView();

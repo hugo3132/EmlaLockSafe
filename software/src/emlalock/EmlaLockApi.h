@@ -1,10 +1,9 @@
-
 /**
  * @author    Hugo3132
  * @copyright 2-clause BSD license
  */
-
 #pragma once
+
 #include "../configuration/Configuration.h"
 #define ARDUINOJSON_USE_LONG_LONG  1
 #define ARDUINOJSON_DECODE_UNICODE 1

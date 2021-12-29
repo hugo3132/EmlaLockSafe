@@ -4,8 +4,8 @@
  */
 #pragma once
 
-#include "../configuration/Configuration.h"
 #include "../LockState.h"
+#include "../configuration/Configuration.h"
 #include "ViewStore.h"
 
 #include <RotaryEncoder.h>
@@ -24,7 +24,7 @@ protected:
 
 protected:
   /**
-   * @brief Cache of the entered key 
+   * @brief Cache of the entered key
    */
   char enteredKey[7];
 
@@ -71,9 +71,9 @@ protected:
   }
 
 public:
- /**
+  /**
    * @brief called during the loop function
-   * 
+   *
    * @param forceRedraw if true everything should be redrawn
    */
   virtual void tick(const bool& forceRedraw) {
@@ -113,7 +113,7 @@ public:
 
         if (strcmp(enteredKey, configuration::Configuration::getSingleton().getEmergencyKey().c_str()) == 0) {
           const auto& timeRestictions = configuration::Configuration::getSingleton().getTimeRestrictions();
-          if(!timeRestictions.restrictEmergencyKeyTimes || timeRestictions.checkTime()) {
+          if (!timeRestictions.restrictEmergencyKeyTimes || timeRestictions.checkTime()) {
             // Correct key was entered...
             LockState::setEndDate(0); // set to unlock
             LockState::setLastUpdateTime(time(NULL) + 10);

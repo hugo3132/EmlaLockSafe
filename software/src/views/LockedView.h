@@ -87,7 +87,7 @@ public:
     getBacklightTimeoutManager().tick(display);
 
     // click reloads the data from emlalock
-    if(click) {
+    if (click) {
       emlalock::EmlaLockApi::getSingleton().triggerRefresh();
     }
 

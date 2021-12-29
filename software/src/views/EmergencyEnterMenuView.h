@@ -51,7 +51,7 @@ protected:
 public:
   /**
    * @brief called during the loop function
-   * 
+   *
    * @param forceRedraw if true everything should be redrawn
    */
   virtual void tick(const bool& forceRedraw) {

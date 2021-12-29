@@ -1,6 +1,6 @@
 /**
- * @file config.h
- * @brief This file contains the actual configuration for the ESP.
+ * @author    Hugo3132
+ * @copyright 2-clause BSD license
  */
 #pragma once
 
@@ -10,12 +10,12 @@
 #define COIL_PIN 15
 
 /**
- * @brief Value of the COIL_PIN if the coil should be locked 
+ * @brief Value of the COIL_PIN if the coil should be locked
  */
 #define SAFE_COIL_LOCKED LOW
 
 /**
- * @brief Value of the COIL_PIN if the coil should be unlocked 
+ * @brief Value of the COIL_PIN if the coil should be unlocked
  */
 #define SAFE_COIL_UNLOCKED HIGH
 

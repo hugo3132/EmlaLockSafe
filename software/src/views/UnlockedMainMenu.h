@@ -7,8 +7,8 @@
 #include "../Tools.h"
 #include "ViewStore.h"
 
-#include <MenuView.h>
 #include <Esp.h>
+#include <MenuView.h>
 
 namespace views {
 /**
@@ -51,7 +51,7 @@ protected:
 
       createMenuItem("Open Safe", [](MenuItem*) {
         const auto& timeRestictions = configuration::Configuration::getSingleton().getTimeRestrictions();
-        if(!timeRestictions.restrictUnlockTimes || timeRestictions.checkTime()) {
+        if (!timeRestictions.restrictUnlockTimes || timeRestictions.checkTime()) {
           ViewStore::activateView(ViewStore::UnlockSafeView);
         }
         else {

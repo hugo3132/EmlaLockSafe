@@ -48,7 +48,7 @@ protected:
       // create menu items
       createMenuItem("Open Safe", [](MenuItem*) {
         const auto& timeRestictions = configuration::Configuration::getSingleton().getTimeRestrictions();
-        if(!timeRestictions.restrictHygieneOpeningTimes || timeRestictions.checkTime()) {
+        if (!timeRestictions.restrictHygieneOpeningTimes || timeRestictions.checkTime()) {
           ViewStore::activateView(ViewStore::UnlockSafeView);
         }
         else {
@@ -87,7 +87,7 @@ public:
     // should the time left be displayed? If yes, how
     static time_t lastDisplayedTime = 0;
     time_t timeLeft = 0;
-    if(LockState::getCleaningEndDate() > time(NULL)) {
+    if (LockState::getCleaningEndDate() > time(NULL)) {
       timeLeft = LockState::getCleaningEndDate() - time(NULL);
     }
 

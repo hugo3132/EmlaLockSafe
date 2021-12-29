@@ -48,7 +48,6 @@ protected:
   virtual void activate() {
     // is this the first time activate is called?
     if (menuItems.empty()) {
-
       createMenuItem("Change Wifi Settings", [this](MenuItem*) {
         configuration::Configuration::getSingleton().setWifiSettings("", "");
         ESP.restart();
@@ -56,13 +55,13 @@ protected:
 
       createMenuItem("Start Configuration Server", [this](MenuItem*) {
         const auto& timeRestictions = configuration::Configuration::getSingleton().getTimeRestrictions();
-        if(!timeRestictions.restrictConfigurationServer || timeRestictions.checkTime()) {
+        if (!timeRestictions.restrictConfigurationServer || timeRestictions.checkTime()) {
           ViewStore::activateView(ViewStore::ConfigurationServerView);
         }
         else {
           ViewStore::activateView(ViewStore::TimeRestrictedView);
         }
-     });
+      });
 
       createMenuItem("Back", [this](MenuItem*) {
         activatePreviousView();

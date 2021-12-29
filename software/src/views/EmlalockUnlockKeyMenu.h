@@ -59,9 +59,8 @@ protected:
                              numberOfColumns,
                              numberOfRows)
               .showModal(false)) {
-
           // update the menu item
-          String keyItemText = "Current key: " +  configuration::Configuration::getSingleton().generateNewEmergencyKey();
+          String keyItemText = "Current key: " + configuration::Configuration::getSingleton().generateNewEmergencyKey();
           menuItems.front().setText(keyItemText);
         }
       });

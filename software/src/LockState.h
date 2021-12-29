@@ -15,7 +15,7 @@
  * @brief Singleton class managing the current lock state. The class also
  * automatically saves the lock state to flash so we know what's going on after
  * a reboot even if there is no wifi.
- * 
+ *
  * For more details see \ref secLockstate
  *
  * Access to this class is thread-safe

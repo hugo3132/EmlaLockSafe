@@ -52,16 +52,16 @@ public:
 public:
   /**
    * @brief Execute the passed function without interrupts
-   * 
+   *
    * @param f function / lambda which should be executed
    */
   static void executeWithoutInterrupts(std::function<void(void)> f) {
     if (interruptsAttached) {
       detach();
-      try{
+      try {
         f();
       }
-      catch(...) {
+      catch (...) {
         attach();
         throw;
       }

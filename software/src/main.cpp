@@ -8,10 +8,10 @@
 
 //#define DISABLE_RTC
 
+#include "LockState.h"
 #include "configuration/Configuration.h"
 #include "configuration/HardwareConfiguration.h"
 #include "configuration/WifiConfigurationServer.h"
-#include "LockState.h"
 #if !defined(DISABLE_RTC)
   #include "RealTimeClock.h"
 #endif
@@ -94,7 +94,9 @@ void setup() {
 
   // Initialize Serial
   Serial.begin(115200);
-  while (!Serial); // wait for serial port to connect. Needed for native USB
+  // wait for serial port to connect. Needed for native USB
+  while (!Serial) {
+  }
   Serial.setDebugOutput(true);
 
   // initialize file system in flash
@@ -132,8 +134,7 @@ void setup() {
   }
 
   // Do we need to configure the WiFi?
-  if ((config.getSsid().length() == 0) ||
-      (config.getPwd().length() == 0)) {
+  if ((config.getSsid().length() == 0) || (config.getPwd().length() == 0)) {
     Serial.println("Start WiFi Configuration Server");
     configuration::WifiConfigurationServer::begin(display);
     return;
@@ -217,8 +218,7 @@ void setup() {
   if (LockState::getEndDate() > time(NULL)) {
     views::ViewStore::activateView(views::ViewStore::LockedView);
   }
-  else if ((config.getApiKey().length() == 0) ||
-           (config.getUserId().length() == 0)) {
+  else if ((config.getApiKey().length() == 0) || (config.getUserId().length() == 0)) {
     views::ViewStore::activateView(views::ViewStore::ConfigurationServerView);
   }
   else {
@@ -277,14 +277,14 @@ void loop() {
   configuration::Configuration& config = configuration::Configuration::getSingleton();
 
   // Is the WiFi configured?
-  if(configuration::WifiConfigurationServer::getSingletonPointer()) {
+  if (configuration::WifiConfigurationServer::getSingletonPointer()) {
     // no, just wait until the configration server reboots
     configuration::WifiConfigurationServer::getSingletonPointer()->loop();
     return;
   }
 
 #if !defined(HEADLESS_API_DEBUGGING)
-  //start emlalock api if necessary
+  // start emlalock api if necessary
   emlalock::EmlaLockApi::getSingleton();
 
   // tick for the encoder if the interrupt didn't properly trigger

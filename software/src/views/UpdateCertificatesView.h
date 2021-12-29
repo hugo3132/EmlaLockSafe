@@ -87,11 +87,14 @@ protected:
     // download the csv file to the file-system
     if (!downloadCertificatesAsCsv()) {
       Serial.println(lastErrorMessage);
-      return ;
+      return;
     }
     sslClient.stopAll();
 
-Serial.print("Free Heap:   ");Serial.print(ESP.getFreeHeap());Serial.print("  Free Stack:  ");Serial.println(ESP.getFreeContStack());
+    Serial.print("Free Heap:   ");
+    Serial.print(ESP.getFreeHeap());
+    Serial.print("  Free Stack:  ");
+    Serial.println(ESP.getFreeContStack());
 
     // First iteration through csv file: Count certificates
     ///////////////////////////////////////////////////////////////////////////
@@ -108,10 +111,13 @@ Serial.print("Free Heap:   ");Serial.print(ESP.getFreeHeap());Serial.print("  Fr
     // check if it makes sense to regenerate the archive
     if (numberOfCertificates == 0) {
       lastErrorMessage = "No certificates found in downloaded CSV file";
-      return ;
+      return;
     }
 
-Serial.print("Free Heap:   ");Serial.print(ESP.getFreeHeap());Serial.print("  Free Stack:  ");Serial.println(ESP.getFreeContStack());
+    Serial.print("Free Heap:   ");
+    Serial.print(ESP.getFreeHeap());
+    Serial.print("  Free Stack:  ");
+    Serial.println(ESP.getFreeContStack());
     // go to the beginning of the CSV file to start parsing
     certsCsv.seek(0);
 
@@ -146,7 +152,10 @@ Serial.print("Free Heap:   ");Serial.print(ESP.getFreeHeap());Serial.print("  Fr
 
     certsAr.close();
     certsCsv.close();
-Serial.print("Free Heap:   ");Serial.print(ESP.getFreeHeap());Serial.print("  Free Stack:  ");Serial.println(ESP.getFreeContStack());
+    Serial.print("Free Heap:   ");
+    Serial.print(ESP.getFreeHeap());
+    Serial.print("  Free Stack:  ");
+    Serial.println(ESP.getFreeContStack());
 
     display->clear();
     display->setCursor(0, 0);
@@ -154,7 +163,10 @@ Serial.print("Free Heap:   ");Serial.print(ESP.getFreeHeap());Serial.print("  Fr
     display->setCursor(0, 1);
     display->print("Verifying...");
 
-Serial.print("Free Heap:   ");Serial.print(ESP.getFreeHeap());Serial.print("  Free Stack:  ");Serial.println(ESP.getFreeContStack());
+    Serial.print("Free Heap:   ");
+    Serial.print(ESP.getFreeHeap());
+    Serial.print("  Free Stack:  ");
+    Serial.println(ESP.getFreeContStack());
     auto numberOfLoadedCertificates = certStore.initCertStore(LittleFS, PSTR("/certst.idx"), PSTR("/certs.tmp"));
     if (numberOfLoadedCertificates != 0) {
       if (LittleFS.exists("/certs.ar")) {

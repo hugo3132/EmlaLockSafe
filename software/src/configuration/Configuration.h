@@ -201,7 +201,7 @@ protected:
    * @brief The API Key extracted from the webpage settings > API
    */
   String apiKey;
-  
+
 protected:
   /**
    * @brief The emergency key
@@ -391,11 +391,11 @@ public:
   }
 
   /**
-   * @brief Generates a new key and stores it to the file system. 
+   * @brief Generates a new key and stores it to the file system.
    */
   const String& generateNewEmergencyKey() {
     std::srand((unsigned int)micros());
-    for(int i = 0; i < 6; i++) {
+    for (int i = 0; i < 6; i++) {
       emergencyKey[i] = getRandomChar();
     }
 
@@ -435,7 +435,6 @@ protected:
       timezone.trim();
       timezoneName = file.readStringUntil('\n');
       timezoneName.trim();
-
 
       backlightTimeOut = strtoul(file.readStringUntil('\n').c_str(), NULL, 0);
       autoLockHygieneOpeningTimeout = strtol(file.readStringUntil('\n').c_str(), NULL, 0) == 1;
