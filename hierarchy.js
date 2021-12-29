@@ -5,7 +5,6 @@ var hierarchy =
       [ "configuration::ConfigurationServer", "classconfiguration_1_1_configuration_server.html", null ],
       [ "configuration::WifiConfigurationServer", "classconfiguration_1_1_wifi_configuration_server.html", null ]
     ] ],
-    [ "emlalock::EmergencyKey", "classemlalock_1_1_emergency_key.html", null ],
     [ "emlalock::EmlaLockApi", "classemlalock_1_1_emla_lock_api.html", null ],
     [ "LockState", "class_lock_state.html", null ],
     [ "lcd::MenuView", null, [

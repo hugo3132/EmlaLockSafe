@@ -9,7 +9,7 @@ var searchData=
   ['condvar_6',['condVar',['../classemlalock_1_1_emla_lock_api.html#af49a20e12b5373f4dc4699015e9a2f6a',1,'emlalock::EmlaLockApi']]],
   ['configuration_7',['Configuration',['../classconfiguration_1_1_configuration.html#adb8665fdcaf76fd7ba6aaccae621d8bb',1,'configuration::Configuration']]],
   ['configuration_8',['configuration',['../namespaceconfiguration.html',1,'']]],
-  ['configuration_9',['Configuration',['../classconfiguration_1_1_configuration.html',1,'configuration']]],
+  ['configuration_9',['Configuration',['../classconfiguration_1_1_configuration_1_1_time_restrictions.html#a30221ddc558692a7b52598b963a74bc2',1,'configuration::Configuration::TimeRestrictions::Configuration()'],['../classconfiguration_1_1_configuration.html',1,'configuration::Configuration']]],
   ['configuration_2eh_10',['Configuration.h',['../_configuration_8h.html',1,'']]],
   ['configuration_5fssid_11',['CONFIGURATION_SSID',['../_wifi_configuration_server_8h.html#a567092298cd72354551acb50de952484',1,'WifiConfigurationServer.h']]],
   ['configurationserver_12',['ConfigurationServer',['../classconfiguration_1_1_configuration_server.html',1,'configuration::ConfigurationServer'],['../classconfiguration_1_1_configuration_server.html#a8419074b4a3af585480b0ba4240e607d',1,'configuration::ConfigurationServer::ConfigurationServer()']]],

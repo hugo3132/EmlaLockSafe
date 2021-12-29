@@ -11,13 +11,12 @@ var searchData=
   ['setdisplaytimeleft_8',['setDisplayTimeLeft',['../class_lock_state.html#aba9bc33a32918f1f8d427eefc5e4e0bc',1,'LockState']]],
   ['setdisplaytimepassed_9',['setDisplayTimePassed',['../class_lock_state.html#aa95434f1cef43898c6e2b1c01ac16e00',1,'LockState']]],
   ['setenddate_10',['setEndDate',['../class_lock_state.html#a5cbbc781d76d1575c4bb43c34a92c609',1,'LockState']]],
-  ['setkey_11',['setKey',['../classemlalock_1_1_emergency_key.html#a327e5d411de6f69378957b4e33985a21',1,'emlalock::EmergencyKey']]],
-  ['setlastupdatetime_12',['setLastUpdateTime',['../class_lock_state.html#a404a330aa634e586bad0047fd0d423a3',1,'LockState']]],
-  ['setmode_13',['setMode',['../class_lock_state.html#a8a7c8e1311ca4f42c2f2c887f50ca862',1,'LockState']]],
-  ['setnumberoffailedsessions_14',['setNumberOfFailedSessions',['../class_lock_state.html#a7d91eeabe7de9c4acf6c1f25e5b74a0b',1,'LockState']]],
-  ['setstartdate_15',['setStartDate',['../class_lock_state.html#a006b2b01c63bfff026fd221a00b5c1cb',1,'LockState']]],
-  ['settemperaturestring_16',['setTemperatureString',['../class_lock_state.html#a5f86b88fb13152297d6654bd91fb7dca',1,'LockState']]],
-  ['settimerview_17',['SetTimerView',['../classviews_1_1_set_timer_view.html#a408642c077f26ed810d86eae68e1d077',1,'views::SetTimerView::SetTimerView(LiquidCrystal_PCF8574 *display, RotaryEncoder *encoder, const int &amp;numberOfColumns, const int &amp;numberOfRows)'],['../classviews_1_1_set_timer_view.html#a04af1c5fa563b51a63b50946df736e97',1,'views::SetTimerView::SetTimerView(const SetTimerView &amp;other)=delete'],['../classviews_1_1_set_timer_view.html#ae12d60210cb0801d699e14e48e90faa6',1,'views::SetTimerView::SetTimerView(SetTimerView &amp;&amp;other) noexcept=delete']]],
-  ['setup_18',['setup',['../main_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d',1,'main.cpp']]],
-  ['setwifisettings_19',['setWifiSettings',['../classconfiguration_1_1_configuration.html#abf846709feae7b108637a08e838d2c84',1,'configuration::Configuration']]]
+  ['setlastupdatetime_11',['setLastUpdateTime',['../class_lock_state.html#a404a330aa634e586bad0047fd0d423a3',1,'LockState']]],
+  ['setmode_12',['setMode',['../class_lock_state.html#a8a7c8e1311ca4f42c2f2c887f50ca862',1,'LockState']]],
+  ['setnumberoffailedsessions_13',['setNumberOfFailedSessions',['../class_lock_state.html#a7d91eeabe7de9c4acf6c1f25e5b74a0b',1,'LockState']]],
+  ['setstartdate_14',['setStartDate',['../class_lock_state.html#a006b2b01c63bfff026fd221a00b5c1cb',1,'LockState']]],
+  ['settemperaturestring_15',['setTemperatureString',['../class_lock_state.html#a5f86b88fb13152297d6654bd91fb7dca',1,'LockState']]],
+  ['settimerview_16',['SetTimerView',['../classviews_1_1_set_timer_view.html#a408642c077f26ed810d86eae68e1d077',1,'views::SetTimerView::SetTimerView(LiquidCrystal_PCF8574 *display, RotaryEncoder *encoder, const int &amp;numberOfColumns, const int &amp;numberOfRows)'],['../classviews_1_1_set_timer_view.html#a04af1c5fa563b51a63b50946df736e97',1,'views::SetTimerView::SetTimerView(const SetTimerView &amp;other)=delete'],['../classviews_1_1_set_timer_view.html#ae12d60210cb0801d699e14e48e90faa6',1,'views::SetTimerView::SetTimerView(SetTimerView &amp;&amp;other) noexcept=delete']]],
+  ['setup_17',['setup',['../main_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d',1,'main.cpp']]],
+  ['setwifisettings_18',['setWifiSettings',['../classconfiguration_1_1_configuration.html#abf846709feae7b108637a08e838d2c84',1,'configuration::Configuration']]]
 ];

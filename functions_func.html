@@ -128,15 +128,15 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 
 
 <h3><a id="index_g" name="index_g"></a>- g -</h3><ul>
-<li>generateNewKey()&#160;:&#160;<a class="el" href="classemlalock_1_1_emergency_key.html#a477f44cfa19bd5ab1f2312a4b2d07c69">emlalock::EmergencyKey</a></li>
+<li>generateNewEmergencyKey()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#a6b39ab207db1655b6ade9a54d3f4de69">configuration::Configuration</a></li>
 <li>getApiKey()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#ac3d6f11f2a9aa38d8216bfa644414a5a">configuration::Configuration</a></li>
 <li>getAutoLockHygieneOpeningTimeout()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#a17e51f19af66435b0ac1a553fa85f245">configuration::Configuration</a></li>
 <li>getBacklightTimeOut()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#a3703e345dba67444125894fe5aec226e">configuration::Configuration</a></li>
 <li>getCachedEndDate()&#160;:&#160;<a class="el" href="class_lock_state.html#a63f22a4b3236976dc7f4acb155f296ff">LockState</a></li>
 <li>getCleaningEndDate()&#160;:&#160;<a class="el" href="class_lock_state.html#a90a228ccc049291a6e593983b99818ea">LockState</a></li>
-<li>getCurrentKey()&#160;:&#160;<a class="el" href="classemlalock_1_1_emergency_key.html#af3bb2a5362c43df11581fa359c8143a8">emlalock::EmergencyKey</a></li>
 <li>getDisplayTimeLeft()&#160;:&#160;<a class="el" href="class_lock_state.html#aeef3456dd5d332cb5cd77c287b632ea5">LockState</a></li>
 <li>getDisplayTimePassed()&#160;:&#160;<a class="el" href="class_lock_state.html#a4a9cf8439df9f1345f114563019661f7">LockState</a></li>
+<li>getEmergencyKey()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#abd0c89edc8edbe79e13dc2e67043b36d">configuration::Configuration</a></li>
 <li>getEndDate()&#160;:&#160;<a class="el" href="class_lock_state.html#a07fea0ad2f0c3c5aafdd68f2bbc7bdd5">LockState</a></li>
 <li>getInstance()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#a69998d4639ac72ba6068fc25ee2140eb">configuration::Configuration</a>, <a class="el" href="classconfiguration_1_1_configuration_server.html#abae829d8b32597b601dd8084f75a364d">configuration::ConfigurationServer</a>, <a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#a095b8e074305d03daadee7bae0924ec3">configuration::WifiConfigurationServer</a></li>
 <li>getLastUpdateTime()&#160;:&#160;<a class="el" href="class_lock_state.html#a7c3976d0520d77803a38eacf1264c161">LockState</a></li>
@@ -144,7 +144,7 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>getNumberOfFailedSessions()&#160;:&#160;<a class="el" href="class_lock_state.html#a3ea10ca9b284a018c5a556fee9c5de14">LockState</a></li>
 <li>getParam()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration_server.html#aa804c661367d6ac9b05f973a93212c82">configuration::ConfigurationServer</a></li>
 <li>getPwd()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#ab6bba78e67cca1c6bbc25a4df21f190a">configuration::Configuration</a></li>
-<li>getRandomChar()&#160;:&#160;<a class="el" href="classemlalock_1_1_emergency_key.html#aafe2e7ba1a3adb0c885fd187c233bb99">emlalock::EmergencyKey</a></li>
+<li>getRandomChar()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#a15cd06a4ba3ad9f636ef7d8378d2b703">configuration::Configuration</a></li>
 <li>getSingleton()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration</a>, <a class="el" href="classconfiguration_1_1_configuration_server.html#a265ded403e56ec71dd44334b1ca87985">configuration::ConfigurationServer</a>, <a class="el" href="classemlalock_1_1_emla_lock_api.html#accc47b8f5c2e2098a1da171b75b05323">emlalock::EmlaLockApi</a>, <a class="el" href="class_lock_state.html#aa2ae461a716dbe47d405858e71cfd435">LockState</a>, <a class="el" href="classviews_1_1_view_store.html#a8551609990773bed68f356722a297e77">views::ViewStore</a></li>
 <li>getSingletonPointer()&#160;:&#160;<a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#a8adeabfdb2aab3fbf52a32e2b7e2b016">configuration::WifiConfigurationServer</a></li>
 <li>getSsid()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#aa4723406cbf76a0d4e6ce24ff3f21334">configuration::Configuration</a></li>
@@ -188,6 +188,8 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 
 
 <h3><a id="index_r" name="index_r"></a>- r -</h3><ul>
+<li>readConfiguration()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#a96a4c785730874d46cd64003ace0d6c6">configuration::Configuration</a></li>
+<li>readFromFile()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html#ad33e314d665f56c5524741a8794e8742">configuration::Configuration::TimeRestrictions</a></li>
 <li>requestUrl()&#160;:&#160;<a class="el" href="classemlalock_1_1_emla_lock_api.html#a1bcdc03a84196bccef1772546ca3c0f1">emlalock::EmlaLockApi</a></li>
 </ul>
 
@@ -204,7 +206,6 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>setDisplayTimeLeft()&#160;:&#160;<a class="el" href="class_lock_state.html#aba9bc33a32918f1f8d427eefc5e4e0bc">LockState</a></li>
 <li>setDisplayTimePassed()&#160;:&#160;<a class="el" href="class_lock_state.html#aa95434f1cef43898c6e2b1c01ac16e00">LockState</a></li>
 <li>setEndDate()&#160;:&#160;<a class="el" href="class_lock_state.html#a5cbbc781d76d1575c4bb43c34a92c609">LockState</a></li>
-<li>setKey()&#160;:&#160;<a class="el" href="classemlalock_1_1_emergency_key.html#a327e5d411de6f69378957b4e33985a21">emlalock::EmergencyKey</a></li>
 <li>setLastUpdateTime()&#160;:&#160;<a class="el" href="class_lock_state.html#a404a330aa634e586bad0047fd0d423a3">LockState</a></li>
 <li>setMode()&#160;:&#160;<a class="el" href="class_lock_state.html#a8a7c8e1311ca4f42c2f2c887f50ca862">LockState</a></li>
 <li>setNumberOfFailedSessions()&#160;:&#160;<a class="el" href="class_lock_state.html#a7d91eeabe7de9c4acf6c1f25e5b74a0b">LockState</a></li>
@@ -242,13 +243,14 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>WifiConfigurationServer()&#160;:&#160;<a class="el" href="classconfiguration_1_1_wifi_configuration_server.html#afe78d95c98ea1ba05cdbb8596cf8c4d0">configuration::WifiConfigurationServer</a></li>
 <li>WifiConnectingView()&#160;:&#160;<a class="el" href="classviews_1_1_wifi_connecting_view.html#a444607cf4579039c9bbbc6bbe1f92e3d">views::WifiConnectingView</a></li>
 <li>writeConfiguration()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration.html#aff96b33c557964cbb8127f83cb4894c5">configuration::Configuration</a></li>
+<li>writeToFile()&#160;:&#160;<a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html#a39242397b2b38a99c3f197257a2bba21">configuration::Configuration::TimeRestrictions</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Dec 28 2021 21:32:04 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Dec 29 2021 15:22:35 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

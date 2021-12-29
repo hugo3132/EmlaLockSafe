@@ -29,23 +29,27 @@
       $.get("lastValues",
         function (data, status) {
           lastValues = data.split(/\r?\n/);
-          document.getElementById('userId').value = lastValues[0];
-          document.getElementById('apiKey').value = lastValues[1];
-          document.getElementById('timezone').value = lastValues[2];
-          document.getElementById('backlightTimeOut').value = lastValues[3];
-          document.getElementById('autoLockHygieneOpeningTimeout').checked = lastValues[4] == "true";
+          var i = 0;
+          document.getElementById('userId').value = lastValues[i]; i++;
+          document.getElementById('apiKey').value = lastValues[i]; i++;
+          document.getElementById('emergencyKey').value = lastValues[i]; i++;
+          document.getElementById('timezone').value = lastValues[i]; i++;
+          document.getElementById('backlightTimeOut').value = lastValues[i]; i++;
+          document.getElementById('autoLockHygieneOpeningTimeout').checked = lastValues[i] == "true"; i++;
 
           d = moment();
-          d.hour(Math.floor(lastValues[5] / 3600));
-          d.minute(Math.floor(lastValues[5] / 60) % 60);
+          d.hour(Math.floor(lastValues[i] / 3600));
+          d.minute(Math.floor(lastValues[i] / 60) % 60);
           document.getElementById('timeRestrictionsStartTime').value = d.format("H:mm");
-          d.hour(Math.floor(lastValues[6] / 3600));
-          d.minute(Math.floor(lastValues[6] / 60) % 60);
+          i++;
+          d.hour(Math.floor(lastValues[i] / 3600));
+          d.minute(Math.floor(lastValues[i] / 60) % 60);
           document.getElementById('timeRestrictionsEndTime').value = d.format("H:mm");
-          document.getElementById('timeRestrictionsRestrictUnlockTimes').checked = lastValues[7] == "true";
-          document.getElementById('timeRestrictionsRestrictHygieneOpeningTimes').checked = lastValues[8] == "true";
-          document.getElementById('timeRestrictionsRestrictEmergencyKeyTimes').checked = lastValues[9] == "true";
-          document.getElementById('timeRestrictionsRestrictConfigurationServer').checked = lastValues[10] == "true";
+          i++;
+          document.getElementById('timeRestrictionsRestrictUnlockTimes').checked = lastValues[i] == "true"; i++;
+          document.getElementById('timeRestrictionsRestrictHygieneOpeningTimes').checked = lastValues[i] == "true"; i++;
+          document.getElementById('timeRestrictionsRestrictEmergencyKeyTimes').checked = lastValues[i] == "true"; i++;
+          document.getElementById('timeRestrictionsRestrictConfigurationServer').checked = lastValues[i] == "true"; i++;
         });
 
       jQuery.ajaxSetup({async:true});
@@ -78,6 +82,16 @@
           alert(data);
         });
     }
+    
+    function generateNewKey() {
+      if(confirm("Are you sure? The old key wont't be valid anymore.")) {
+        document.getElementById('emergencyKey').value = "Waiting for new key";
+        $.get("generateNewKey",
+          function (data, status) {
+            document.getElementById('emergencyKey').value = data;
+          });
+      }
+    }
   </script>
 
 </head>
@@ -93,6 +107,10 @@
 
     <label for="apiKey">API Key</label>
     <input type="text" id="apiKey" name="apiKey" placeholder="Your API Key">
+
+    <label for="emergencyKey">Emergency Key</label>
+    <input type="text" id="emergencyKey" name="emergencyKey" placeholder="AAAAAA" readonly>
+    <button type="button" onclick="generateNewKey();">Generate New Emergency Key</button>
   </div>
 
   <div class="container">
