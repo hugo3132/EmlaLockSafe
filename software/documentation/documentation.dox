@@ -653,6 +653,7 @@ Currently the following values can be set:
 @paragraph parEmlaLockSettings Emlalock Settings
 - User ID
 - API Key
+- The Emergency Key
 
 @paragraph parMiscellaneousSettings Miscellaneous Settings
 - Timezone
