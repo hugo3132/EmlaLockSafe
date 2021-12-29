@@ -6,7 +6,6 @@
 #include "../Tools.h"
 #include "../UsedInterrupts.h"
 #include "../configuration/Configuration.h"
-#include "../emlalock/EmergencyKey.h"
 
 #include <DialogYesNo.h>
 #include <ESP.h>

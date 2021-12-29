@@ -3,7 +3,7 @@
  * @copyright 2-clause BSD license
  */
 #pragma once
-#include "../emlalock/EmergencyKey.h"
+#include "../configuration/Configuration.h"
 
 #include <DialogYesNo.h>
 #include <MenuView.h>
@@ -47,12 +47,8 @@ protected:
   virtual void activate() {
     // is this the first time activate is called?
     if (menuItems.empty()) {
-      // get the current key from the file system
-      char key[7];
-      emlalock::EmergencyKey::getCurrentKey(key);
-      
       // Menu item just showing the current key
-      String keyItemText = "Current Key: " + String(key);
+      String keyItemText = "Current Key: " + configuration::Configuration::getSingleton().getEmergencyKey();
       createMenuItem(keyItemText, [this](MenuItem*) {});
 
       // Menu item which allows to generate a new key
@@ -63,13 +59,9 @@ protected:
                              numberOfColumns,
                              numberOfRows)
               .showModal(false)) {
-          char key[7];
-
-          // generate and save new key
-          emlalock::EmergencyKey::generateNewKey(key);
 
           // update the menu item
-          String keyItemText = "Current key: " + String(key);
+          String keyItemText = "Current key: " +  configuration::Configuration::getSingleton().generateNewEmergencyKey();
           menuItems.front().setText(keyItemText);
         }
       });

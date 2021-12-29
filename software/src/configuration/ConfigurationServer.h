@@ -73,18 +73,34 @@ private:
 
     // Add file to webserver returning the current settings
     server.on("/lastValues", HTTP_GET, [this](AsyncWebServerRequest* request) {
-      request->send(200,
-                    "text/plain",
-                    Configuration::getSingleton().getUserId() + "\r\n" + Configuration::getSingleton().getApiKey() + "\r\n" +
-                      Configuration::getSingleton().getTimezoneName() + "\r\n" +
-                      Configuration::getSingleton().getBacklightTimeOut() + "\r\n" +
-                      (Configuration::getSingleton().getAutoLockHygieneOpeningTimeout()?"true":"false") + "\r\n" +
-                      Configuration::getSingleton().getTimeRestrictions().startTime + "\r\n" +
-                      Configuration::getSingleton().getTimeRestrictions().endTime + "\r\n" +
-                      (Configuration::getSingleton().getTimeRestrictions().restrictUnlockTimes?"true":"false") + "\r\n" +
-                      (Configuration::getSingleton().getTimeRestrictions().restrictHygieneOpeningTimes?"true":"false") + "\r\n" +
-                      (Configuration::getSingleton().getTimeRestrictions().restrictEmergencyKeyTimes?"true":"false") + "\r\n" +
-                      (Configuration::getSingleton().getTimeRestrictions().restrictConfigurationServer?"true":"false"));
+      String response = "";
+
+      response += Configuration::getSingleton().getUserId();
+      response += "\r\n";
+      response += Configuration::getSingleton().getApiKey();
+      response += "\r\n";
+      response += Configuration::getSingleton().getEmergencyKey();
+      response += "\r\n";
+      response += Configuration::getSingleton().getTimezoneName();
+      response += "\r\n";
+      response += Configuration::getSingleton().getBacklightTimeOut();
+      response += "\r\n";
+      response += Configuration::getSingleton().getAutoLockHygieneOpeningTimeout() ? "true" : "false";
+      response += "\r\n";
+      response += Configuration::getSingleton().getTimeRestrictions().startTime;
+      response += "\r\n";
+      response += Configuration::getSingleton().getTimeRestrictions().endTime;
+      response += "\r\n";
+      response += Configuration::getSingleton().getTimeRestrictions().restrictUnlockTimes ? "true" : "false";
+      response += "\r\n";
+      response += Configuration::getSingleton().getTimeRestrictions().restrictHygieneOpeningTimes ? "true" : "false";
+      response += "\r\n";
+      response += Configuration::getSingleton().getTimeRestrictions().restrictEmergencyKeyTimes ? "true" : "false";
+      response += "\r\n";
+      response += Configuration::getSingleton().getTimeRestrictions().restrictConfigurationServer ? "true" : "false";
+      response += "\r\n";
+
+      request->send(200, "text/plain", response);
     });
 
     server.on("/saveData", HTTP_GET, [](AsyncWebServerRequest* request) {
@@ -101,15 +117,18 @@ private:
                                                              getParam(request, "timezoneName"),
                                                              getParam(request, "timezone"),
                                                              strtoul(getParam(request, "backlightTimeOut").c_str(), NULL, 0),
-                                                             getParam(request, "autoLockHygieneOpeningTimeout") == "true", 
+                                                             getParam(request, "autoLockHygieneOpeningTimeout") == "true",
                                                              restrictions);
       request->send(200, "text/plain", "Configuration updated");
+    });
+
+    server.on("/generateNewKey", HTTP_GET, [](AsyncWebServerRequest* request) {
+      request->send(200, "text/plain", Configuration::getSingleton().generateNewEmergencyKey());
     });
 
     // Start Webserver
     server.begin();
   }
-
 
   static String getParam(AsyncWebServerRequest* request, const String& paramName) {
     auto param = request->getParam(paramName);

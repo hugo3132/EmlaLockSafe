@@ -6,10 +6,10 @@
 
 #include "..\UsedInterrupts.h"
 
-#include <algorithm>
 #include <Arduino.h>
 #include <SPIFFS.h>
 #include <ViewBase.h>
+#include <algorithm>
 #include <stdlib.h>
 #include <time.h>
 
@@ -25,6 +25,8 @@ public:
    * The safe can only be opened between start and endTime
    */
   class TimeRestrictions {
+    friend class Configuration;
+
   public:
     /**
      * @brief The number of seconds after midnight after which the safe can be opened
@@ -62,6 +64,9 @@ public:
     bool restrictConfigurationServer;
 
   public:
+    /**
+     * @brief Construct a new Time Restrictions object
+     */
     TimeRestrictions()
       : startTime(0)
       , endTime(86400)
@@ -81,7 +86,7 @@ public:
       localtime_r(&currentTime, &tmBuf);
       uint32_t currentSeconds = tmBuf.tm_hour * 3600 + tmBuf.tm_min * 60 + tmBuf.tm_sec;
 
-      if(startTime == endTime) {
+      if (startTime == endTime) {
         return true;
       }
       else if (endTime > startTime) {
@@ -91,7 +96,52 @@ public:
         // Midnight overflow
         return (currentSeconds >= endTime) && (currentSeconds <= startTime);
       }
+    }
 
+  protected:
+    /**
+     * @brief Reads the content of this class from the configuration file stream
+     *
+     * @param file file stream at the position where the data should be located
+     */
+    void readFromFile(File& file) {
+      String start = file.readStringUntil('\n');
+      String end = file.readStringUntil('\n');
+      String restrictions = file.readStringUntil('\n');
+      start.trim();
+      end.trim();
+      restrictions.end();
+      if (start.isEmpty() || end.isEmpty() || restrictions.isEmpty()) {
+        startTime = 0;
+        endTime = 86400;
+        restrictUnlockTimes = false;
+        restrictHygieneOpeningTimes = false;
+        restrictEmergencyKeyTimes = false;
+        restrictConfigurationServer = false;
+      }
+      else {
+        startTime = strtoul(start.c_str(), NULL, 0);
+        endTime = strtoul(end.c_str(), NULL, 0);
+
+        unsigned long l = strtoul(restrictions.c_str(), NULL, 0);
+        restrictUnlockTimes = l & (1 << 0);
+        restrictHygieneOpeningTimes = l & (1 << 1);
+        restrictEmergencyKeyTimes = l & (1 << 2);
+        restrictConfigurationServer = l & (1 << 3);
+      }
+    }
+
+  protected:
+    /**
+     * @brief Writes all configuration items of this class to the file at the current stream position
+     *
+     * @param file file stream at the position where the data should be located
+     */
+    void writeToFile(File& file) {
+      file.println(startTime);
+      file.println(endTime);
+      file.println((restrictUnlockTimes << 0) | (restrictHygieneOpeningTimes << 1) | (restrictEmergencyKeyTimes << 2) |
+                   (restrictConfigurationServer << 3));
     }
   };
 
@@ -139,7 +189,7 @@ protected:
   String pwd;
 #pragma endregion
 
-#pragma region Emlalock API settings
+#pragma region Emlalock settings
 protected:
   /**
    * @brief The User ID extracted from the webpage settings > API
@@ -151,6 +201,12 @@ protected:
    * @brief The API Key extracted from the webpage settings > API
    */
   String apiKey;
+  
+protected:
+  /**
+   * @brief The emergency key
+   */
+  String emergencyKey;
 #pragma endregion
 
 #pragma region Miscellaneous Settings
@@ -189,59 +245,7 @@ protected:
 
 public:
   Configuration() {
-    // load everything from the SPIFFS
-    UsedInterrupts::executeWithoutInterrupts([this]() {
-      File file = SPIFFS.open("/configuration.txt", "r");
-      if (!file) {
-        Serial.println("Loading configuration.txt failed");
-        return;
-      }
-
-      ssid = file.readStringUntil('\n');
-      ssid.trim();
-      pwd = file.readStringUntil('\n');
-      pwd.trim();
-      userId = file.readStringUntil('\n');
-      userId.trim();
-      apiKey = file.readStringUntil('\n');
-      apiKey.trim();
-      timezone = file.readStringUntil('\n');
-      timezone.trim();
-      timezoneName = file.readStringUntil('\n');
-      timezoneName.trim();
-      backlightTimeOut = strtoul(file.readStringUntil('\n').c_str(), NULL, 0);
-      autoLockHygieneOpeningTimeout = strtol(file.readStringUntil('\n').c_str(), NULL, 0) == 1;
-
-      // read time restrictions
-      String start = file.readStringUntil('\n');
-      String end = file.readStringUntil('\n');
-      String restrictions = file.readStringUntil('\n');
-      start.trim();
-      end.trim();
-      restrictions.end();
-      if (start.isEmpty() || end.isEmpty() || restrictions.isEmpty()) {
-        timeRestrictions.startTime = 0;
-        timeRestrictions.endTime = 86400;
-        timeRestrictions.restrictUnlockTimes = false;
-        timeRestrictions.restrictHygieneOpeningTimes = false;
-        timeRestrictions.restrictEmergencyKeyTimes = false;
-        timeRestrictions.restrictConfigurationServer = false;
-      }
-      else {
-        timeRestrictions.startTime = strtoul(start.c_str(), NULL, 0);
-        timeRestrictions.endTime = strtoul(end.c_str(), NULL, 0);
-
-        unsigned long l = strtoul(restrictions.c_str(), NULL, 0);
-        timeRestrictions.restrictUnlockTimes = l & (1 << 0);
-        timeRestrictions.restrictHygieneOpeningTimes = l & (1 << 1);
-        timeRestrictions.restrictEmergencyKeyTimes = l & (1 << 2);
-        timeRestrictions.restrictConfigurationServer = l & (1 << 3);
-      }
-
-      file.close();
-      file = SPIFFS.open("/configuration.txt", "r");
-      Serial.printf("configuration.txt: \n\"%s\"\n", file.readString().c_str());
-    });
+    readConfiguration();
   }
 
 #pragma region Getter
@@ -263,7 +267,7 @@ public:
   }
 #pragma endregion
 
-#pragma region Emlalock API settings
+#pragma region Emlalock settings
 public:
   /**
    * @brief get the User ID extracted from the webpage settings > API
@@ -278,6 +282,14 @@ public:
    */
   const String& getApiKey() const {
     return apiKey;
+  }
+
+public:
+  /**
+   * @brief get the emergency key of the safe
+   */
+  const String& getEmergencyKey() const {
+    return emergencyKey;
   }
 #pragma endregion
 
@@ -378,6 +390,64 @@ public:
     writeConfiguration();
   }
 
+  /**
+   * @brief Generates a new key and stores it to the file system. 
+   */
+  const String& generateNewEmergencyKey() {
+    std::srand((unsigned int)micros());
+    for(int i = 0; i < 6; i++) {
+      emergencyKey[i] = getRandomChar();
+    }
+
+    writeConfiguration();
+
+    return emergencyKey;
+  }
+#pragma endregion
+
+protected:
+  /**
+   * @brief Read all configuration data from file
+   */
+  void readConfiguration() {
+    // load everything from the SPIFFS
+    UsedInterrupts::executeWithoutInterrupts([this]() {
+      File file = SPIFFS.open("/configuration.txt", "r");
+      if (!file) {
+        Serial.println("Loading configuration.txt failed");
+        return;
+      }
+
+      ssid = file.readStringUntil('\n');
+      ssid.trim();
+      pwd = file.readStringUntil('\n');
+      pwd.trim();
+      userId = file.readStringUntil('\n');
+      userId.trim();
+      apiKey = file.readStringUntil('\n');
+      apiKey.trim();
+      emergencyKey = file.readStringUntil('\n');
+      emergencyKey.trim();
+      if (emergencyKey.length() != 6) {
+        emergencyKey = "AAAAAA";
+      }
+      timezone = file.readStringUntil('\n');
+      timezone.trim();
+      timezoneName = file.readStringUntil('\n');
+      timezoneName.trim();
+
+
+      backlightTimeOut = strtoul(file.readStringUntil('\n').c_str(), NULL, 0);
+      autoLockHygieneOpeningTimeout = strtol(file.readStringUntil('\n').c_str(), NULL, 0) == 1;
+
+      timeRestrictions.readFromFile(file);
+
+      file.close();
+      file = SPIFFS.open("/configuration.txt", "r");
+      Serial.printf("configuration.txt: \n\"%s\"\n", file.readString().c_str());
+    });
+  }
+
 protected:
   /**
    * @brief writes all configuration values to the SPIFFS
@@ -395,16 +465,33 @@ protected:
       file.println(pwd);
       file.println(userId);
       file.println(apiKey);
+      file.println(emergencyKey);
       file.println(timezone);
       file.println(timezoneName);
       file.println(backlightTimeOut);
       file.println((autoLockHygieneOpeningTimeout) ? "1" : "0");
 
-      file.println(timeRestrictions.startTime);
-      file.println(timeRestrictions.endTime);
-      file.println((timeRestrictions.restrictUnlockTimes << 0) | (timeRestrictions.restrictHygieneOpeningTimes << 1) | (timeRestrictions.restrictEmergencyKeyTimes << 2) | (timeRestrictions.restrictConfigurationServer << 3));
+      timeRestrictions.writeToFile(file);
     });
   }
-#pragma endregion
+
+protected:
+  /**
+   * @brief Get a random character (A-Z, 0-9)
+   */
+  static char getRandomChar() {
+    int x = 36;
+    while (x > 35) {
+      // according to example of
+      // https://en.cppreference.com/w/cpp/numeric/random/rand we need this to
+      // have no bias....
+      x = std::rand() / ((RAND_MAX + 1u) / 35);
+    }
+
+    if (x < 26) {
+      return (char)x + 'A';
+    }
+    return (char)x - 26 + '0';
+  }
 };
 } // namespace configuration

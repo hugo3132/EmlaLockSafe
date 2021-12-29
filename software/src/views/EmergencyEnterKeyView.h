@@ -4,7 +4,7 @@
  */
 #pragma once
 
-#include "../emlalock/EmergencyKey.h"
+#include "../configuration/Configuration.h"
 #include "../LockState.h"
 #include "ViewStore.h"
 
@@ -111,9 +111,7 @@ public:
         editIndex = 0;
         display->setCursor(0, 1);
 
-        char key[7];
-        emlalock::EmergencyKey::getCurrentKey(key);
-        if (strcmp(key, enteredKey) == 0) {
+        if (strcmp(enteredKey, configuration::Configuration::getSingleton().getEmergencyKey().c_str()) == 0) {
           const auto& timeRestictions = configuration::Configuration::getSingleton().getTimeRestrictions();
           if(!timeRestictions.restrictEmergencyKeyTimes || timeRestictions.checkTime()) {
             // Correct key was entered...
