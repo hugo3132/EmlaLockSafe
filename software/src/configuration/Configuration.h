@@ -405,6 +405,25 @@ public:
   }
 #pragma endregion
 
+
+public:
+  /**
+   * @brief Reset all values to the default values and write configuration
+   */
+  void restoreFactoryDefaults() {
+    ssid = "";
+    pwd = "";
+    userId = "";
+    apiKey = "";
+    emergencyKey = "AAAAAA";
+    timezone = "CET-1CEST,M3.5.0,M10.5.0/3";
+    timezoneName = "Europe/Berlin";
+    backlightTimeOut = 15;
+    autoLockHygieneOpeningTimeout = false;
+    timeRestrictions = TimeRestrictions();
+    writeConfiguration();
+  }
+
 protected:
   /**
    * @brief Read all configuration data from file

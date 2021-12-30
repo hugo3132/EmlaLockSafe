@@ -225,7 +225,7 @@ This menu can be entered using the @ref subsubUnlockedMainMenu.
 @htmlonly
 <div id="_subsubPreferencesMenu"></div>
 <script>document.addEventListener('DOMContentLoaded', function() {
-menus.push(new MenuView("_subsubPreferencesMenu", "Preferences", ["Change Wifi Settings", "Start Configuration Server", "Back"]));
+menus.push(new MenuView("_subsubPreferencesMenu", "Preferences", ["Change Wifi Settings", "Start Configuration Server", "Restore Factory Defaults", "Back"]));
 });</script>
 @endhtmlonly
 
@@ -233,7 +233,8 @@ The following actions can be selected:
 - <b>Change Wifi Settings:</b> Deletes the WiFi credentials and restarts the controller. After the reboot the controller will start the 
 @ref subWiFiConfig server.
 - <b>Start Configuration Server:</b> Activates the @ref subSoftwareConfiguration server.
-- <b>Back:</b> Return to the @ref subsubUnlockedMainMenu
+- <b>Restore Factory Defaults:</b> Deletes all configuration data. After the reboot the controller will start the @ref subWiFiConfig server.
+- <b>Back:</b> Return to the @ref subsubUnlockedMainMenu.
 
 
 

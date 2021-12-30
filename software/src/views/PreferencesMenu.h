@@ -62,6 +62,19 @@ protected:
           ViewStore::activateView(ViewStore::TimeRestrictedView);
         }
       });
+      createMenuItem("Restore Factory Defaults", [this](MenuItem*) {
+        if (lcd::DialogYesNo(display, encoder, "Are you sure to\ndelete everything?", numberOfColumns, numberOfRows)
+              .showModal(false)) {
+          configuration::Configuration::getSingleton().restoreFactoryDefaults();
+          display->clear();
+          display->setCursor(0, 0);
+          display->print("The controller is");
+          display->setCursor(0, 1);
+          display->print("gooing to reboot...");
+          delay(2000);
+          ESP.restart();
+        }
+      });
 
       createMenuItem("Back", [this](MenuItem*) {
         activatePreviousView();
