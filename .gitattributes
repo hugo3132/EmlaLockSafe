@@ -1,2 +1,6 @@
 # Apply override to all files in the directory
 software/documentation/** linguist-documentation
+
+# remove jquery
+software/data/jquery-3.6.0.min.js -linguist-documentation
+
