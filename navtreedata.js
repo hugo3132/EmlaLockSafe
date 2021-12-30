@@ -104,8 +104,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_configuration_8h.html",
-"classconfiguration_1_1_wifi_configuration_server.html#a787cff6b80c9677478967d08603512fe",
-"classviews_1_1_unlocked_main_menu.html#aab2e2a4cce8d869522cb7c9df4777e57"
+"classconfiguration_1_1_wifi_configuration_server.html#a693b4501bb219b779cf433255b1632ef",
+"classviews_1_1_unlocked_main_menu.html#a5969bab10762efea902531254218dccf"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

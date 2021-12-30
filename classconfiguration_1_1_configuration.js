@@ -18,6 +18,7 @@ var classconfiguration_1_1_configuration =
     [ "getTimezoneName", "classconfiguration_1_1_configuration.html#ab116782c71ee36386127196ab6bea2b4", null ],
     [ "getUserId", "classconfiguration_1_1_configuration.html#a4f050335d9770604fadd679e422cfb82", null ],
     [ "readConfiguration", "classconfiguration_1_1_configuration.html#a96a4c785730874d46cd64003ace0d6c6", null ],
+    [ "restoreFactoryDefaults", "classconfiguration_1_1_configuration.html#a5d2bb14d1ae6ca88c3f4afd1d8e8e212", null ],
     [ "setConfigurationSettings", "classconfiguration_1_1_configuration.html#a001d42e4b880cd2db12cbb478a9c880b", null ],
     [ "setWifiSettings", "classconfiguration_1_1_configuration.html#abf846709feae7b108637a08e838d2c84", null ],
     [ "writeConfiguration", "classconfiguration_1_1_configuration.html#aff96b33c557964cbb8127f83cb4894c5", null ],

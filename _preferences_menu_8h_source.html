@@ -126,16 +126,30 @@ $(document).ready(function(){initNavTree('_preferences_menu_8h_source.html','');
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>          <a class="code hl_function" href="classviews_1_1_view_store.html#a436fa4cf71eb05877006f730b624514d">ViewStore::activateView</a>(<a class="code hl_enumvalue" href="classviews_1_1_view_store.html#af8a836be52dfc2f1e197adfaa6aedd79a79b6d1b5b4a78e2a802b316c88937adb">ViewStore::TimeRestrictedView</a>);</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        }</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      });</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>      createMenuItem(<span class="stringliteral">&quot;Back&quot;</span>, [<span class="keyword">this</span>](MenuItem*) {</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        activatePreviousView();</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>      });</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    }</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    lcd::MenuView::activate();</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  }</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>};</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>} <span class="comment">// namespace views</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>      createMenuItem(<span class="stringliteral">&quot;Restore Factory Defaults&quot;</span>, [<span class="keyword">this</span>](MenuItem*) {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="keywordflow">if</span> (lcd::DialogYesNo(<a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>, <a class="code hl_function" href="main_8cpp.html#a42242bcf496993724e2adda711a8562c">encoder</a>, <span class="stringliteral">&quot;Are you sure to\ndelete everything?&quot;</span>, numberOfColumns, numberOfRows)</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>              .showModal(<span class="keyword">false</span>)) {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>          <a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().<a class="code hl_function" href="classconfiguration_1_1_configuration.html#a5d2bb14d1ae6ca88c3f4afd1d8e8e212">restoreFactoryDefaults</a>();</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>          <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;clear();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>          <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;setCursor(0, 0);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>          <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;print(<span class="stringliteral">&quot;The controller is&quot;</span>);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>          <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;setCursor(0, 1);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>          <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;print(<span class="stringliteral">&quot;gooing to reboot...&quot;</span>);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>          delay(2000);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>          ESP.restart();</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>      });</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>      createMenuItem(<span class="stringliteral">&quot;Back&quot;</span>, [<span class="keyword">this</span>](MenuItem*) {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        activatePreviousView();</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>      });</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    }</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    lcd::MenuView::activate();</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  }</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>};</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>} <span class="comment">// namespace views</span></div>
+<div class="ttc" id="aclassconfiguration_1_1_configuration_html_a5d2bb14d1ae6ca88c3f4afd1d8e8e212"><div class="ttname"><a href="classconfiguration_1_1_configuration.html#a5d2bb14d1ae6ca88c3f4afd1d8e8e212">configuration::Configuration::restoreFactoryDefaults</a></div><div class="ttdeci">void restoreFactoryDefaults()</div><div class="ttdoc">Reset all values to the default values and write configuration.</div><div class="ttdef"><b>Definition:</b> Configuration.h:413</div></div>
 <div class="ttc" id="aclassconfiguration_1_1_configuration_html_a7aca43d804af4b3e8544edee376b14ee"><div class="ttname"><a href="classconfiguration_1_1_configuration.html#a7aca43d804af4b3e8544edee376b14ee">configuration::Configuration::getTimeRestrictions</a></div><div class="ttdeci">const TimeRestrictions &amp; getTimeRestrictions() const</div><div class="ttdoc">get the timeout of display backlight in seconds</div><div class="ttdef"><b>Definition:</b> Configuration.h:335</div></div>
 <div class="ttc" id="aclassconfiguration_1_1_configuration_html_ab6d07675a90b458bf3a2a910036749bc"><div class="ttname"><a href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a></div><div class="ttdeci">static Configuration &amp; getSingleton()</div><div class="ttdoc">Get the Singleton object.</div><div class="ttdef"><b>Definition:</b> Configuration.h:162</div></div>
 <div class="ttc" id="aclassconfiguration_1_1_configuration_html_abf846709feae7b108637a08e838d2c84"><div class="ttname"><a href="classconfiguration_1_1_configuration.html#abf846709feae7b108637a08e838d2c84">configuration::Configuration::setWifiSettings</a></div><div class="ttdeci">void setWifiSettings(const String &amp;ssid, const String &amp;pwd)</div><div class="ttdoc">Set the Wifi Settings.</div><div class="ttdef"><b>Definition:</b> Configuration.h:349</div></div>
@@ -156,7 +170,7 @@ $(document).ready(function(){initNavTree('_preferences_menu_8h_source.html','');
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c8fa76d8dc1b9e06ff8aeb3121608b1b.html">software</a></li><li class="navelem"><a class="el" href="dir_0a6976b261bfea925410a9d3b510969e.html">src</a></li><li class="navelem"><a class="el" href="dir_a68c8b71bf3e0e982ae3d08b11290715.html">views</a></li><li class="navelem"><a class="el" href="_preferences_menu_8h.html">PreferencesMenu.h</a></li>
-    <li class="footer">Generated on Thu Dec 30 2021 09:40:35 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Thu Dec 30 2021 10:35:11 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>
