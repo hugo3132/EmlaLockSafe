@@ -9,8 +9,8 @@
 This is the documentation for the EmlaLockSafe. The sources can be found under
 [https://github.com/hugo3132/EmlaLockSafe](https://github.com/hugo3132/EmlaLockSafe).
 
-<a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/safe.png">
-@image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/safe.png height=300px
+<a href="https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/pictures/safe.jpg">
+@image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/safe.jpg height=300px
 </a>
 
 @tableofcontents
@@ -564,8 +564,8 @@ https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50
 
 @htmlonly
 <div align="center">
-<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/DisplayModule_Back.png" height="300">
-<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/DisplayModule_Front.png" height="300">
+<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/DisplayModule_Back.jpg" height="300">
+<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/DisplayModule_Front.jpg" height="300">
 </div>
 @endhtmlonly
 
