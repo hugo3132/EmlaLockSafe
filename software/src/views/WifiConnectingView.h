@@ -52,6 +52,7 @@ protected:
 
     // Start connecting
     WiFi.disconnect();
+    WiFi.setHostname("EmlalockSafe");
     WiFi.mode(WIFI_STA);
     WiFi.begin(configuration::Configuration::getSingleton().getSsid().c_str(),
                configuration::Configuration::getSingleton().getPwd().c_str());

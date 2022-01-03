@@ -134,7 +134,7 @@ public:
     // again
     display->setCursor(0, 1);
     for (int i = 0; i < (millis() - coilActivationTime) / 500; i++) {
-      display->write(0xFF);
+      display->write('=');
     }
 
     // Check if the coil should be released after 10 seconds

@@ -4,7 +4,6 @@
  */
 #pragma once
 #include "../Tools.h"
-#include "../configuration/ConfigurationServer.h"
 
 #include <MenuView.h>
 
@@ -47,7 +46,6 @@ protected:
   virtual void activate() {
     // is this the first time activate is called?
     if (menuItems.empty()) {
-      configuration::ConfigurationServer::begin();
 
       // create menu items
       createMenuItem("http://" + WiFi.localIP().toString(), [this](MenuItem*) {});
@@ -56,7 +54,6 @@ protected:
         ESP.restart();
       });
       createMenuItem("Back", [this](MenuItem*) {
-        configuration::ConfigurationServer::end();
         activatePreviousView();
       });
     }

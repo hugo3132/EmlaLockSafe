@@ -10,6 +10,7 @@
 
 #include "LockState.h"
 #include "configuration/Configuration.h"
+#include "configuration/ConfigurationServer.h"
 #include "configuration/HardwareConfiguration.h"
 #include "configuration/WifiConfigurationServer.h"
 #if !defined(DISABLE_RTC)
@@ -214,6 +215,9 @@ void setup() {
   // Start connecting to WIFI
   views::ViewStore::activateView(views::ViewStore::WifiConnectingView);
 
+  // Initialize the webserver for the remote control
+  configuration::ConfigurationServer::begin(display, encoder);
+
   // Check if the safe should be locked
   if (LockState::getEndDate() > time(NULL)) {
     views::ViewStore::activateView(views::ViewStore::LockedView);
@@ -363,4 +367,4 @@ void loop() {
   emlalock::EmlaLockApi::getSingleton().triggerRefresh();
   delay(10000);
 #endif
-}
+} 
