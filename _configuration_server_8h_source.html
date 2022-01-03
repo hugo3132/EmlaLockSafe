@@ -283,29 +283,30 @@ $(document).ready(function(){initNavTree('_configuration_server_8h_source.html',
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>      <span class="keywordflow">if</span> ((info-&gt;opcode == WS_TEXT) &amp;&amp; (len == 1)) {</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        <span class="keywordflow">if</span> (data[0] == <span class="charliteral">&#39;L&#39;</span>) {</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>          String response = <a class="code hl_variable" href="classconfiguration_1_1_configuration_server.html#a819114077ea2f42572a26b7de7e4877a">display</a>.getCompleteContent();</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>          response += <a class="code hl_function" href="classconfiguration_1_1_configuration_server.html#a79981150555ba4053729c1d79f8cff2d">isConfigurationAllowed</a>() ? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>;</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>          client-&gt;text(response);</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        }</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (data[0] == <span class="charliteral">&#39;A&#39;</span>) {</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>          <a class="code hl_variable" href="classconfiguration_1_1_configuration_server.html#a9e01070b59626e36798aea3e54d49c95">encoder</a>.injectClockwiseRotation();</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        }</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (data[0] == <span class="charliteral">&#39;B&#39;</span>) {</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>          <a class="code hl_variable" href="classconfiguration_1_1_configuration_server.html#a9e01070b59626e36798aea3e54d49c95">encoder</a>.injectClick();</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        }</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (data[0] == <span class="charliteral">&#39;C&#39;</span>) {</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>          <a class="code hl_variable" href="classconfiguration_1_1_configuration_server.html#a9e01070b59626e36798aea3e54d49c95">encoder</a>.injectCounterClockwiseRotation();</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        }</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>      }</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    }</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == WS_EVT_DISCONNECT) {</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>      Serial.println(<span class="stringliteral">&quot;Client disconnected&quot;</span>);</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    }</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>      Serial.println(<span class="stringliteral">&quot;else&quot;</span>);</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    }</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>  }</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>};</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>} <span class="comment">// namespace configuration</span></div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>          response += <a class="code hl_function" href="classconfiguration_1_1_configuration_server.html#a79981150555ba4053729c1d79f8cff2d">isConfigurationAllowed</a>() ? <span class="stringliteral">&quot;true\n&quot;</span> : <span class="stringliteral">&quot;false\n&quot;</span>;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>          response += lcd::ViewBase::isBacklightOn() ? <span class="stringliteral">&quot;true\n&quot;</span> : <span class="stringliteral">&quot;false\n&quot;</span>;</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>          client-&gt;text(response);</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        }</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (data[0] == <span class="charliteral">&#39;A&#39;</span>) {</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>          <a class="code hl_variable" href="classconfiguration_1_1_configuration_server.html#a9e01070b59626e36798aea3e54d49c95">encoder</a>.injectClockwiseRotation();</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        }</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (data[0] == <span class="charliteral">&#39;B&#39;</span>) {</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>          <a class="code hl_variable" href="classconfiguration_1_1_configuration_server.html#a9e01070b59626e36798aea3e54d49c95">encoder</a>.injectClick();</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        }</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (data[0] == <span class="charliteral">&#39;C&#39;</span>) {</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>          <a class="code hl_variable" href="classconfiguration_1_1_configuration_server.html#a9e01070b59626e36798aea3e54d49c95">encoder</a>.injectCounterClockwiseRotation();</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        }</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>      }</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    }</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == WS_EVT_DISCONNECT) {</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>      Serial.println(<span class="stringliteral">&quot;Client disconnected&quot;</span>);</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    }</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>      Serial.println(<span class="stringliteral">&quot;else&quot;</span>);</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    }</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>  }</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>};</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>} <span class="comment">// namespace configuration</span></div>
 <div class="ttc" id="a_configuration_server_base_8h_html"><div class="ttname"><a href="_configuration_server_base_8h.html">ConfigurationServerBase.h</a></div></div>
 <div class="ttc" id="aclass_used_interrupts_html_a7783d371f93af2c1c7d70c4183304047"><div class="ttname"><a href="class_used_interrupts.html#a7783d371f93af2c1c7d70c4183304047">UsedInterrupts::executeWithoutInterrupts</a></div><div class="ttdeci">static void executeWithoutInterrupts(std::function&lt; void(void)&gt; f)</div><div class="ttdoc">Execute the passed function without interrupts.</div><div class="ttdef"><b>Definition:</b> UsedInterrupts.h:58</div></div>
 <div class="ttc" id="aclassconfiguration_1_1_configuration_1_1_time_restrictions_html"><div class="ttname"><a href="classconfiguration_1_1_configuration_1_1_time_restrictions.html">configuration::Configuration::TimeRestrictions</a></div><div class="ttdoc">Container to restrict the time when the safe can be opened.</div><div class="ttdef"><b>Definition:</b> Configuration.h:27</div></div>
@@ -350,7 +351,7 @@ $(document).ready(function(){initNavTree('_configuration_server_8h_source.html',
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c8fa76d8dc1b9e06ff8aeb3121608b1b.html">software</a></li><li class="navelem"><a class="el" href="dir_0a6976b261bfea925410a9d3b510969e.html">src</a></li><li class="navelem"><a class="el" href="dir_650690eb5ede187d5942b421ce477bf8.html">configuration</a></li><li class="navelem"><a class="el" href="_configuration_server_8h.html">ConfigurationServer.h</a></li>
-    <li class="footer">Generated on Mon Jan 3 2022 21:13:23 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Mon Jan 3 2022 21:24:21 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>
