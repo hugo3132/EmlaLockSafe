@@ -13,7 +13,7 @@ input[type=password], input[type=text], select, textarea {
 }
 
 button {
-  background-color: #04AA6D;
+  background-color: #046dAA;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -22,7 +22,7 @@ button {
 }
 
 input[type=submit]:hover {
-  background-color: #45a049;
+  background-color: #4549a0;
 }
 
 .container {
@@ -31,4 +31,30 @@ input[type=submit]:hover {
   padding: 20px;
   margin-top: 16px;
   margin-bottom: 16px;
+}
+
+.centerContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.encoderButton {
+  margin: 5px;
+  margin-top: 15px;
+  height: 80px;
+  width: 80px;
+  font-size: x-large;
+}
+
+.encoderButton[disabled] {
+  background-color: #888;
+}
+
+#remoteLcdFrame {
+  background-color:#046dAA;
+}
+
+#remoteLcdFrame[disabled] {
+  background-color:#333;
 }

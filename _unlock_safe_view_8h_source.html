@@ -181,7 +181,7 @@ $(document).ready(function(){initNavTree('_unlock_safe_view_8h_source.html','');
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="comment">// again</span></div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;setCursor(0, 1);</div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; (millis() - coilActivationTime) / 500; i++) {</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>      <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;write(0xFF);</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>      <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;write(<span class="charliteral">&#39;=&#39;</span>);</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    }</div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="comment">// Check if the coil should be released after 10 seconds</span></div>
@@ -215,15 +215,15 @@ $(document).ready(function(){initNavTree('_unlock_safe_view_8h_source.html','');
 <div class="ttc" id="aclassviews_1_1_unlock_safe_view_html_abee6e1a6839c2012a12b3c8d34594343"><div class="ttname"><a href="classviews_1_1_unlock_safe_view.html#abee6e1a6839c2012a12b3c8d34594343">views::UnlockSafeView::UnlockSafeView</a></div><div class="ttdeci">UnlockSafeView(UnlockSafeView &amp;&amp;other) noexcept=delete</div><div class="ttdoc">Move constructor - not available.</div></div>
 <div class="ttc" id="aclassviews_1_1_unlock_safe_view_html_ad08d23c69c63335e4ead131c8c5625e3"><div class="ttname"><a href="classviews_1_1_unlock_safe_view.html#ad08d23c69c63335e4ead131c8c5625e3">views::UnlockSafeView::UnlockSafeView</a></div><div class="ttdeci">UnlockSafeView(LiquidCrystal_PCF8574 *display, RotaryEncoder *encoder, const int &amp;numberOfColumns, const int &amp;numberOfRows)</div><div class="ttdoc">Construct the vie.</div><div class="ttdef"><b>Definition:</b> UnlockSafeView.h:56</div></div>
 <div class="ttc" id="aclassviews_1_1_unlock_safe_view_html_ae6e5daeb09ec32ed052f72677a77fc9f"><div class="ttname"><a href="classviews_1_1_unlock_safe_view.html#ae6e5daeb09ec32ed052f72677a77fc9f">views::UnlockSafeView::activationTime</a></div><div class="ttdeci">time_t activationTime</div><div class="ttdoc">Time when this view was activated.</div><div class="ttdef"><b>Definition:</b> UnlockSafeView.h:45</div></div>
-<div class="ttc" id="amain_8cpp_html_a0470805418b89ed4b8319dbbefb13d52"><div class="ttname"><a href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a></div><div class="ttdeci">views::ConfigurationServerView configurationServerView &amp; display</div><div class="ttdef"><b>Definition:</b> main.cpp:56</div></div>
-<div class="ttc" id="anamespaceviews_html"><div class="ttname"><a href="namespaceviews.html">views</a></div><div class="ttdef"><b>Definition:</b> ConfigurationServerView.h:11</div></div>
+<div class="ttc" id="amain_8cpp_html_a0470805418b89ed4b8319dbbefb13d52"><div class="ttname"><a href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a></div><div class="ttdeci">views::ConfigurationServerView configurationServerView &amp; display</div><div class="ttdef"><b>Definition:</b> main.cpp:57</div></div>
+<div class="ttc" id="anamespaceviews_html"><div class="ttname"><a href="namespaceviews.html">views</a></div><div class="ttdef"><b>Definition:</b> ConfigurationServerView.h:10</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c8fa76d8dc1b9e06ff8aeb3121608b1b.html">software</a></li><li class="navelem"><a class="el" href="dir_0a6976b261bfea925410a9d3b510969e.html">src</a></li><li class="navelem"><a class="el" href="dir_a68c8b71bf3e0e982ae3d08b11290715.html">views</a></li><li class="navelem"><a class="el" href="_unlock_safe_view_8h.html">UnlockSafeView.h</a></li>
-    <li class="footer">Generated on Fri Dec 31 2021 15:03:17 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Mon Jan 3 2022 21:08:20 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

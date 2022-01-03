@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "EmlaLockSafe", "index.html", [
+    [ "Changelog of Documentation", "index.html#secChangelog", null ],
     [ "Setup the Safe", "index.html#secSetupSafe", [
       [ "Howto Flash the Software", "index.html#subHowtoFlashTheSoftware", null ],
       [ "WiFi Configuration", "index.html#subWiFiConfig", null ],
@@ -104,8 +105,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_configuration_8h.html",
-"classconfiguration_1_1_wifi_configuration_server.html#a693b4501bb219b779cf433255b1632ef",
-"classviews_1_1_unlocked_main_menu.html#a5969bab10762efea902531254218dccf"
+"classconfiguration_1_1_configuration_server_base.html#a719283c04c86daf793d5f7a5a2b9aa4c",
+"classviews_1_1_unlock_safe_view.html#a7d1f01a26767ef7224eab1b06e5afad2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

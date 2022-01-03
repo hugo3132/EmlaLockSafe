@@ -119,64 +119,65 @@ $(document).ready(function(){initNavTree('_wifi_connecting_view_8h_source.html',
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="comment">// Start connecting</span></div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    WiFi.disconnect();</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    WiFi.mode(WIFI_STA);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    WiFi.begin(<a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().getSsid().c_str(),</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>               <a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().getPwd().c_str());</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    WiFi.setAutoReconnect(<span class="keyword">true</span>);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="comment">// Play an animation while the connection is established</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordtype">int</span> counter = 0;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <a class="code hl_function" href="class_tools.html#a69c111f91d30e6692e68e00457590279">Tools::waitAnimation</a>(<a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>, [&amp;counter]() -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>      counter++;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      <span class="keywordflow">if</span> (counter % 25 == 0) {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="comment">// if we&#39;ve waited for over 2.5s (25 loops), restart wifi....</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment">// this is required because of an bug in the ESP32 arduino core.</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        WiFi.disconnect();</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        WiFi.mode(WIFI_STA);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        WiFi.begin(<a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().getSsid().c_str(),</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                   <a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().getPwd().c_str());</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        WiFi.setAutoReconnect(<span class="keyword">true</span>);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>      }</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>      <span class="keywordflow">return</span> WiFi.status() != WL_CONNECTED;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    });</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;clear();</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;setCursor(0, 0);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;print(<span class="stringliteral">&quot;Setting Timezone:&quot;</span>);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="comment">// configure NTP</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    configTzTime(<a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().getTimezone().c_str(),</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                 <span class="stringliteral">&quot;pool.ntp.org&quot;</span>,</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                 <span class="stringliteral">&quot;time.nist.gov&quot;</span>,</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                 <span class="stringliteral">&quot;time.google.com&quot;</span>);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="comment">// go back to previous view</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    activatePreviousView();</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  }</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classviews_1_1_wifi_connecting_view.html#a2b2acec9b9e641ee0f389e7708a0d027">   95</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classviews_1_1_wifi_connecting_view.html#a2b2acec9b9e641ee0f389e7708a0d027">tick</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; forceRedraw) {</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="comment">// not used since activate blocks and immediately returns to the previous</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="comment">// view</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  }</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}; <span class="comment">// namespace views</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>} <span class="comment">// namespace views</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    WiFi.setHostname(<span class="stringliteral">&quot;EmlalockSafe&quot;</span>);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    WiFi.mode(WIFI_STA);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    WiFi.begin(<a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().getSsid().c_str(),</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>               <a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().getPwd().c_str());</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    WiFi.setAutoReconnect(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="comment">// Play an animation while the connection is established</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">int</span> counter = 0;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <a class="code hl_function" href="class_tools.html#a69c111f91d30e6692e68e00457590279">Tools::waitAnimation</a>(<a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>, [&amp;counter]() -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      counter++;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>      <span class="keywordflow">if</span> (counter % 25 == 0) {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment">// if we&#39;ve waited for over 2.5s (25 loops), restart wifi....</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="comment">// this is required because of an bug in the ESP32 arduino core.</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        WiFi.disconnect();</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        WiFi.mode(WIFI_STA);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        WiFi.begin(<a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().getSsid().c_str(),</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                   <a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().getPwd().c_str());</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        WiFi.setAutoReconnect(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>      }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>      <span class="keywordflow">return</span> WiFi.status() != WL_CONNECTED;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    });</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;clear();</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;setCursor(0, 0);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <a class="code hl_variable" href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a>-&gt;print(<span class="stringliteral">&quot;Setting Timezone:&quot;</span>);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="comment">// configure NTP</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    configTzTime(<a class="code hl_function" href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a>().getTimezone().c_str(),</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                 <span class="stringliteral">&quot;pool.ntp.org&quot;</span>,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                 <span class="stringliteral">&quot;time.nist.gov&quot;</span>,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                 <span class="stringliteral">&quot;time.google.com&quot;</span>);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="comment">// go back to previous view</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    activatePreviousView();</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classviews_1_1_wifi_connecting_view.html#a2b2acec9b9e641ee0f389e7708a0d027">   96</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classviews_1_1_wifi_connecting_view.html#a2b2acec9b9e641ee0f389e7708a0d027">tick</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; forceRedraw) {</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="comment">// not used since activate blocks and immediately returns to the previous</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="comment">// view</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  }</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}; <span class="comment">// namespace views</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>} <span class="comment">// namespace views</span></div>
 <div class="ttc" id="aclass_tools_html_a69c111f91d30e6692e68e00457590279"><div class="ttname"><a href="class_tools.html#a69c111f91d30e6692e68e00457590279">Tools::waitAnimation</a></div><div class="ttdeci">static void waitAnimation(LiquidCrystal_PCF8574 *display, std::function&lt; bool()&gt; stillActive)</div><div class="ttdoc">Shows the animation while waiting until the callback returns false.</div><div class="ttdef"><b>Definition:</b> Tools.h:69</div></div>
 <div class="ttc" id="aclassconfiguration_1_1_configuration_html_ab6d07675a90b458bf3a2a910036749bc"><div class="ttname"><a href="classconfiguration_1_1_configuration.html#ab6d07675a90b458bf3a2a910036749bc">configuration::Configuration::getSingleton</a></div><div class="ttdeci">static Configuration &amp; getSingleton()</div><div class="ttdoc">Get the Singleton object.</div><div class="ttdef"><b>Definition:</b> Configuration.h:162</div></div>
 <div class="ttc" id="aclassviews_1_1_wifi_connecting_view_html"><div class="ttname"><a href="classviews_1_1_wifi_connecting_view.html">views::WifiConnectingView</a></div><div class="ttdoc">View displayed while connection to the access point.</div><div class="ttdef"><b>Definition:</b> WifiConnectingView.h:19</div></div>
-<div class="ttc" id="aclassviews_1_1_wifi_connecting_view_html_a2b2acec9b9e641ee0f389e7708a0d027"><div class="ttname"><a href="classviews_1_1_wifi_connecting_view.html#a2b2acec9b9e641ee0f389e7708a0d027">views::WifiConnectingView::tick</a></div><div class="ttdeci">virtual void tick(const bool &amp;forceRedraw)</div><div class="ttdoc">called during the loop function</div><div class="ttdef"><b>Definition:</b> WifiConnectingView.h:95</div></div>
+<div class="ttc" id="aclassviews_1_1_wifi_connecting_view_html_a2b2acec9b9e641ee0f389e7708a0d027"><div class="ttname"><a href="classviews_1_1_wifi_connecting_view.html#a2b2acec9b9e641ee0f389e7708a0d027">views::WifiConnectingView::tick</a></div><div class="ttdeci">virtual void tick(const bool &amp;forceRedraw)</div><div class="ttdoc">called during the loop function</div><div class="ttdef"><b>Definition:</b> WifiConnectingView.h:96</div></div>
 <div class="ttc" id="aclassviews_1_1_wifi_connecting_view_html_a444607cf4579039c9bbbc6bbe1f92e3d"><div class="ttname"><a href="classviews_1_1_wifi_connecting_view.html#a444607cf4579039c9bbbc6bbe1f92e3d">views::WifiConnectingView::WifiConnectingView</a></div><div class="ttdeci">WifiConnectingView(LiquidCrystal_PCF8574 *display)</div><div class="ttdoc">Construct the view object.</div><div class="ttdef"><b>Definition:</b> WifiConnectingView.h:26</div></div>
 <div class="ttc" id="aclassviews_1_1_wifi_connecting_view_html_a75d7ad0e7f9ad922ba67f06f150c8aa7"><div class="ttname"><a href="classviews_1_1_wifi_connecting_view.html#a75d7ad0e7f9ad922ba67f06f150c8aa7">views::WifiConnectingView::WifiConnectingView</a></div><div class="ttdeci">WifiConnectingView(WifiConnectingView &amp;&amp;other) noexcept=delete</div><div class="ttdoc">Move constructor - not available.</div></div>
 <div class="ttc" id="aclassviews_1_1_wifi_connecting_view_html_a7d4800e049621614110870d23bac4d39"><div class="ttname"><a href="classviews_1_1_wifi_connecting_view.html#a7d4800e049621614110870d23bac4d39">views::WifiConnectingView::WifiConnectingView</a></div><div class="ttdeci">WifiConnectingView(const WifiConnectingView &amp;other)=delete</div><div class="ttdoc">Copy constructor - not available.</div></div>
 <div class="ttc" id="aclassviews_1_1_wifi_connecting_view_html_ab4b6e262984b08987c81960324ce925c"><div class="ttname"><a href="classviews_1_1_wifi_connecting_view.html#ab4b6e262984b08987c81960324ce925c">views::WifiConnectingView::activate</a></div><div class="ttdeci">virtual void activate()</div><div class="ttdoc">called as soon as the view becomes active</div><div class="ttdef"><b>Definition:</b> WifiConnectingView.h:45</div></div>
-<div class="ttc" id="amain_8cpp_html_a0470805418b89ed4b8319dbbefb13d52"><div class="ttname"><a href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a></div><div class="ttdeci">views::ConfigurationServerView configurationServerView &amp; display</div><div class="ttdef"><b>Definition:</b> main.cpp:56</div></div>
-<div class="ttc" id="anamespaceviews_html"><div class="ttname"><a href="namespaceviews.html">views</a></div><div class="ttdef"><b>Definition:</b> ConfigurationServerView.h:11</div></div>
+<div class="ttc" id="amain_8cpp_html_a0470805418b89ed4b8319dbbefb13d52"><div class="ttname"><a href="main_8cpp.html#a0470805418b89ed4b8319dbbefb13d52">display</a></div><div class="ttdeci">views::ConfigurationServerView configurationServerView &amp; display</div><div class="ttdef"><b>Definition:</b> main.cpp:57</div></div>
+<div class="ttc" id="anamespaceviews_html"><div class="ttname"><a href="namespaceviews.html">views</a></div><div class="ttdef"><b>Definition:</b> ConfigurationServerView.h:10</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c8fa76d8dc1b9e06ff8aeb3121608b1b.html">software</a></li><li class="navelem"><a class="el" href="dir_0a6976b261bfea925410a9d3b510969e.html">src</a></li><li class="navelem"><a class="el" href="dir_a68c8b71bf3e0e982ae3d08b11290715.html">views</a></li><li class="navelem"><a class="el" href="_wifi_connecting_view_8h.html">WifiConnectingView.h</a></li>
-    <li class="footer">Generated on Fri Dec 31 2021 15:03:17 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Mon Jan 3 2022 21:08:20 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

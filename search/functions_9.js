@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['preferencesmenu_0',['PreferencesMenu',['../classviews_1_1_preferences_menu.html#ab6692b79ea64eb43825e01c70dc6cab8',1,'views::PreferencesMenu::PreferencesMenu(LiquidCrystal_PCF8574 *display, RotaryEncoder *encoder, const int &amp;numberOfColumns, const int &amp;numberOfRows)'],['../classviews_1_1_preferences_menu.html#a4974a5aeab2ed4c0fa7fa9535adb872c',1,'views::PreferencesMenu::PreferencesMenu(const PreferencesMenu &amp;other)=delete'],['../classviews_1_1_preferences_menu.html#a38c0533f48970892bd3236eb0e3e3204',1,'views::PreferencesMenu::PreferencesMenu(PreferencesMenu &amp;&amp;other) noexcept=delete']]]
+  ['ongeneratenewkey_0',['onGenerateNewKey',['../classconfiguration_1_1_configuration_server.html#ac9b3f814436a10a5b8ffda0b08379b84',1,'configuration::ConfigurationServer']]],
+  ['ongetlastvalues_1',['onGetLastValues',['../classconfiguration_1_1_configuration_server.html#a52facf8687a47b29a0bea9d789149fa4',1,'configuration::ConfigurationServer']]],
+  ['onremotecontrolwebsocketevent_2',['onRemoteControlWebSocketEvent',['../classconfiguration_1_1_configuration_server.html#a108de425eafa35716f1a16e2053cff5a',1,'configuration::ConfigurationServer']]],
+  ['onsavedata_3',['onSaveData',['../classconfiguration_1_1_configuration_server.html#acfa9c2486dc9d4d1237b358ccee6f893',1,'configuration::ConfigurationServer']]]
 ];

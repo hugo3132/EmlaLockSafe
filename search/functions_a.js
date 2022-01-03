@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['readconfiguration_0',['readConfiguration',['../classconfiguration_1_1_configuration.html#a96a4c785730874d46cd64003ace0d6c6',1,'configuration::Configuration']]],
-  ['readfromfile_1',['readFromFile',['../classconfiguration_1_1_configuration_1_1_time_restrictions.html#ad33e314d665f56c5524741a8794e8742',1,'configuration::Configuration::TimeRestrictions']]],
-  ['requesturl_2',['requestUrl',['../classemlalock_1_1_emla_lock_api.html#a1bcdc03a84196bccef1772546ca3c0f1',1,'emlalock::EmlaLockApi']]],
-  ['restorefactorydefaults_3',['restoreFactoryDefaults',['../classconfiguration_1_1_configuration.html#a5d2bb14d1ae6ca88c3f4afd1d8e8e212',1,'configuration::Configuration']]]
+  ['preferencesmenu_0',['PreferencesMenu',['../classviews_1_1_preferences_menu.html#ab6692b79ea64eb43825e01c70dc6cab8',1,'views::PreferencesMenu::PreferencesMenu(LiquidCrystal_PCF8574 *display, RotaryEncoder *encoder, const int &amp;numberOfColumns, const int &amp;numberOfRows)'],['../classviews_1_1_preferences_menu.html#a4974a5aeab2ed4c0fa7fa9535adb872c',1,'views::PreferencesMenu::PreferencesMenu(const PreferencesMenu &amp;other)=delete'],['../classviews_1_1_preferences_menu.html#a38c0533f48970892bd3236eb0e3e3204',1,'views::PreferencesMenu::PreferencesMenu(PreferencesMenu &amp;&amp;other) noexcept=delete']]]
 ];

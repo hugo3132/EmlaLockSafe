@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="main.css">
   <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
   <script type="text/javascript" src="moment.js"></script>
+  <script type="text/javascript" src="dotmatrix.js"></script>
+  <script type="text/javascript" src="remoteLcd.js"></script>
 
   <script type="text/javascript">
     var timeZones = [];
@@ -98,6 +100,12 @@
 
 <body>
   <div class="container">
+    <h3>Remote Control</h3>
+
+    <div id="remoteLcd" configAvailable="true"></div>
+  </div>
+  
+  <div class="container">
     <h3>Emlalock Settings</h3>
 
     <p>The following settings must be copied from tab "API" in your settings on <a href="https://www.emlalock.com/#/settings" target="_blank" rel="noopener noreferrer">emlalock.com</a>.</p>
@@ -158,7 +166,6 @@
   <div class="container">
     <button type="button" onclick="saveData();">Save Data</button>
   </div>
-
 </body>
 
 </html>
