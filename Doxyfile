@@ -1309,9 +1309,13 @@ HTML_EXTRA_FILES       = software/documentation/dot-matrix-lcd/dist/index.js \
                          software/data/indexWifi.html \
                          software/data/indexConfig.html \
                          software/data/jquery-3.6.0.min.js \
+                         software/data/jqueryLicense.txt \
                          software/data/main.css \
                          software/data/zones.json \
-                         software/data/moment.js
+                         software/data/moment.js \
+                         software/data/dotmatrix.js \
+                         software/data/remoteLcd.js \
+                         software/data/rotate.svg
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the style sheet and background images according to
