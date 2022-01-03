@@ -54,6 +54,9 @@ input[type=submit]:hover {
 #remoteLcdFrame {
   background-color:#046dAA;
 }
+#remoteLcdFrame[backlight="false"] {
+  background-color:#333;
+}
 
 #remoteLcdFrame[disabled] {
   background-color:#333;

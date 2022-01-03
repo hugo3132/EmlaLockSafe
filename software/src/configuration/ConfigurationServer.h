@@ -260,7 +260,8 @@ protected:
       if ((info->opcode == WS_TEXT) && (len == 1)) {
         if (data[0] == 'L') {
           String response = display.getCompleteContent();
-          response += isConfigurationAllowed() ? "true" : "false";
+          response += isConfigurationAllowed() ? "true\n" : "false\n";
+          response += lcd::ViewBase::isBacklightOn() ? "true\n" : "false\n";
           client->text(response);
         }
         else if (data[0] == 'A') {

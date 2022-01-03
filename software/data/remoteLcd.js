@@ -27,6 +27,8 @@ function NewLcdContent(e) {
     location.reload();
   }
 
+  $("#remoteLcdFrame").attr("backlight", s[5]);
+
   $("#remoteLcd").find("*").attr("disabled", false);
   lcd.writeString({ string: s[0], offset: 0 });
   lcd.writeString({ string: s[1], offset: 20 });
@@ -67,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var container = document.getElementById("remoteLcd");
   container.innerHTML =
     '<div class="centerContent">' +
-    '  <div id="remoteLcdFrame" class="lcd-container"></div>' +
+    '  <div id="remoteLcdFrame" class="lcd-container" backlight="true"></div>' +
     "</div>" +
     '<div class="centerContent">' +
     '  <button class="encoderButton" type="button" onclick="if (connection.readyState == 1) { connection.send(\'C\');}"><img src="rotate.svg" style="transform: scaleX(-1);"></button>' +
