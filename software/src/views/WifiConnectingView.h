@@ -66,6 +66,7 @@ protected:
         // if we've waited for over 2.5s (25 loops), restart wifi....
         // this is required because of an bug in the ESP32 arduino core.
         WiFi.disconnect();
+        WiFi.setHostname("EmlalockSafe");
         WiFi.mode(WIFI_STA);
         WiFi.begin(configuration::Configuration::getSingleton().getSsid().c_str(),
                    configuration::Configuration::getSingleton().getPwd().c_str());

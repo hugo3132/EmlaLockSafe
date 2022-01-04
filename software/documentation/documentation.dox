@@ -79,7 +79,7 @@ For the detailed description of the software behind this chapter please refer to
 @section secUsingTheSafe Using the Safe
 
 The main interaction with the safe is done using the display and the encoder knob. It is alsso possible to remote control the inferface over the same
-webpage as used in @ref subSoftwareConfiguration (e.g. http://192.168.1.1). Everything which is displayed on the LCD is handled by so called views. 
+webpage as used in @ref subSoftwareConfiguration (e.g. http://emlalocksafe). Everything which is displayed on the LCD is handled by so called views. 
 One variant of such views are menus:
 @htmlonly
 <div id="_secUsingTheSafeExampleMenu"></div>
