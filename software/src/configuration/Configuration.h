@@ -207,6 +207,13 @@ protected:
    * @brief The emergency key
    */
   String emergencyKey;
+
+protected:
+  /** 
+   * @brief Disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before
+   * a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid!
+   */
+  bool disableFailedSession;
 #pragma endregion
 
 #pragma region Miscellaneous Settings
@@ -291,6 +298,17 @@ public:
   const String& getEmergencyKey() const {
     return emergencyKey;
   }
+
+public:
+  /**
+   * @brief get disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before
+   * a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid!
+   */
+  const bool& getDisableFailedSession() const {
+    return disableFailedSession;
+  }
+
+  
 #pragma endregion
 
 #pragma region Miscellaneous Settings
@@ -357,6 +375,8 @@ public:
    *
    * @param userId new Emlalock API user id
    * @param apiKey new Emlalock API key
+   * @param disableFailedSession disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before
+   * a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid!
    * @param timezoneName new name of timezone
    * @param timezone new timezone string
    * @param backlightTimeOut new timeout of display backlight in seconds
@@ -366,6 +386,7 @@ public:
    */
   void setConfigurationSettings(const String& userId,
                                 const String& apiKey,
+                                const bool& disableFailedSession,
                                 const String& timezoneName,
                                 const String& timezone,
                                 const long& backlightTimeOut,
@@ -373,6 +394,7 @@ public:
                                 const TimeRestrictions& timeRestrictions) {
     this->userId = userId;
     this->apiKey = apiKey;
+    this->disableFailedSession = disableFailedSession;
 
     this->timezoneName = timezoneName;
     this->timezone = timezone;
@@ -407,7 +429,7 @@ public:
 
 
 public:
-  /**
+  /** 
    * @brief Reset all values to the default values and write configuration
    */
   void restoreFactoryDefaults() {
@@ -416,6 +438,7 @@ public:
     userId = "";
     apiKey = "";
     emergencyKey = "AAAAAA";
+    disableFailedSession = false;
     timezone = "CET-1CEST,M3.5.0,M10.5.0/3";
     timezoneName = "Europe/Berlin";
     backlightTimeOut = 15;
@@ -450,6 +473,7 @@ protected:
       if (emergencyKey.length() != 6) {
         emergencyKey = "AAAAAA";
       }
+      disableFailedSession = strtol(file.readStringUntil('\n').c_str(), NULL, 0) == 1;
       timezone = file.readStringUntil('\n');
       timezone.trim();
       timezoneName = file.readStringUntil('\n');
@@ -484,6 +508,7 @@ protected:
       file.println(userId);
       file.println(apiKey);
       file.println(emergencyKey);
+      file.println((disableFailedSession) ? "1" : "0");
       file.println(timezone);
       file.println(timezoneName);
       file.println(backlightTimeOut);

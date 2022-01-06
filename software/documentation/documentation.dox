@@ -660,6 +660,7 @@ Currently the following values can be set:
 - User ID
 - API Key
 - The Emergency Key
+- The behavior in case a session is ended as failed session
 
 @paragraph parMiscellaneousSettings Miscellaneous Settings
 - Timezone

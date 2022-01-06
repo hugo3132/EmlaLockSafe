@@ -144,7 +144,7 @@ protected:
         if (numberOfFailedSessionOld != numberOfFailedSessionNew) {
           LockState::setNumberOfFailedSessions(numberOfFailedSessionNew);
           // Check if a session with an known end date was aborted:
-          if ((LockState::getMode() == LockState::Mode::emlalock) && (LockState::getEndDate() != 0)) {
+          if ((LockState::getMode() == LockState::Mode::emlalock) && (LockState::getEndDate() != 0) && (configuration::Configuration::getSingleton().getDisableFailedSession())) {
             // that's not allowed if this happened during an active
             // emlalock-session! Switch to manual mode with the last known end-time
             Serial.println("Abort rejected");

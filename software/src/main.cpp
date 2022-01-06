@@ -223,6 +223,7 @@ void setup() {
     views::ViewStore::activateView(views::ViewStore::LockedView);
   }
   else if ((config.getApiKey().length() == 0) || (config.getUserId().length() == 0)) {
+    views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
     views::ViewStore::activateView(views::ViewStore::ConfigurationServerView);
   }
   else {

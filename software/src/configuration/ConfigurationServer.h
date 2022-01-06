@@ -169,6 +169,8 @@ protected:
       response += "\r\n";
       response += Configuration::getSingleton().getEmergencyKey();
       response += "\r\n";
+      response += Configuration::getSingleton().getDisableFailedSession() ? "true" : "false";
+      response += "\r\n";
       response += Configuration::getSingleton().getTimezoneName();
       response += "\r\n";
       response += Configuration::getSingleton().getBacklightTimeOut();
@@ -213,6 +215,7 @@ protected:
 
       Configuration::getSingleton().setConfigurationSettings(getParam(request, "userId"),
                                                              getParam(request, "apiKey"),
+                                                             getParam(request, "disableFailedSession") == "true",
                                                              getParam(request, "timezoneName"),
                                                              getParam(request, "timezone"),
                                                              strtoul(getParam(request, "backlightTimeOut").c_str(), NULL, 0),
