@@ -12,6 +12,12 @@ input[type=password], input[type=text], select, textarea {
   resize: vertical;
 }
 
+input[type=checkbox] {
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+
+
 button {
   background-color: #046dAA;
   color: white;
@@ -19,6 +25,8 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 6px;
+  margin-bottom: 16px;
 }
 
 input[type=submit]:hover {

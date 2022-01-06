@@ -12,7 +12,7 @@ var searchData=
   ['server_9',['server',['../classconfiguration_1_1_configuration_server_base.html#af86efe328020175152e5db5dd8ac5306',1,'configuration::ConfigurationServerBase']]],
   ['setcachedenddate_10',['setCachedEndDate',['../class_lock_state.html#a4b899defe48e3709c924296d8b97f1bb',1,'LockState']]],
   ['setcleaningenddate_11',['setCleaningEndDate',['../class_lock_state.html#abece85fe7460c5a4f17a79435d42d6f8',1,'LockState']]],
-  ['setconfigurationsettings_12',['setConfigurationSettings',['../classconfiguration_1_1_configuration.html#a001d42e4b880cd2db12cbb478a9c880b',1,'configuration::Configuration']]],
+  ['setconfigurationsettings_12',['setConfigurationSettings',['../classconfiguration_1_1_configuration.html#a1cb42ee333e6f2685d59902c8572313d',1,'configuration::Configuration']]],
   ['setdisplaytimeleft_13',['setDisplayTimeLeft',['../class_lock_state.html#aba9bc33a32918f1f8d427eefc5e4e0bc',1,'LockState']]],
   ['setdisplaytimepassed_14',['setDisplayTimePassed',['../class_lock_state.html#aa95434f1cef43898c6e2b1c01ac16e00',1,'LockState']]],
   ['setenddate_15',['setEndDate',['../class_lock_state.html#a5cbbc781d76d1575c4bb43c34a92c609',1,'LockState']]],

@@ -7,7 +7,7 @@ var searchData=
   ['selectdisplaytimepassed_4',['SelectDisplayTimePassed',['../classviews_1_1_select_display_time_passed.html#aad24ad99ed26b087cb55d44568f4fcb1',1,'views::SelectDisplayTimePassed::SelectDisplayTimePassed(LiquidCrystal_PCF8574 *display, RotaryEncoder *encoder, const int &amp;numberOfColumns, const int &amp;numberOfRows)'],['../classviews_1_1_select_display_time_passed.html#abfaf4d10703d5ff2005ac57796a92f52',1,'views::SelectDisplayTimePassed::SelectDisplayTimePassed(const SelectDisplayTimePassed &amp;other)=delete'],['../classviews_1_1_select_display_time_passed.html#aaa09baa3a2a538a4448ce95367f04639',1,'views::SelectDisplayTimePassed::SelectDisplayTimePassed(SelectDisplayTimePassed &amp;&amp;other) noexcept=delete']]],
   ['setcachedenddate_5',['setCachedEndDate',['../class_lock_state.html#a4b899defe48e3709c924296d8b97f1bb',1,'LockState']]],
   ['setcleaningenddate_6',['setCleaningEndDate',['../class_lock_state.html#abece85fe7460c5a4f17a79435d42d6f8',1,'LockState']]],
-  ['setconfigurationsettings_7',['setConfigurationSettings',['../classconfiguration_1_1_configuration.html#a001d42e4b880cd2db12cbb478a9c880b',1,'configuration::Configuration']]],
+  ['setconfigurationsettings_7',['setConfigurationSettings',['../classconfiguration_1_1_configuration.html#a1cb42ee333e6f2685d59902c8572313d',1,'configuration::Configuration']]],
   ['setdisplaytimeleft_8',['setDisplayTimeLeft',['../class_lock_state.html#aba9bc33a32918f1f8d427eefc5e4e0bc',1,'LockState']]],
   ['setdisplaytimepassed_9',['setDisplayTimePassed',['../class_lock_state.html#aa95434f1cef43898c6e2b1c01ac16e00',1,'LockState']]],
   ['setenddate_10',['setEndDate',['../class_lock_state.html#a5cbbc781d76d1575c4bb43c34a92c609',1,'LockState']]],

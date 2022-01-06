@@ -35,6 +35,7 @@
           document.getElementById('userId').value = lastValues[i]; i++;
           document.getElementById('apiKey').value = lastValues[i]; i++;
           document.getElementById('emergencyKey').value = lastValues[i]; i++;
+          document.getElementById('disableFailedSession').checked = lastValues[i] == "true"; i++;
           document.getElementById('timezone').value = lastValues[i]; i++;
           document.getElementById('backlightTimeOut').value = lastValues[i]; i++;
           document.getElementById('autoLockHygieneOpeningTimeout').checked = lastValues[i] == "true"; i++;
@@ -69,6 +70,7 @@
         {
           userId: document.getElementById('userId').value,
           apiKey: document.getElementById('apiKey').value,
+          disableFailedSession: String(document.getElementById('disableFailedSession').checked).toLowerCase(),
           timezoneName: document.getElementById('timezone').value,
           timezone: timeZones[document.getElementById('timezone').value],
           backlightTimeOut: document.getElementById('backlightTimeOut').value,
@@ -119,6 +121,10 @@
     <label for="emergencyKey">Emergency Key</label>
     <input type="text" id="emergencyKey" name="emergencyKey" placeholder="AAAAAA" readonly>
     <button type="button" onclick="generateNewKey();">Generate New Emergency Key</button>
+
+    <br>
+    <input type="checkbox" id="disableFailedSession" name="disableFailedSession">
+    <label for="disableFailedSession">Disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid!</label>
   </div>
 
   <div class="container">

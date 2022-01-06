@@ -124,6 +124,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abd0c89edc8edbe79e13dc2e67043b36d"><td class="memItemLeft" align="right" valign="top">const String &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#abd0c89edc8edbe79e13dc2e67043b36d">getEmergencyKey</a> () const</td></tr>
 <tr class="memdesc:abd0c89edc8edbe79e13dc2e67043b36d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the emergency key of the safe  <a href="classconfiguration_1_1_configuration.html#abd0c89edc8edbe79e13dc2e67043b36d">More...</a><br /></td></tr>
 <tr class="separator:abd0c89edc8edbe79e13dc2e67043b36d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fbd72b9241696d3039752f789560629"><td class="memItemLeft" align="right" valign="top">const bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a1fbd72b9241696d3039752f789560629">getDisableFailedSession</a> () const</td></tr>
+<tr class="memdesc:a1fbd72b9241696d3039752f789560629"><td class="mdescLeft">&#160;</td><td class="mdescRight">get disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid!  <a href="classconfiguration_1_1_configuration.html#a1fbd72b9241696d3039752f789560629">More...</a><br /></td></tr>
+<tr class="separator:a1fbd72b9241696d3039752f789560629"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a183a5b197a874d7028097b0ffa6efa52"><td class="memItemLeft" align="right" valign="top">const String &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a183a5b197a874d7028097b0ffa6efa52">getTimezone</a> () const</td></tr>
 <tr class="memdesc:a183a5b197a874d7028097b0ffa6efa52"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the timezone-string (e.g. "CET-1CEST,M3.5.0,M10.5.0/3") see also <a href="https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv">https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv</a>  <a href="classconfiguration_1_1_configuration.html#a183a5b197a874d7028097b0ffa6efa52">More...</a><br /></td></tr>
 <tr class="separator:a183a5b197a874d7028097b0ffa6efa52"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,9 +145,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abf846709feae7b108637a08e838d2c84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#abf846709feae7b108637a08e838d2c84">setWifiSettings</a> (const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a59f8d0425ab5deaf118ed7aa0e283d8d">ssid</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#aefe0a07f75ae168439bde201c333c86b">pwd</a>)</td></tr>
 <tr class="memdesc:abf846709feae7b108637a08e838d2c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Wifi Settings.  <a href="classconfiguration_1_1_configuration.html#abf846709feae7b108637a08e838d2c84">More...</a><br /></td></tr>
 <tr class="separator:abf846709feae7b108637a08e838d2c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a001d42e4b880cd2db12cbb478a9c880b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a001d42e4b880cd2db12cbb478a9c880b">setConfigurationSettings</a> (const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a8fa57236ecb80d1a1ba0507861e27690">userId</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a78074af3f9221418ab931c73eae01285">apiKey</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a0404e4cc36a1edeba5872e1755dbc6ce">timezoneName</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a74543ac7a7c5e9343fc3aad77219666f">timezone</a>, const long &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a9f622dae12903310fe43be53f3e4a3d4">backlightTimeOut</a>, const bool &amp;<a class="el" href="classconfiguration_1_1_configuration.html#adfffcc5d6a1ec877f175a28dfdf1b7a2">autoLockHygieneOpeningTimeout</a>, const <a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html">TimeRestrictions</a> &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a6a3bdb73942d2a36917885ca59a95838">timeRestrictions</a>)</td></tr>
-<tr class="memdesc:a001d42e4b880cd2db12cbb478a9c880b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <a class="el" href="classconfiguration_1_1_configuration.html" title="Static class accessing the configuration.">Configuration</a> Settings.  <a href="classconfiguration_1_1_configuration.html#a001d42e4b880cd2db12cbb478a9c880b">More...</a><br /></td></tr>
-<tr class="separator:a001d42e4b880cd2db12cbb478a9c880b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cb42ee333e6f2685d59902c8572313d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a1cb42ee333e6f2685d59902c8572313d">setConfigurationSettings</a> (const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a8fa57236ecb80d1a1ba0507861e27690">userId</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a78074af3f9221418ab931c73eae01285">apiKey</a>, const bool &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a47a6b322973900742c40b089385defbd">disableFailedSession</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a0404e4cc36a1edeba5872e1755dbc6ce">timezoneName</a>, const String &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a74543ac7a7c5e9343fc3aad77219666f">timezone</a>, const long &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a9f622dae12903310fe43be53f3e4a3d4">backlightTimeOut</a>, const bool &amp;<a class="el" href="classconfiguration_1_1_configuration.html#adfffcc5d6a1ec877f175a28dfdf1b7a2">autoLockHygieneOpeningTimeout</a>, const <a class="el" href="classconfiguration_1_1_configuration_1_1_time_restrictions.html">TimeRestrictions</a> &amp;<a class="el" href="classconfiguration_1_1_configuration.html#a6a3bdb73942d2a36917885ca59a95838">timeRestrictions</a>)</td></tr>
+<tr class="memdesc:a1cb42ee333e6f2685d59902c8572313d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <a class="el" href="classconfiguration_1_1_configuration.html" title="Static class accessing the configuration.">Configuration</a> Settings.  <a href="classconfiguration_1_1_configuration.html#a1cb42ee333e6f2685d59902c8572313d">More...</a><br /></td></tr>
+<tr class="separator:a1cb42ee333e6f2685d59902c8572313d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b39ab207db1655b6ade9a54d3f4de69"><td class="memItemLeft" align="right" valign="top">const String &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a6b39ab207db1655b6ade9a54d3f4de69">generateNewEmergencyKey</a> ()</td></tr>
 <tr class="memdesc:a6b39ab207db1655b6ade9a54d3f4de69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a new key and stores it to the file system.  <a href="classconfiguration_1_1_configuration.html#a6b39ab207db1655b6ade9a54d3f4de69">More...</a><br /></td></tr>
 <tr class="separator:a6b39ab207db1655b6ade9a54d3f4de69"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -196,6 +199,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:acae88ca03c0e3ee9f005c5ae7fc6c460"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#acae88ca03c0e3ee9f005c5ae7fc6c460">emergencyKey</a></td></tr>
 <tr class="memdesc:acae88ca03c0e3ee9f005c5ae7fc6c460"><td class="mdescLeft">&#160;</td><td class="mdescRight">The emergency key.  <a href="classconfiguration_1_1_configuration.html#acae88ca03c0e3ee9f005c5ae7fc6c460">More...</a><br /></td></tr>
 <tr class="separator:acae88ca03c0e3ee9f005c5ae7fc6c460"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47a6b322973900742c40b089385defbd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a47a6b322973900742c40b089385defbd">disableFailedSession</a></td></tr>
+<tr class="memdesc:a47a6b322973900742c40b089385defbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid!  <a href="classconfiguration_1_1_configuration.html#a47a6b322973900742c40b089385defbd">More...</a><br /></td></tr>
+<tr class="separator:a47a6b322973900742c40b089385defbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74543ac7a7c5e9343fc3aad77219666f"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconfiguration_1_1_configuration.html#a74543ac7a7c5e9343fc3aad77219666f">timezone</a></td></tr>
 <tr class="memdesc:a74543ac7a7c5e9343fc3aad77219666f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The timezone-string (e.g. "CET-1CEST,M3.5.0,M10.5.0/3") see also <a href="https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv">https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv</a>.  <a href="classconfiguration_1_1_configuration.html#a74543ac7a7c5e9343fc3aad77219666f">More...</a><br /></td></tr>
 <tr class="separator:a74543ac7a7c5e9343fc3aad77219666f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -373,6 +379,33 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>get the timeout of display backlight in seconds </p>
+
+</div>
+</div>
+<a id="a1fbd72b9241696d3039752f789560629" name="a1fbd72b9241696d3039752f789560629"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fbd72b9241696d3039752f789560629">&#9670;&nbsp;</a></span>getDisableFailedSession()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const bool &amp; configuration::Configuration::getDisableFailedSession </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid! </p>
 
 </div>
 </div>
@@ -700,8 +733,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a001d42e4b880cd2db12cbb478a9c880b" name="a001d42e4b880cd2db12cbb478a9c880b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a001d42e4b880cd2db12cbb478a9c880b">&#9670;&nbsp;</a></span>setConfigurationSettings()</h2>
+<a id="a1cb42ee333e6f2685d59902c8572313d" name="a1cb42ee333e6f2685d59902c8572313d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cb42ee333e6f2685d59902c8572313d">&#9670;&nbsp;</a></span>setConfigurationSettings()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -720,6 +753,12 @@ Protected Attributes</h2></td></tr>
           <td></td>
           <td class="paramtype">const String &amp;&#160;</td>
           <td class="paramname"><em>apiKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>disableFailedSession</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -769,6 +808,7 @@ Protected Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">userId</td><td>new Emlalock API user id </td></tr>
     <tr><td class="paramname">apiKey</td><td>new Emlalock API key </td></tr>
+    <tr><td class="paramname">disableFailedSession</td><td>disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid! </td></tr>
     <tr><td class="paramname">timezoneName</td><td>new name of timezone </td></tr>
     <tr><td class="paramname">timezone</td><td>new timezone string </td></tr>
     <tr><td class="paramname">backlightTimeOut</td><td>new timeout of display backlight in seconds </td></tr>
@@ -922,6 +962,30 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Timeout of display backlight in seconds. </p>
+
+</div>
+</div>
+<a id="a47a6b322973900742c40b089385defbd" name="a47a6b322973900742c40b089385defbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47a6b322973900742c40b089385defbd">&#9670;&nbsp;</a></span>disableFailedSession</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool configuration::Configuration::disableFailedSession</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid! </p>
 
 </div>
 </div>
@@ -1102,7 +1166,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceconfiguration.html">configuration</a></li><li class="navelem"><a class="el" href="classconfiguration_1_1_configuration.html">Configuration</a></li>
-    <li class="footer">Generated on Thu Jan 6 2022 09:18:10 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Thu Jan 6 2022 21:20:27 for EmlaLockSafe by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>
