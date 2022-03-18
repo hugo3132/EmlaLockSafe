@@ -93,12 +93,18 @@ void setup() {
   pinMode(COIL_PIN, OUTPUT);
   digitalWrite(COIL_PIN, SAFE_COIL_LOCKED);
 
+  // Configure Switch to enable config server
+  pinMode(ENABLE_CONFIG_SERVER_PIN1, INPUT_PULLDOWN);
+  pinMode(ENABLE_CONFIG_SERVER_PIN2, OUTPUT);
+  digitalWrite(ENABLE_CONFIG_SERVER_PIN2, 1);
+
   // Initialize Serial
   Serial.begin(115200);
   // wait for serial port to connect. Needed for native USB
   while (!Serial) {
   }
   Serial.setDebugOutput(true);
+  delay(500);
 
   // initialize file system in flash
   Serial.println("Mount SPIFFS");
@@ -224,7 +230,6 @@ void setup() {
   }
   else if ((config.getApiKey().length() == 0) || (config.getUserId().length() == 0)) {
     views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
-    views::ViewStore::activateView(views::ViewStore::ConfigurationServerView);
   }
   else {
     views::ViewStore::activateView(views::ViewStore::UnlockedMainMenu);
@@ -295,8 +300,22 @@ void loop() {
   // tick for the encoder if the interrupt didn't properly trigger
   encoder.tick();
 
+  // Check if the configuration server should be enabled
+  static bool switchEnabledConfigServer = false;
+  if (digitalRead(ENABLE_CONFIG_SERVER_PIN1) == 1) {
+    switchEnabledConfigServer = true;
+    if (lcd::ViewBase::getCurrentView() != views::ViewStore::getView(views::ViewStore::ConfigurationServerView)) {
+      views::ViewStore::activateView(views::ViewStore::ConfigurationServerView);
+    }
+  }
+  else if ((switchEnabledConfigServer) &&
+           (lcd::ViewBase::getCurrentView() == views::ViewStore::getView(views::ViewStore::ConfigurationServerView))) {
+    // disble view
+    lcd::ViewBase::getCurrentView()->activatePreviousView();
+    switchEnabledConfigServer = false;
+  }
   // check if the safe must be locked?
-  if (LockState::getEndDate() > time(NULL)) {
+  else if (LockState::getEndDate() > time(NULL)) {
     // check if there is a hygiene opening
     if ((config.getAutoLockHygieneOpeningTimeout() && LockState::getCleaningEndDate() > time(NULL)) ||
         (!config.getAutoLockHygieneOpeningTimeout() && LockState::getCleaningEndDate() != 0)) {
@@ -368,4 +387,4 @@ void loop() {
   emlalock::EmlaLockApi::getSingleton().triggerRefresh();
   delay(10000);
 #endif
-} 
+}

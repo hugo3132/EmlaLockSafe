@@ -209,9 +209,10 @@ protected:
   String emergencyKey;
 
 protected:
-  /** 
-   * @brief Disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before
-   * a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid!
+  /**
+   * @brief Disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date
+   * before a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer
+   * valid!
    */
   bool disableFailedSession;
 #pragma endregion
@@ -301,14 +302,14 @@ public:
 
 public:
   /**
-   * @brief get disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before
-   * a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid!
+   * @brief get disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date
+   * before a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer
+   * valid!
    */
   const bool& getDisableFailedSession() const {
     return disableFailedSession;
   }
 
-  
 #pragma endregion
 
 #pragma region Miscellaneous Settings
@@ -375,8 +376,9 @@ public:
    *
    * @param userId new Emlalock API user id
    * @param apiKey new Emlalock API key
-   * @param disableFailedSession disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the last known end date before
-   * a session was ended and marked as failed. Hygiene openings can no longer be triggered since the session is no longer valid!
+   * @param disableFailedSession disable support of failed session. <b>Note: </b>If selected, the safe will be locked until the
+   * last known end date before a session was ended and marked as failed. Hygiene openings can no longer be triggered since the
+   * session is no longer valid!
    * @param timezoneName new name of timezone
    * @param timezone new timezone string
    * @param backlightTimeOut new timeout of display backlight in seconds
@@ -427,9 +429,8 @@ public:
   }
 #pragma endregion
 
-
 public:
-  /** 
+  /**
    * @brief Reset all values to the default values and write configuration
    */
   void restoreFactoryDefaults() {

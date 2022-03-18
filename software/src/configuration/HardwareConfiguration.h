@@ -10,6 +10,16 @@
 #define COIL_PIN 15
 
 /**
+ * @brief GPIO of input pin of switch to enable config server
+ */
+#define ENABLE_CONFIG_SERVER_PIN1 35
+
+/**
+ * @brief GPIO of output pin of switch to enable config server
+ */
+#define ENABLE_CONFIG_SERVER_PIN2 14
+
+/**
  * @brief Value of the COIL_PIN if the coil should be locked
  */
 #define SAFE_COIL_LOCKED LOW
