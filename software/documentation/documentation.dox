@@ -563,7 +563,7 @@ The I/O module is responsible for displaying the current state and is therefore 
 <div align="center"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_IO_Module_Schematic.svg" width="1024px"></div>
 @endhtmlonly
 
-Everything is mounted to a 3D printed case. The STL file can be downloaded from https://github.com/hugo3132/EmlaLockSafe/raw/master/hardware/EmlaLockSafe_IO_Module_Case.7z. 
+Everything is mounted to a 3D printed case. The STL file can be downloaded from https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/3d%20printed%20parts/LCD_Housing.stl. 
 The case itself was created using the free version of onshape. If it should be modified you can use the following link
 https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374 and modify it to your own needs.
 
