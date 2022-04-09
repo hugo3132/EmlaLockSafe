@@ -1,0 +1,20 @@
+Inside PCB holder (EmlaSafe - PCB Holder .f3d):
+4x 2,2x6,5mm wood/plastic screws (self tapper)
+Reuse original 4 screws from the black cover.
+
+Inside LCD bracket (EmlaSafe - Adapter Plate.f3d > small body)
+2x M2.5 washer (optional)
+2x M2,5x12mm hex bolt
+2x M3 washer (optional)
+2x M3x12mm hex bolt
+
+Outside LCD bracket (EmlaSafe - Adapter Plate.f3d > large body)
+2x M2.5 nut
+2x M3 nut
+4x 2,2x9,5mm wood/plastic screws (self tapper)
+
+Outside LCD: (STL from the safe Github)
+4x 2,2x6,5mm wood/plastic screws (self tapper)
+
+Lessen rattle of safe mechanism:
+1x M6 washer (place beneath the cotter pin)
