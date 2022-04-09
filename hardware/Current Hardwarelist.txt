@@ -14,10 +14,16 @@ Encoder:
 https://www.amazon.de/WayinTop-Encoder-Drehgeber-Drehwinkelgeber-Druckknopf/dp/B07T3672VK
 
 Housing:
-https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374
+https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/LCD%20Housing%20by%20hugo3132
+source: https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374
+
+Brackets if you don't want to drill into the safe:
+https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab
+
 
 Safe (must have some kind of electronic opening mechanism):
 https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628
+alternative: https://www.amazon.de/gp/product/B07X25MM4Y
 
 Controller Board:
 =================
