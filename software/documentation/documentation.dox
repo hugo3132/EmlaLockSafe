@@ -19,7 +19,14 @@ This is the documentation for the EmlaLockSafe. The sources can be found under
 
 
 @section secChangelog Changelog of Documentation
-- 2022-01-03: Added a note to @ref secUsingTheSafe which describes that the safe can be remote controlled.
+- 2022-01-03: 
+  - Added a note to @ref secUsingTheSafe which describes that the safe can be remote controlled.
+- 2022-04-09: 
+  - Updated link to stl file in @ref subsubIOModule
+  - Fixed broken chapter @ref subsubMainConfigurationServer
+  - Updated how links are displayed in @ref subsubControllerBoard
+  - Added alternative source for the safe to @ref secHardwareDescription
+  - Added descriptions and links to the brackets created by naatisab to @ref subsubControllerBoard and @ref subsubIOModule
 
 
 
@@ -34,7 +41,7 @@ This is the documentation for the EmlaLockSafe. The sources can be found under
 For the development on arduino the free [Visual Studio Code](https://code.visualstudio.com/) together with the extension 
 [PlatformIO](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide) was used. After both are installed and the controller board
 is connected to the computer, the folder [software](https://github.com/hugo3132/EmlaLockSafe/tree/master/software) must be opened in Visual Studio Code. 
-selected to create an image containg everything from the [data](https://github.com/hugo3132/EmlaLockSafe/tree/master/software/data) folder. Next, Upload
+selected to create an image containing everything from the [data](https://github.com/hugo3132/EmlaLockSafe/tree/master/software/data) folder. Next, Upload
 Filesystem Image must be selected to flash the data folder to the controller board. Finally, Upload should be selected to compile and upload the firmware:
 
 @image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/FlashControllerBoard.png height=400px
@@ -117,10 +124,10 @@ Therefore, the system time can be always assumed to be correct.
 
 In addition, a @ref subSafeMode is implemented which allows to open safe with a code.
 
-@warning In case the end date is not visible in your sesssion, it cannot be read over the API as well. Therefore, the safe can only be open if the 
+@warning In case the end date is not visible in your session, it cannot be read over the API as well. Therefore, the safe can only be open if the 
 connection to the emlalock site works. Alternatively, the @ref subSafeMode must be used.
 
-@note At least in my case the mechanical keyhole is coverd by the housing of the display. Therefore, I can store the mechanical key next to the safe 
+@note At least in my case the mechanical keyhole is covered by the housing of the display. Therefore, I can store the mechanical key next to the safe 
 and just smash the display housing with an hammer in case of an emergency. 
 
 
@@ -503,6 +510,7 @@ After entering the last character of the key, the key is verified. If the correc
 @subsection subUnderstandingTheLockingMechanism Understanding the locking mechanism
 
 I've used a [cheap safe from a local hardware store](https://www.bauhaus.info/tresore/moebeleinsatztresor-security-box-mini/p/23519628). 
+[This safe from amazon](https://www.amazon.de/gp/product/B07X25MM4Y) was successfully tested as well.
 But any cheap safe should do the trick as long as it can be electronically unlocked and easily disassembled. Try to look for a safe which is powered by 
 4 batteries (4 x 1.5V). Then the chances are high that the 5V of the controller board are high enough to pull the coil. The cheaper the safe the easier it
 might be to drill the holes into it to mount everything. After removing the cover on the inside of the safe, the original electronics board can be removed
@@ -524,7 +532,7 @@ Therefore, I had to switch to the more powerful [ESP32 D1 mini module](https://w
 The controller module is extended by a [real-time clock (RTC) module](https://www.amazon.de/AZDelivery-Real-Clock-DS3231-Parent/dp/B07ZQGBH14). As long as 
 the controller has a WiFi connection the time of the RTC module is set using the [network time protocol](https://en.wikipedia.org/wiki/Network_Time_Protocol). 
 In case the WiFi connection is lost the controller is able to get the time from the RTC module even after the power outage (see also @ref subSafetyAspect). 
-This is important in case the @refg subManualMode is used.
+This is important in case the @ref subManualMode is used.
 
 The controller and RTC module are both part of the @ref subsubControllerBoard which is mounted inside the safe. The 
 @ref subsubControllerBoard is extended by the @ref subsubIOModule mounted to the outside of the safe which contains a 
@@ -545,10 +553,14 @@ used (either by disconnecting them or using a USB power cable).
 <div align="center"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_Controller_Board.svg" width="1024px"></div>
 @endhtmlonly
 
-A two-layer board layout can be found under https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware. I also added the files I've used when I ordered the PCB from
-[https://www.jlcpcb.com/](jlcpcb) under https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/JLCPCB%20Job. The assembled board looks like:
+A two-layer board layout can be found under [hardware](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware). I also added the files I've used when I ordered the PCB from
+[jlcpcb](https://www.jlcpcb.com/) under [hardware/JLCPCB Job](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/JLCPCB%20Job). The assembled board looks like:
 
 @image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/ControllerBoard.jpg width=500px
+
+Originally, the controller board was mounted by drilling some holes directly into the original plastic cover of the mechanics (see picture at the very top of this page).
+Naatisab created an alternative 3d-printed PCB holder which replaces the original plastic cover by a 3D printed holder. It can be found under 
+[hardware/3d printed parts/Emla Safe mounting brackets by naaitsab](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab).
 
 
 
@@ -563,9 +575,15 @@ The I/O module is responsible for displaying the current state and is therefore 
 <div align="center"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_IO_Module_Schematic.svg" width="1024px"></div>
 @endhtmlonly
 
-Everything is mounted to a 3D printed case. The STL file can be downloaded from https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/3d%20printed%20parts/LCD_Housing.stl. 
-The case itself was created using the free version of onshape. If it should be modified you can use the following link
-https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374 and modify it to your own needs.
+Everything is mounted to a 3D printed case. The STL file can be downloaded from 
+[hardware/3d printed parts/LCD Housing by hugo3132](https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/3d%20printed%20parts/LCD%20Housing%20by%20hugo3132). 
+The case itself was created using the free version of onshape. If it should be modified you can use the 
+[following link](https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374)
+and modify it to your own needs. In the original setup, the LCD housing was mounted by drilling some holes into the metal of the safe and screwing it from the inside.
+Naatisab created some 3D printed brackets which can be used to mount the LCD housing without drilling into the safe (see
+[hardware/3d printed parts/Emla Safe mounting brackets by naaitsab](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab)). 
+
+
 
 @htmlonly
 <div align="center">
@@ -595,7 +613,7 @@ For the I/O module no PCB is required. Everything is directly soldered to each o
 
 @section secOverviewAboutSoftware Overview about Software
 The EmlaLockSafe uses an ESP32 processor board to open the attached safe dependent on your session on [emlalock.com](https://www.emlalock.com).
-The software running on the EPS32 is speparated into different parts which are described in the following sections.
+The software running on the EPS32 is separated into different parts which are described in the following sections.
 
 The @ref subConfiguration "first section" covers how the webservers are used to configure the software. The section @ref subLockstate shows how the 
 software handles if it should open or not and what is shown on the display. The section @ref subEmlaLockApi shows how the software interacts with the API
@@ -604,7 +622,7 @@ of [emlalock.com](https://www.emlalock.com).
 Except of the @ref subsubWifiConfigurationServer, everything what is displayed on the LCD is using @ref subViews. A view can be what's currently displayed, 
 a dialog or an menu. For the navigation within the views, the encoder nob can be used.
 
-@warning If the filesystem in the flash memory (SPIFFS) is accessed the interrupts must be temorarily deactivated. The class @ref UsedInterrupts provides
+@warning If the filesystem in the flash memory (SPIFFS) is accessed the interrupts must be temporarily deactivated. The class @ref UsedInterrupts provides
 an @ref UsedInterrupts::attach "attach" and @ref UsedInterrupts::detach "detach" function to temporarily deactivated the interrupts. An other option is
 to use the function @ref UsedInterrupts::executeWithoutInterrupts "executeWithoutInterrupts" which accepts a lamda expression which is executed while the
 interrupts are detached.
@@ -639,7 +657,7 @@ visible WiFi networks. The list is automatically updated in the @ref configurati
 @subsubsection subsubMainConfigurationServer Main Configuration Server
 
 The main configuration server is a webserver to configure everything except of the WiFi settings. The main website provided by the server is the file 
-[indexConfig.html](https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexConfig.html") (preview without backend
+[indexConfig.html](https://github.com/hugo3132/EmlaLockSafe/blob/master/software/data/indexConfig.html) (preview without backend
  <a href="indexConfig.html" target="_blank">indexConfig.html</a>). The webserver is automatically 
 started and stopped by the @ref views::ConfigurationServerView. As mentioned before, the @ref views::ConfigurationServerView "view" and therefore also the 
 webserver is activated automatically after a reboot if the EmlaLock API is not configured. When the @ref views::ConfigurationServerView is active, it 
