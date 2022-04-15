@@ -560,7 +560,9 @@ A two-layer board layout can be found under [hardware](https://github.com/hugo31
 
 Originally, the controller board was mounted by drilling some holes directly into the original plastic cover of the mechanics (see picture at the very top of this page).
 Naatisab created an alternative 3d-printed PCB holder which replaces the original plastic cover by a 3D printed holder. It can be found under 
-[hardware/3d printed parts/Emla Safe mounting brackets by naaitsab](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab).
+[hardware/3d printed parts/Emla Safe mounting brackets by naaitsab](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab):
+
+@image html "https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab/EmlaSafe%20-%20PCB%20Holder.jpg" width=400px
 
 
 
@@ -589,6 +591,7 @@ Naatisab created some 3D printed brackets which can be used to mount the LCD hou
 <div align="center">
 <img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/DisplayModule_Back.jpg" height="300">
 <img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/DisplayModule_Front.jpg" height="300">
+<img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab/EmlaSafe%20-%20Adapter%20Plate.jpg" height="300">
 </div>
 @endhtmlonly
 
