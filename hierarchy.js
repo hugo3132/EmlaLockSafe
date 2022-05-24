@@ -17,7 +17,6 @@ var hierarchy =
       [ "views::SelectDisplayTimePassed", "classviews_1_1_select_display_time_passed.html", null ],
       [ "views::UnlockedMainMenu", "classviews_1_1_unlocked_main_menu.html", null ]
     ] ],
-    [ "RealTimeClock", "class_real_time_clock.html", null ],
     [ "configuration::Configuration::TimeRestrictions", "classconfiguration_1_1_configuration_1_1_time_restrictions.html", null ],
     [ "Tools", "class_tools.html", null ],
     [ "UsedInterrupts", "class_used_interrupts.html", null ],

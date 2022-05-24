@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['selectdisplaytimeleft_0',['SelectDisplayTimeLeft',['../classviews_1_1_select_display_time_left.html',1,'views']]],
-  ['selectdisplaytimepassed_1',['SelectDisplayTimePassed',['../classviews_1_1_select_display_time_passed.html',1,'views']]],
-  ['settimerview_2',['SetTimerView',['../classviews_1_1_set_timer_view.html',1,'views']]]
+  ['timerestrictedview_0',['TimeRestrictedView',['../classviews_1_1_time_restricted_view.html',1,'views']]],
+  ['timerestrictions_1',['TimeRestrictions',['../classconfiguration_1_1_configuration_1_1_time_restrictions.html',1,'configuration::Configuration']]],
+  ['tools_2',['Tools',['../class_tools.html',1,'']]]
 ];

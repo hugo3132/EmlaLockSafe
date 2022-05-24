@@ -30,7 +30,6 @@ var annotated_dup =
       [ "WifiConnectingView", "classviews_1_1_wifi_connecting_view.html", "classviews_1_1_wifi_connecting_view" ]
     ] ],
     [ "LockState", "class_lock_state.html", "class_lock_state" ],
-    [ "RealTimeClock", "class_real_time_clock.html", "class_real_time_clock" ],
     [ "Tools", "class_tools.html", "class_tools" ],
     [ "UsedInterrupts", "class_used_interrupts.html", "class_used_interrupts" ]
 ];
