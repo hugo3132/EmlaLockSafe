@@ -57,6 +57,11 @@ var NAVTREE =
       [ "New electronics", "index.html#subNewElectronics", [
         [ "Controller board", "index.html#subsubControllerBoard", null ],
         [ "I/O module", "index.html#subsubIOModule", null ]
+      ] ],
+      [ "Mounting Electronics to Safe", "index.html#subHousing", [
+        [ "Version 1 by Hugo3132", "index.html#subsubHousing1", null ],
+        [ "Extension of Version 1 by naatisab", "index.html#subsubHousing2", null ],
+        [ "Version 2 by Hugo3132", "index.html#subsubHousing3", null ]
       ] ]
     ] ],
     [ "Overview about Software", "index.html#secOverviewAboutSoftware", [
