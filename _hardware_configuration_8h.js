@@ -8,6 +8,7 @@ var _hardware_configuration_8h =
     [ "ENCODER_SWITCH", "_hardware_configuration_8h.html#a6116ee493d3b9538c2a9904c54a8ab48", null ],
     [ "LCD_ADDR", "_hardware_configuration_8h.html#a6a90c49be18cd45434c04afd79b0bf9d", null ],
     [ "LCD_NUMBER_OF_COLS", "_hardware_configuration_8h.html#ac0f7d5c7fba347957c082514efc3de74", null ],
+    [ "LCD_NUMBER_OF_ROWS", "_hardware_configuration_8h.html#aa6f7005b6549b4c807318332a724344f", null ],
     [ "SAFE_COIL_LOCKED", "_hardware_configuration_8h.html#aef0a54121099b09508951b3b54c27c96", null ],
     [ "SAFE_COIL_UNLOCKED", "_hardware_configuration_8h.html#ab1d61c384180c5f2cb388bdddf85d96b", null ]
 ];
