@@ -29,7 +29,9 @@ This is the documentation for the EmlaLockSafe. The sources can be found under
   - Added descriptions and links to the brackets created by naatisab to @ref subsubControllerBoard and @ref subsubIOModule
 - 2022-04-15: 
   - Added pictures of the brackets created by naatisab to @ref subsubControllerBoard and @ref subsubIOModule
-
+- 2022-05-24:
+  - Added description of new Housing
+  - Moved everything housing related to @ref subHousing
 
 
 
@@ -560,11 +562,6 @@ A two-layer board layout can be found under [hardware](https://github.com/hugo31
 
 @image html https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/ControllerBoard.jpg width=500px
 
-Originally, the controller board was mounted by drilling some holes directly into the original plastic cover of the mechanics (see picture at the very top of this page).
-Naatisab created an alternative 3d-printed PCB holder which replaces the original plastic cover by a 3D printed holder. It can be found under 
-[hardware/3d printed parts/Emla Safe mounting brackets by naaitsab](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab):
-
-@image html "https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab/EmlaSafe%20-%20PCB%20Holder.jpg" width=400px
 
 
 
@@ -579,35 +576,64 @@ The I/O module is responsible for displaying the current state and is therefore 
 <div align="center"><img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/Schematics/EmlaLockSafe_IO_Module_Schematic.svg" width="1024px"></div>
 @endhtmlonly
 
-Everything is mounted to a 3D printed case. The STL file can be downloaded from 
+
+
+
+
+
+@subsection subHousing Mounting Electronics to Safe
+
+@subsubsection subsubHousing1 Version 1 by Hugo3132
+
+In the first version only one 3D printed part was necessry containg everything from the @ref subsubIOModule.
+The STL file can be downloaded from 
 [hardware/3d printed parts/LCD Housing by hugo3132](https://github.com/hugo3132/EmlaLockSafe/blob/master/hardware/3d%20printed%20parts/LCD%20Housing%20by%20hugo3132). 
 The case itself was created using the free version of onshape. If it should be modified you can use the 
 [following link](https://cad.onshape.com/documents/5e5c868aceb5d7f8533767fd/w/02a796cf0a235e5fc50259cc/e/6ff6b7a15110ccacfdb04374)
-and modify it to your own needs. In the original setup, the LCD housing was mounted by drilling some holes into the metal of the safe and screwing it from the inside.
-Naatisab created some 3D printed brackets which can be used to mount the LCD housing without drilling into the safe (see
-[hardware/3d printed parts/Emla Safe mounting brackets by naaitsab](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab)). 
-
-
+and modify it to your own needs. The LCD housing is mounted by drilling some holes into the metal of the safe and screwing it from the inside.
+The @ref subsubControllerBoard is mounted by using some screws to the inner plastic cover of the safe.
 
 @htmlonly
 <div align="center">
 <img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/DisplayModule_Back.jpg" height="300">
 <img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/pictures/DisplayModule_Front.jpg" height="300">
+</div>
+@endhtmlonly
+
+
+@subsubsection subsubHousing2 Extension of Version 1 by naatisab
+
+Naatisab created some 3D printed brackets which can be used to mount the LCD housing without drilling into the safe (see
+[hardware/3d printed parts/Emla Safe mounting brackets by naaitsab](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab)). 
+
+@htmlonly
+<div align="center">
 <img src="https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab/EmlaSafe%20-%20Adapter%20Plate.jpg" height="300">
 </div>
 @endhtmlonly
 
 For the I/O module no PCB is required. Everything is directly soldered to each other or connected with some cables.
 
+Originally, the controller board was mounted by drilling some holes directly into the original plastic cover of the mechanics (see picture at the very top of this page).
+Naatisab created an alternative 3d-printed PCB holder which replaces the original plastic cover by a 3D printed holder. It can be found under 
+[hardware/3d printed parts/Emla Safe mounting brackets by naaitsab](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab):
+
+@image html "https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/3d%20printed%20parts/Emla%20Safe%20mounting%20brackets%20by%20naaitsab/EmlaSafe%20-%20PCB%20Holder.jpg" width=400px
 
 
 
 
+@subsubsection subsubHousing3 Version 2 by Hugo3132
 
+Inspired by the extension I've created a 
+[completly new design for the 3D printed parts](https://github.com/hugo3132/EmlaLockSafe/tree/master/hardware/3d%20printed%20parts/Housing%20v2%20by%20hugo3132%20inspired%20by%20naaitsab)
+using FreeCAD. For the new design 3 parts must be printed, 15 2x12mm screws and 3 washers are required:
+@image html "https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/3d%20printed%20parts/Housing%20v2%20by%20hugo3132%20inspired%20by%20naaitsab/Parts.jpg" width=400px
 
+The washers are required to first mount the LCD module to the Front Panel. Then, the mounting frame 1 is mounted to the panel. From inside the safe,
+the mounting frame 2 is mounted to the first frame through the door of the safe. Finally, the PCB is mounted to the second frame and everything is connected:
 
-
-
+@image html "https://raw.githubusercontent.com/hugo3132/EmlaLockSafe/master/hardware/3d%20printed%20parts/Housing%20v2%20by%20hugo3132%20inspired%20by%20naaitsab/MountingInstructions.jpg" width=400px
 
 
 
